@@ -1,2 +1,2 @@
-# know-me-serv
+# know-me
 Serwer KnowMe
