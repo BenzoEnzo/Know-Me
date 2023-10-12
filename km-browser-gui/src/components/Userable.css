@@ -25,11 +25,6 @@ input {
     text-align: center;
 }
 
-.right-container {
-    flex: 0.7;
-    background-color: #2a2a3f;
-}
-
 .sub-container {
     flex: 0.4;
 }
@@ -50,37 +45,82 @@ input {
 }
 
 .description-container {
-
 }
 
-.square-container {
-    position: absolute;
-    top: 50%;
-    right: -5%;
-    transform: translateY(-50%);
-    display: flex;
+.right-container {
+    flex: 0.7;
+    background-color: #2a2a3f;
     flex-direction: column;
-    gap: 10px;
-    z-index: 10;
+    display: flex;
 }
 
-.square {
-    width: 50px;
-    height: 50px;
-    background-color: #8a79a6;
-    border: 2px solid #5e5e6f;
+@keyframes neonPulse {
+    0% {
+        text-shadow: 0 0 5px #b0c4de, 0 0 10px #b0c4de, 0 0 15px #dcdcdc, 0 0 20px #dcdcdc, 0 0 25px #b0c4de, 0 0 30px #dcdcdc, 0 0 35px #dcdcdc;
+    }
+    50% {
+        text-shadow: 0 0 7px #dcdcdc, 0 0 15px #dcdcdc, 0 0 30px #b0c4de, 0 0 40px #b0c4de, 0 0 50px #dcdcdc, 0 0 60px #b0c4de, 0 0 70px #b0c4de;
+    }
+    100% {
+        text-shadow: 0 0 5px #b0c4de, 0 0 10px #b0c4de, 0 0 15px #dcdcdc, 0 0 20px #dcdcdc, 0 0 25px #b0c4de, 0 0 30px #dcdcdc, 0 0 35px #dcdcdc;
+    }
 }
 
-.square:nth-child(1) {
-    background-color: #705882;
+.keys-title {
+    flex: 0.3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 3px solid #8b76a9;
+    color: #dcdcdc;
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    text-shadow: 0 0 5px #b0c4de, 0 0 10px #b0c4de, 0 0 15px #dcdcdc, 0 0 20px #dcdcdc, 0 0 25px #b0c4de, 0 0 30px #dcdcdc, 0 0 35px #dcdcdc;
+    animation: neonPulse 1.5s infinite alternate;
 }
 
-.square:nth-child(2) {
-    background-color: #9069a2;
+.keys-table {
+    flex: 1;
+    margin: 20px;
+    overflow: auto;
 }
 
-.square:nth-child(3) {
-    background-color: #b59ac2;
+.table-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #8a79a6;
 }
+
+.table-header {
+    font-weight: bold;
+}
+
+.add-key-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    border-top: 3px solid #8b76a9;
+}
+
+.add-key-button {
+    padding: 0.5rem 1rem;
+    color: #dcdcdc;
+    background-color: #3e3e4f;
+    border: 1px solid #8a79a6;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-key-button:hover {
+    background-color: #8b76a9;
+}
+
+
+
+
 
 

@@ -22,7 +22,7 @@ public class RandomConnection {
         }
 
         Long firstId = pickRandomId();
-        availableIds.remove(firstId);  // usuwamy pierwsze wylosowane ID, aby uniknąć jego powtórzenia
+        availableIds.remove(firstId);
 
         Long secondId = pickRandomId();
 

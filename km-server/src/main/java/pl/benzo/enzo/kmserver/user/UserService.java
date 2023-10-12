@@ -1,7 +1,6 @@
 package pl.benzo.enzo.kmserver.user;
 
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.kmserver.user.model.*;
@@ -13,9 +12,13 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Scheduled(fixedRate = 360000)
     private void deleteExpiryUsers(){
         userRepository.deleteAllByDeleteAtBefore(LocalDateTime.now());
@@ -25,14 +28,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public String saveUser(CreateRequest createRequest){
+    public User saveUser(CreateRequest createRequest){
         final User user = User.builder()
                 .name(createRequest.name())
                 .describe(createRequest.describe())
                 .gender(createRequest.gender())
                 .build();
-        userRepository.save(user);
-        return "";
+       return userRepository.save(user);
     }
     public IdDto generateUser(){
         final User user = User.builder()
@@ -53,5 +55,4 @@ public class UserService {
         }
         return new ValidateResponse(user.getId(),"");
     }
-
 }

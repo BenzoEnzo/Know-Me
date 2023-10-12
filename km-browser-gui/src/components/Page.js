@@ -11,6 +11,7 @@ function Page(){
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isButtonDisabled, setButtonDisabled] = useState(false);
+
     const handleGenerateId = async () => {
         try {
             const response = await axios.post('/api/user');
@@ -23,6 +24,8 @@ function Page(){
             console.error("Wystąpił błąd podczas generowania ID.");
         }
     }
+
+
 
     const handleValidate = () => {
         validateId(crypto)
