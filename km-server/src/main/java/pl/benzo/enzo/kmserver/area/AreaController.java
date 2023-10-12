@@ -13,12 +13,18 @@ import org.springframework.web.bind.annotation.*;
 public class AreaController {
     private final AreaService areaService;
 
-    @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public ResponseEntity<?> create(@RequestBody CreateAreaRequest createAreaRequest) {
+    @GetMapping()
+    public ResponseEntity<?> getAreas() {
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(areaService.createArea(createAreaRequest));
+                .status(HttpStatus.OK)
+                .body(areaService.getAll());
     }
 
+    @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> create(@RequestBody CreateAreaRequest createAreaRequest) {
+        areaService.createArea(createAreaRequest);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .build();
+    }
 }

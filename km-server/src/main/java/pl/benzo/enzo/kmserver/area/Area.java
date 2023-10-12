@@ -28,8 +28,9 @@ public class Area {
 
     private String sessionId;
 
-    public Area(User user, Key key) {
+    public Area(User user, Key key, String sessionId) {
         this.user = user;
         this.key = key;
+        this.sessionId = sessionId;
     }
 }

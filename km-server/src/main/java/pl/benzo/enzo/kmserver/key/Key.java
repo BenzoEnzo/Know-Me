@@ -22,8 +22,6 @@ public class Key {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "key", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Area> areas = new ArrayList<>();
     public Key(String name){
         this.name = name;
     }

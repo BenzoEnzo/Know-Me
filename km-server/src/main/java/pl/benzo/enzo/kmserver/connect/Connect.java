@@ -5,11 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.util.Pair;
+import pl.benzo.enzo.kmserver.user.model.User;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Connect {
-   private Pair<Long,Long> conversation;
+   private Long person1;
+   private Long person2;
+
 }

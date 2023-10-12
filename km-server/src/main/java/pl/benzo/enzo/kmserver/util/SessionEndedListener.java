@@ -1,4 +1,4 @@
-package pl.benzo.enzo.kmserver.session;
+package pl.benzo.enzo.kmserver.util;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.session.events.SessionDestroyedEvent;
@@ -18,9 +18,6 @@ public class SessionEndedListener implements ApplicationListener<SessionDestroye
     @Override
     public void onApplicationEvent(SessionDestroyedEvent event) {
         String sessionId = event.getSessionId();
-        Area area = areaService.findBySessionId(sessionId);
-        if (area != null) {
-           areaService.deleteArea(area);
-        }
+        areaService.deleteArea(sessionId);
     }
 }

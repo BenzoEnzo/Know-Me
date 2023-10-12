@@ -23,9 +23,6 @@ public class User {
     private String describe;
     private LocalDateTime deleteAt;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Area> areas = new ArrayList<>();
-
     public User(String name, String crypto, LocalDateTime deleteAt) {
         this.name = name;
         this.crypto = crypto;
