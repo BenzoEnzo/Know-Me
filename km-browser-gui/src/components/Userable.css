@@ -6,4 +6,28 @@
     background-color: #2e2e3f;
     width: 300px;
     text-align: center;
+    display: flex;
+}
+
+.left-container {
+    padding: 30vh;
+    display: flex;
+    flex-direction: column;
+    border-right: 5px solid #8a79a6;
+}
+
+.right-container {
+    flex: 0.7;
+}
+
+.sub-container {
+    flex: 0.5;
+}
+
+.image-container {
+
+}
+
+.description-container {
+
 }
