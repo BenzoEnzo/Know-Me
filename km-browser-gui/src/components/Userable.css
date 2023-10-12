@@ -1,27 +1,41 @@
 .extended-panel {
-    padding: 30vh;
+    height: 80vh;
     border: 1px solid #8a79a6;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(142, 121, 166, 0.5);
     background-color: #2e2e3f;
-    width: 300px;
+    width: 140vh;
     text-align: center;
     display: flex;
 }
 
 .left-container {
-    padding: 30vh;
+    flex: 0.3;
     display: flex;
+    border-right: 3px solid #8b76a9;
     flex-direction: column;
-    border-right: 5px solid #8a79a6;
+}
+
+input {
+    height: 20px;
+    background-color: #3e3e4f;
+    color: #fff;
+    width: 70%;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
 
 .right-container {
     flex: 0.7;
+    background-color: #2a2a3f;
 }
 
 .sub-container {
-    flex: 0.5;
+    flex: 0.4;
+}
+
+.name-container {
+    flex: 0.2;
 }
 
 .image-container {
