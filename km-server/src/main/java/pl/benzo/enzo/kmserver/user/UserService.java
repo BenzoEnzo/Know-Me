@@ -32,6 +32,7 @@ public class UserService {
         final User user = User.builder()
                 .name(createRequest.name())
                 .describe(createRequest.describe())
+                .gender(createRequest.gender())
                 .crypto(crypto)
                 .deleteAt(DateOperation.addHoursToDate(LocalDateTime.now(),24))
                 .build();

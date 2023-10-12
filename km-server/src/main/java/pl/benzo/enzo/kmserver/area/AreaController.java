@@ -20,7 +20,7 @@ public class AreaController {
                 .body(areaService.getAll());
     }
 
-    @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(@RequestBody CreateAreaRequest createAreaRequest) {
         areaService.createArea(createAreaRequest);
         return ResponseEntity

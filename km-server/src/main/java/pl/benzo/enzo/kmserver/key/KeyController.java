@@ -19,7 +19,7 @@ public class KeyController {
                 .status(HttpStatus.OK)
                 .body(keyService.getAll());
     }
-    @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<?> create(@RequestBody String name) {
         return ResponseEntity
