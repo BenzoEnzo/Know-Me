@@ -23,15 +23,12 @@ import java.util.Objects;
 @Service
 public class UploadService {
 
-    @Value("{$file.upload.directory)")
-    private String uploadDirectory;
-
-    public void storeFile(MultipartFile file, String filename) throws IOException {
+    public void storeFile(MultipartFile file, String filename, String uploadDirectory) throws IOException {
         Path filePath = Paths.get(uploadDirectory + File.separator + filename);
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
     }
 
-    public Resource loadFile(String filename) throws FileNotFoundException {
+    public Resource loadFile(String filename, String uploadDirectory) throws FileNotFoundException {
         Path filePath = Paths.get(uploadDirectory + File.separator + filename);
         try {
             Resource resource = new UrlResource(filePath.toUri());

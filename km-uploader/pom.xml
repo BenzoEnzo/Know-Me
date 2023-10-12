@@ -10,7 +10,7 @@
     </parent>
     <groupId>pl.benzo.enzo</groupId>
     <artifactId>km-uploader</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.11</version>
     <name>km-uploader</name>
     <description>km-uploader</description>
     <properties>

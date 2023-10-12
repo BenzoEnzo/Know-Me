@@ -24,12 +24,7 @@ public class User {
     private String describe;
     private LocalDateTime deleteAt;
     private Gender gender;
-    public User(String name, String crypto, LocalDateTime deleteAt) {
-        this.name = name;
-        this.crypto = crypto;
-        this.deleteAt = deleteAt;
-    }
-
+    private String photoId;
     public User() {
 
     }
