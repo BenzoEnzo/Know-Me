@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.benzo.enzo.kmserver.key.KeyService;
 import pl.benzo.enzo.kmserver.user.model.CreateRequest;
+import pl.benzo.enzo.kmserver.user.model.IdDto;
 
 @RestController
 @RequestMapping("/api/user")
@@ -21,11 +22,27 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(userService.getAll());
     }
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody CreateRequest createRequest) {
+    public ResponseEntity<?> update(@RequestBody CreateRequest createRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(userService.saveUser(createRequest));
+    }
+
+    @PostMapping(value = "/validate", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> validate(@RequestBody IdDto idDto) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(userService.validateIdUser(idDto));
+    }
+
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> generate() {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(userService.generateUser());
     }
 }

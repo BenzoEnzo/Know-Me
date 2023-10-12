@@ -4,15 +4,13 @@ package pl.benzo.enzo.kmserver.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import pl.benzo.enzo.kmserver.user.model.CreateRequest;
-import pl.benzo.enzo.kmserver.user.model.CreateResponse;
-import pl.benzo.enzo.kmserver.user.model.User;
-import pl.benzo.enzo.kmserver.user.model.UserRepository;
+import pl.benzo.enzo.kmserver.user.model.*;
 import pl.benzo.enzo.kmserver.util.DateOperation;
 import pl.benzo.enzo.kmserver.util.GenerateID;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -28,19 +26,31 @@ public class UserService {
     }
 
     public String saveUser(CreateRequest createRequest){
-        final String crypto = GenerateID.create();
         final User user = User.builder()
                 .name(createRequest.name())
                 .describe(createRequest.describe())
                 .gender(createRequest.gender())
-                .crypto(crypto)
+                .build();
+        userRepository.save(user);
+        return "";
+    }
+    public IdDto generateUser(){
+        final User user = User.builder()
+                .crypto(GenerateID.create())
                 .deleteAt(DateOperation.addHoursToDate(LocalDateTime.now(),24))
                 .build();
         userRepository.save(user);
-        return crypto;
+        return new IdDto(user.getCrypto());
     }
-
     public void deleteUser(Long id){
         userRepository.deleteById(id);
+    }
+
+    public ValidateResponse validateIdUser(IdDto crypto){
+        final User user = userRepository.findUserByCrypto(crypto.crypto());
+        if(Objects.isNull(user)){
+            throw new IllegalArgumentException("Invalid Credentials");
+        }
+        return new ValidateResponse(user.getId(),"");
     }
 }
