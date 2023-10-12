@@ -12,6 +12,7 @@ import pl.benzo.enzo.kmserver.util.DateOperation;
 import pl.benzo.enzo.kmserver.util.GenerateID;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,11 @@ public class UserService {
         userRepository.deleteAllByDeleteAtBefore(LocalDateTime.now());
     }
 
-    private String saveUser(CreateRequest createRequest){
+    public List<User> getAll(){
+        return userRepository.findAll();
+    }
+
+    public String saveUser(CreateRequest createRequest){
         final String crypto = GenerateID.create();
         final User user = User.builder()
                 .name(createRequest.name())
@@ -32,5 +37,9 @@ public class UserService {
                 .build();
         userRepository.save(user);
         return crypto;
+    }
+
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
     }
 }
