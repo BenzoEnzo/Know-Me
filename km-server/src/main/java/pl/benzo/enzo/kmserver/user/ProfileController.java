@@ -17,10 +17,10 @@ public class ProfileController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadPhoto(@RequestParam("file") MultipartFile file) {
-        return uploadBaseController.uploadProfilePicture(file, "7");
+        return null; //TODO
     }
     @GetMapping
     public ResponseEntity<?> getProfilePicture(@RequestBody PhotoRequest photoRequest) throws FileNotFoundException {
-       return uploadBaseController.getProfilePicture(photoRequest.crypto());
+        return null; //TODO
     }
 }
