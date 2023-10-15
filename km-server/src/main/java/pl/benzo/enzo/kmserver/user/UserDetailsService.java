@@ -2,15 +2,10 @@ package pl.benzo.enzo.kmserver.user;
 
 
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.fileupload.FileUpload;
-import org.apache.tomcat.util.http.fileupload.MultipartStream;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.benzo.enzo.kmserver.user.model.UploadImage;
-import pl.benzo.enzo.kmserver.user.model.UserRepository;
-import pl.benzo.enzo.kmuploader.image.UploadService;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -21,7 +16,8 @@ public class UserDetailsService {
     private String filename;
 
     public void uploadImageOnServ(MultipartFile file) throws IOException {
-        String uploadDir = "/home/devk/pobrane/";
+        String uploadDir = "/home/devk/Pulpit/IdeaProjects/know-me/km-server/src/main/resources/static";
+        filename = file.getOriginalFilename();
         uploadService.storeFile(file, filename, uploadDir);
     }
 

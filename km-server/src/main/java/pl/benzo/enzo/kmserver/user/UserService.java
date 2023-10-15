@@ -2,6 +2,8 @@ package pl.benzo.enzo.kmserver.user;
 
 
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.kmserver.user.model.*;
 import pl.benzo.enzo.kmserver.util.DateOperation;
@@ -10,6 +12,7 @@ import pl.benzo.enzo.kmserver.util.GenerateID;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -54,5 +57,13 @@ public class UserService {
             throw new IllegalArgumentException("Invalid Credentials");
         }
         return new ValidateResponse(user.getId(),"");
+    }
+
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        Optional<User> userDetail = Optional.ofNullable(userRepository.findUserByCrypto(username));
+
+        return userDetail.map(ImplUserDetails::new)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
     }
 }
