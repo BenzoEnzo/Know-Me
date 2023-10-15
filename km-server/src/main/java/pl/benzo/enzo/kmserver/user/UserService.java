@@ -34,15 +34,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User saveUser(CreateRequest createRequest, String token){
+    public void saveUser(String name, String token){
         String crypto = jwt.extractUsername(token);
         User user = userRepository.findUserByCrypto(crypto);
-        User.builder()
-                .name(createRequest.name())
-                .describe(createRequest.describe())
-                .gender(createRequest.gender())
-                .build();
-       return userRepository.save(user);
+        user.setName(name);
+        userRepository.save(user);
     }
     public IdDto generateUser(){
         final User user = User.builder()
@@ -61,7 +57,7 @@ public class UserService {
         if(Objects.isNull(user)){
             throw new IllegalArgumentException("Invalid Credentials");
         }
-        return new ValidateResponse(user.getId(),"");
+        return new ValidateResponse(user.getId(),jwt.generateToken(crypto.crypto()));
     }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

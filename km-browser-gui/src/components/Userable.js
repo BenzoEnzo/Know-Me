@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import './Userable.css';
-import {updateName} from "../functions/update";
+
 
 const Userable = () => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -9,6 +9,7 @@ const Userable = () => {
     const [name, setName] = useState('');
     const [newKey, setNewKey] = useState('');
     const [keys, setKeys] = useState([]);
+    const token = localStorage.getItem("token");
 
     const onFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
@@ -25,17 +26,29 @@ const Userable = () => {
         }
     };
 
+    const fetchAllKeys = async () => {
+        try {
+            const response = await axios.get('/api/key');
+            setKeys(response.data);
+        } catch (error) {
+            console.error('Error fetching keys:', error);
+        }
+    };
+
+    const parseJSON = (data) => {
+        try {
+            return JSON.parse(data);
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+            return null;
+        }
+    };
+
     const addKey = async () => {
         try {
-            const tokenJWT = localStorage.getItem("tokenJWT");
-            const response = await axios.post('/api/key', { name: newKey },
-                {
-                    headers: {
-                        'Authorization': 'Bearer ' + tokenJWT
-                    }
-                });
+            const response = await axios.post('/api/key', { name: newKey });
             if (response.data) {
-                setKeys([...keys, newKey]);
+                setKeys(prevKeys => [...prevKeys, response.data]);
                 setNewKey('');
             } else {
                 alert('Klucz o tej nazwie już istnieje.');
@@ -44,6 +57,28 @@ const Userable = () => {
             console.error('Error adding key:', error);
         }
     };
+
+    const updateUser = async () => {
+        try {
+            const response = await axios.post('/api/user/update', { name: name },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer\t" + token
+                    }
+                });
+            if (response.data) {
+                setName([name])
+            } else {
+                alert('Klucz o tej nazwie już istnieje.');
+            }
+        } catch (error) {
+            console.error('Error adding key:', error);
+        }
+    };
+    useEffect(() => {
+        fetchAllKeys();
+    }, [newKey]);
 
     return (
         <div className="extended-panel">
@@ -62,7 +97,14 @@ const Userable = () => {
 
                 </div>
                 <div className="name-container">
-                    <input placeholder="Zapisz Imię" />
+                    <div className="sub-container">
+                        <input
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Dodaj imie"
+                        />
+                        <button onClick={updateUser}>chng name</button>
+                    </div>
                 </div>
                 <div className="sub-container description-container">
                     <h1>MIEJSCE NA OPIS</h1>
@@ -78,12 +120,15 @@ const Userable = () => {
                         <span>Ilość osób</span>
                         <span>Wejdź</span>
                     </div>
-                    {keys.map(key => (
-                        <div className="table-row" key={key}>
-                            <span>{key}</span>
-                            {/* Jeśli chcesz wyświetlić ilość osób i przycisk "Wejdź", dodaj je tutaj. */}
-                        </div>
-                    ))}
+                    {keys.map(keyObj => {
+                        let keyParsed = parseJSON(keyObj.name);
+                        if(!keyParsed) return null;
+                        return (
+                            <div className="table-row" key={keyObj.id}>
+                                <span>{keyParsed.name}</span>
+                            </div>
+                        );
+                    })}
                 </div>
                 <div className="sub-container">
                     <input

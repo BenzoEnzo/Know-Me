@@ -5,11 +5,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import pl.benzo.enzo.kmserver.key.KeyService;
 import pl.benzo.enzo.kmserver.token.Jwt;
 import pl.benzo.enzo.kmserver.user.model.CreateRequest;
 import pl.benzo.enzo.kmserver.user.model.IdDto;
+import pl.benzo.enzo.kmserver.user.model.User;
 
 @RestController
 @RequestMapping("/api/user")
@@ -26,18 +28,11 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(userService.getAll());
     }
-    @PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public ResponseEntity<?> update(@RequestBody CreateRequest createRequest, @RequestHeader("Authorization") String token) {
-        if (!jwt.validateToken(token)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
-        }
-
-        String userId = jwt.extractUsername(token);
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(userService.saveUser(createRequest, userId));
+    @PostMapping(value = "/update",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> update(@RequestBody String name, Authentication authentication) {
+        String crypto = ((User) authentication.getPrincipal()).getCrypto();
+        userService.saveUser(name, crypto);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/validate", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,7 +44,7 @@ public class UserController {
         Object validationResult = userService.validateIdUser(idDto);
         return ResponseEntity
                 .ok()
-                .header("Authorization", token)
+                .header("Authorization",token)
                 .body(validationResult);
     } catch (Exception e) {
         return ResponseEntity

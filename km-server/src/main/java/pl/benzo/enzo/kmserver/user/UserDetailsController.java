@@ -13,7 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/api/user/details")
+@RequestMapping("/api/details")
 @RequiredArgsConstructor
 public class UserDetailsController {
     private final UserDetailsService userDetailsService;
