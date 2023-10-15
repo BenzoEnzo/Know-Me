@@ -30,22 +30,23 @@ public class SecurityConfig {
                                                    introspector) throws Exception {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
         httpSecurity.csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(
-                mvcMatcherBuilder.pattern("/api/user/**"), PathRequest.toH2Console()));
+                mvcMatcherBuilder.pattern("/api/**"), PathRequest.toH2Console()));
 
         httpSecurity.headers(headersConfigurer ->
                 headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
 
         httpSecurity.authorizeHttpRequests(auth ->
                 auth
-                        .requestMatchers(mvcMatcherBuilder.pattern("/api/user/**")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/api/**")).permitAll()
                         .requestMatchers(PathRequest.toH2Console()).authenticated()
                         .anyRequest().authenticated()
         ).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        httpSecurity.formLogin(Customizer.withDefaults());
-        httpSecurity.httpBasic(Customizer.withDefaults());
+
+
 
         return httpSecurity.getOrBuild();
     }
+
 
 
 }

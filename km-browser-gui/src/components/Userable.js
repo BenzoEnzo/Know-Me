@@ -27,7 +27,13 @@ const Userable = () => {
 
     const addKey = async () => {
         try {
-            const response = await axios.post('/api/key', { name: newKey });
+            const tokenJWT = localStorage.getItem("tokenJWT");
+            const response = await axios.post('/api/key', { name: newKey },
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + tokenJWT
+                    }
+                });
             if (response.data) {
                 setKeys([...keys, newKey]);
                 setNewKey('');
@@ -47,11 +53,13 @@ const Userable = () => {
                         <img src={uploadedImageURL} alt="Uploaded" />
                     ) : (
                         <>
-                            <h1>MIEJSCE NA ZDJECIE</h1>
+                            <img src="http://localhost:8061/ds.jpeg" alt="Załadowane zdjęcie" />
+                            {uploadedImageURL && <img src={uploadedImageURL} alt="Załadowane zdjęcie" />}
                             <input type="file" onChange={onFileChange} />
                             <button onClick={onUpload}>Prześlij</button>
                         </>
                     )}
+
                 </div>
                 <div className="name-container">
                     <input placeholder="Zapisz Imię" />

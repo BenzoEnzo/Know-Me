@@ -14,6 +14,7 @@ import pl.benzo.enzo.kmserver.user.model.IdDto;
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     private final UserService userService;
     private final Jwt jwt;
@@ -27,19 +28,34 @@ public class UserController {
     }
     @PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> update(@RequestBody CreateRequest createRequest) {
+    public ResponseEntity<?> update(@RequestBody CreateRequest createRequest, @RequestHeader("Authorization") String token) {
+        if (!jwt.validateToken(token)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        }
+
+        String userId = jwt.extractUsername(token);
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(userService.saveUser(createRequest));
+                .body(userService.saveUser(createRequest, userId));
     }
 
     @PostMapping(value = "/validate", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<?> validate(@RequestBody IdDto idDto) {
+        try {
+        final String crypto = idDto.crypto();
+        final String token = jwt.generateToken(crypto);
+        Object validationResult = userService.validateIdUser(idDto);
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .header(HttpHeaders.AUTHORIZATION,jwt.generateToken(idDto.crypto()))
-                .body(userService.validateIdUser(idDto));
+                .ok()
+                .header("Authorization", token)
+                .body(validationResult);
+    } catch (Exception e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body("An error occurred: " + e.getMessage());
+        }
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)

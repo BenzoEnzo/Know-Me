@@ -29,8 +29,9 @@ function Page(){
 
     const handleValidate = () => {
         validateId(crypto)
-            .then(() => {
+            .then(response => {
                 console.log("Logged in successfully!");
+                console.log(response);
                 navigate("/user")
         }).catch(error => {
             console.error("Wystąpił błąd podczas validacji id", error.message);

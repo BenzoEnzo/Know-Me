@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import pl.benzo.enzo.kmserver.token.Jwt;
 import pl.benzo.enzo.kmserver.user.model.*;
 import pl.benzo.enzo.kmserver.util.DateOperation;
 import pl.benzo.enzo.kmserver.util.GenerateID;
@@ -17,9 +18,11 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final Jwt jwt;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, Jwt jwt) {
         this.userRepository = userRepository;
+        this.jwt = jwt;
     }
 
     @Scheduled(fixedRate = 360000)
@@ -31,8 +34,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User saveUser(CreateRequest createRequest){
-        final User user = User.builder()
+    public User saveUser(CreateRequest createRequest, String token){
+        String crypto = jwt.extractUsername(token);
+        User user = userRepository.findUserByCrypto(crypto);
+        User.builder()
                 .name(createRequest.name())
                 .describe(createRequest.describe())
                 .gender(createRequest.gender())

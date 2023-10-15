@@ -1,17 +1,21 @@
 package pl.benzo.enzo.kmserver.key;
 
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.benzo.enzo.kmserver.token.Jwt;
 
 @RestController
 @RequestMapping("/api/key")
-@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class KeyController {
     private final KeyService keyService;
+
+    public KeyController(KeyService keyService) {
+        this.keyService = keyService;
+    }
 
     @GetMapping()
     public ResponseEntity<?> getKeys() {

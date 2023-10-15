@@ -7,6 +7,8 @@ export function validateId(crypto) {
         body: JSON.stringify({crypto})
     })
         .then(response => {
+            let token = response.headers.get("Authorization");
+            localStorage.setItem('tokenJWT', token);
             if (!response.ok) {
                 throw new Error("Registration failed");
             }
