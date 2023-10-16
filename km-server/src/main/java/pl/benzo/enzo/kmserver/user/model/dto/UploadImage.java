@@ -1,4 +1,4 @@
-package pl.benzo.enzo.kmserver.user.model;
+package pl.benzo.enzo.kmserver.user.model.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 

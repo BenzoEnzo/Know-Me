@@ -1,4 +1,4 @@
-package pl.benzo.enzo.kmserver.user;
+package pl.benzo.enzo.kmserver.user.service;
 
 import lombok.NoArgsConstructor;
 import org.springframework.core.io.Resource;

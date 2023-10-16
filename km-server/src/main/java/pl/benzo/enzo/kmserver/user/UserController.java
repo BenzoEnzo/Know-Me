@@ -1,47 +1,52 @@
 package pl.benzo.enzo.kmserver.user;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import pl.benzo.enzo.kmserver.key.KeyService;
 import pl.benzo.enzo.kmserver.token.Jwt;
-import pl.benzo.enzo.kmserver.user.model.CreateRequest;
-import pl.benzo.enzo.kmserver.user.model.IdDto;
-import pl.benzo.enzo.kmserver.user.model.User;
+import pl.benzo.enzo.kmserver.user.model.dto.UpdateRequest;
+import pl.benzo.enzo.kmserver.user.model.dto.CryptoDto;
+import pl.benzo.enzo.kmserver.user.model.dto.UserDto;
+import pl.benzo.enzo.kmserver.user.service.UserService;
+import reactor.core.Exceptions;
+
+import java.util.List;
 
 @RestController
+@Slf4j
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
-    private final UserService userService;
+    private final UserApi userApi;
     private final Jwt jwt;
 
     @GetMapping()
     @ResponseBody
-    public ResponseEntity<?> getUsers() {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(userService.getAll());
+    public ResponseEntity<List<UserDto>> getUsers() {
+       final List<UserDto> usersResponse = userApi.getAll()
+               .onSuccess(result -> log.info(String.valueOf(result.size())))
+               .onFailure(throwable -> log.error("Error while fetching users list", throwable))
+               .getOrElseThrow(() -> new IllegalArgumentException("error"));
+       return ResponseEntity.ok(usersResponse);
     }
     @PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> update(@RequestBody CreateRequest createRequest) {
-        userService.saveUser(createRequest);
+    public ResponseEntity<?> update(@RequestBody UpdateRequest updateRequest) {
+        userService.saveUser(updateRequest);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/validate", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> validate(@RequestBody IdDto idDto) {
+    public ResponseEntity<?> validate(@RequestBody CryptoDto cryptoDto) {
         try {
-        final String crypto = idDto.crypto();
+        final String crypto = cryptoDto.crypto();
         final String token = jwt.generateToken(crypto);
-        Object validationResult = userService.validateIdUser(idDto);
+        Object validationResult = userService.validateIdUser(cryptoDto);
         return ResponseEntity
                 .ok()
                 .header("Authorization",token)

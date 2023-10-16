@@ -13,8 +13,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import pl.benzo.enzo.kmserver.user.UserService;
-import pl.benzo.enzo.kmserver.user.model.UserRepository;
+import pl.benzo.enzo.kmserver.user.service.UserDetailsService;
+import pl.benzo.enzo.kmserver.user.service.UserService;
+import pl.benzo.enzo.kmserver.user.service.UserRepository;
 
 import java.util.List;
 
@@ -26,13 +27,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
 
     private final Jwt jwt;
-    private final UserRepository userRepository;
-    private final UserService userService;
+    private final UserDetailsService userDetailsService;
 
-    public JwtFilter(Jwt jwt, UserRepository userRepository, UserService userService) {
+    public JwtFilter(Jwt jwt, UserDetailsService userDetailsService) {
         this.jwt = jwt;
-        this.userRepository = userRepository;
-        this.userService = userService;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -52,7 +51,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        UserDetails userDetails = userService.loadUserByUsername(jwt.extractUsername(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(jwt.extractUsername(token));
 
         UsernamePasswordAuthenticationToken
                 authentication = new UsernamePasswordAuthenticationToken(
