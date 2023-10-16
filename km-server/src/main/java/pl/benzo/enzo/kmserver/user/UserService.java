@@ -34,10 +34,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void saveUser(String name, String token){
-        String crypto = jwt.extractUsername(token);
-        User user = userRepository.findUserByCrypto(crypto);
-        user.setName(name);
+    public void saveUser(CreateRequest createRequest){
+        User user = userRepository.findById(createRequest.id())
+                .orElseThrow(null);
+        user.setName(createRequest.name());
         userRepository.save(user);
     }
     public IdDto generateUser(){

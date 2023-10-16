@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Userable.css';
 
 
+
 const Userable = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadedImageURL, setUploadedImageURL] = useState('');
@@ -10,6 +11,7 @@ const Userable = () => {
     const [newKey, setNewKey] = useState('');
     const [keys, setKeys] = useState([]);
     const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("id");
 
     const onFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
@@ -57,20 +59,19 @@ const Userable = () => {
             console.error('Error adding key:', error);
         }
     };
-
+    const payload = {
+        id: userId,
+        name: name,
+        describe: "",
+        gender: "K"
+    }
     const updateUser = async () => {
         try {
-            const response = await axios.post('/api/user/update', { name: name },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer\t" + token
-                    }
-                });
+            const response = await axios.post('/api/user/update', payload)
             if (response.data) {
                 setName([name])
             } else {
-                alert('Klucz o tej nazwie już istnieje.');
+                alert('ERROR !');
             }
         } catch (error) {
             console.error('Error adding key:', error);
@@ -80,6 +81,35 @@ const Userable = () => {
         fetchAllKeys();
     }, [newKey]);
 
+    const handleEnterClick = async () => {
+        const user = {
+            id: userId
+        };
+
+        const key = {
+            id: 2
+        };
+
+        const requestPayload = {
+            user: user,
+            key: key
+        };
+
+        try {
+            const response = await axios.post('/api/area', requestPayload,
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+            if (response.status === 201) {
+                console.log("Area created successfully");
+            }
+        } catch (error) {
+            console.error("Error creating the area:", error);
+        }
+    }
     return (
         <div className="extended-panel">
             <div className="left-container">
@@ -126,6 +156,7 @@ const Userable = () => {
                         return (
                             <div className="table-row" key={keyObj.id}>
                                 <span>{keyParsed.name}</span>
+                                <button className="mini-button" onClick={handleEnterClick}>X</button>
                             </div>
                         );
                     })}

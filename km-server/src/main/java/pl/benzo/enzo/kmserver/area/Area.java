@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import pl.benzo.enzo.kmserver.key.Key;
 import pl.benzo.enzo.kmserver.user.model.User;
 
@@ -13,6 +14,7 @@ import pl.benzo.enzo.kmserver.user.model.User;
 @Setter
 @RequiredArgsConstructor
 @Table(name = "areas")
+@CrossOrigin(origins = "http://localhost:3000")
 public class Area {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,6 +3,9 @@ import {useState} from "react";
 import axios from "axios";
 import {validateId} from "../functions/validateId";
 import {useNavigate} from "react-router-dom";
+import {setId} from "../functions/userSlice";
+import { useDispatch, useSelector } from 'react-redux';
+
 
 
 function Page(){
@@ -11,6 +14,8 @@ function Page(){
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isButtonDisabled, setButtonDisabled] = useState(false);
+    const dispatch = useDispatch();
+
 
     const handleGenerateId = async () => {
         try {
@@ -27,11 +32,9 @@ function Page(){
 
 
 
-    const handleValidate = () => {
+    const handleValidate = async () => {
         validateId(crypto)
             .then(response => {
-                console.log("Logged in successfully!");
-                console.log(response);
                 navigate("/user")
         }).catch(error => {
             console.error("Wystąpił błąd podczas validacji id", error.message);
@@ -42,6 +45,8 @@ function Page(){
             }, 2000);
         })
     };
+
+
 
     return (
         <main>

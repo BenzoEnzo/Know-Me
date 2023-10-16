@@ -28,10 +28,10 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(userService.getAll());
     }
-    @PostMapping(value = "/update",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@RequestBody String name, Authentication authentication) {
-        String crypto = ((User) authentication.getPrincipal()).getCrypto();
-        userService.saveUser(name, crypto);
+    @PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> update(@RequestBody CreateRequest createRequest) {
+        userService.saveUser(createRequest);
         return ResponseEntity.ok().build();
     }
 

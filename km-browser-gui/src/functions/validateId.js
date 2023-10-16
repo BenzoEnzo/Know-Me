@@ -1,3 +1,4 @@
+import {setId} from "./userSlice";
 
 
 export function validateId(crypto) {
@@ -11,6 +12,7 @@ export function validateId(crypto) {
         .then(response => response.json())
         .then(data => {
             if (data && data.sessionId) {
+                localStorage.setItem("id",data.id);
                 localStorage.setItem("token", data.sessionId);
             } else
             return data;
