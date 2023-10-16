@@ -31,4 +31,8 @@ public class AreaService {
                 .stream().map(Area::getUser).map(User::getId)
                 .collect(Collectors.toSet());
     }
+
+    public int getAllUserIdsFromArenaSize(Long keyId){
+       return getAllUserIdsFromArea(keyId).size();
+    }
 }

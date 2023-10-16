@@ -67,4 +67,9 @@ public class UserService {
         return userDetail.map(ImplUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
     }
+    public String readUser(Long id){
+        return userRepository.findById(id)
+                .get()
+                .getName();
+    }
 }

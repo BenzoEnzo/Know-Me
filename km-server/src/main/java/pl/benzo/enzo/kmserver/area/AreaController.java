@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class AreaController {
     private final AreaService areaService;
 
-    @GetMapping()
-    public ResponseEntity<?> getAreas() {
+    @PostMapping(value ="/size",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getSameUsersArea(@RequestBody Long keyId) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(areaService.getAll());
+                .body(areaService.getAllUserIdsFromArenaSize(keyId));
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)

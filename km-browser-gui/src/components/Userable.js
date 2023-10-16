@@ -10,6 +10,7 @@ const Userable = () => {
     const [name, setName] = useState('');
     const [newKey, setNewKey] = useState('');
     const [keys, setKeys] = useState([]);
+    const [areaSize, setAreas] = useState('');
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("id");
 
@@ -32,6 +33,15 @@ const Userable = () => {
         try {
             const response = await axios.get('/api/key');
             setKeys(response.data);
+        } catch (error) {
+            console.error('Error fetching keys:', error);
+        }
+    };
+
+    const fetchUserName = async () => {
+        try {
+            const response = await axios.post('/api/user/read', userId);
+            setName(response.data);
         } catch (error) {
             console.error('Error fetching keys:', error);
         }
@@ -70,16 +80,17 @@ const Userable = () => {
             const response = await axios.post('/api/user/update', payload)
             if (response.data) {
                 setName([name])
-            } else {
-                alert('ERROR !');
-            }
-        } catch (error) {
+            } } catch (error) {
             console.error('Error adding key:', error);
         }
     };
     useEffect(() => {
         fetchAllKeys();
     }, [newKey]);
+
+    useEffect(() => {
+        fetchUserName();
+    }, [name]);
 
     const handleEnterClick = async () => {
         const user = {
@@ -153,9 +164,11 @@ const Userable = () => {
                     {keys.map(keyObj => {
                         let keyParsed = parseJSON(keyObj.name);
                         if(!keyParsed) return null;
+                        let numOfPeople = areaSize[keyObj.id]
                         return (
                             <div className="table-row" key={keyObj.id}>
                                 <span>{keyParsed.name}</span>
+                                <span>{numOfPeople}</span>
                                 <button className="mini-button" onClick={handleEnterClick}>X</button>
                             </div>
                         );

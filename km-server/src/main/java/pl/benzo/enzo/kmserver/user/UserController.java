@@ -53,6 +53,14 @@ public class UserController {
         }
     }
 
+    @PostMapping(value = "/read",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> readUser(@RequestBody Long id) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.readUser(id));
+    }
+
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<?> generate() {

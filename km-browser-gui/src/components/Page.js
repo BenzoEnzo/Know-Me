@@ -3,7 +3,6 @@ import {useState} from "react";
 import axios from "axios";
 import {validateId} from "../functions/validateId";
 import {useNavigate} from "react-router-dom";
-import {setId} from "../functions/userSlice";
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -14,7 +13,7 @@ function Page(){
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isButtonDisabled, setButtonDisabled] = useState(false);
-    const dispatch = useDispatch();
+
 
 
     const handleGenerateId = async () => {
