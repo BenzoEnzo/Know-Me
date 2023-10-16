@@ -1,7 +1,9 @@
 package pl.benzo.enzo.kmserver.user.service;
 
 
+
 import io.vavr.control.Try;
+import io.vavr.collection.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.kmserver.token.Jwt;
@@ -12,8 +14,8 @@ import pl.benzo.enzo.kmserver.util.DateOperation;
 import pl.benzo.enzo.kmserver.util.GenerateID;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -24,14 +26,16 @@ public class UserService implements UserApi {
     private final Jwt jwt;
 
 
-    public Try<Optional<ReadUserResponse>> readUser(ReadUserRequest readUserRequest){
-        return Try.of(()-> userRepository.findById(readUserRequest.id())
-                 .map(User::getName)
-                 .map(ReadUserResponse::new));
+    public Try<ReadUserResponse> readUser(ReadUserRequest readUserRequest){
+        return Try.of(()-> {
+            final String user = userRepository.findUserById(readUserRequest.id())
+                 .getName();
+            return new ReadUserResponse(user);
+        });
     }
     @Override
     public Try<List<UserDto>> getAll() {
-        return Try.of(userBaseService::readAll);
+        return Try.of(() ->userBaseService.readAll());
     }
 
     @Override

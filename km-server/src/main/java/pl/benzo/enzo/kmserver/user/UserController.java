@@ -2,15 +2,14 @@ package pl.benzo.enzo.kmserver.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.benzo.enzo.kmserver.token.Jwt;
 import pl.benzo.enzo.kmserver.user.model.dto.*;
 
-import java.util.List;
-import java.util.Optional;
+import io.vavr.collection.List;
+
 
 @RestController
 @Slf4j
@@ -52,8 +51,8 @@ public class UserController {
 
     @PostMapping(value = "/read",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Optional<ReadUserResponse>> readUser(@RequestBody ReadUserRequest readUserRequest) {
-        final Optional<ReadUserResponse> readUserResponse = userApi.readUser(readUserRequest)
+    public ResponseEntity<ReadUserResponse>readUser(@RequestBody ReadUserRequest readUserRequest) {
+        final ReadUserResponse readUserResponse = userApi.readUser(readUserRequest)
                 .onSuccess(result -> log.info("Successful"))
                 .onFailure(throwable -> log.error("Error while validate", throwable))
                 .getOrElseThrow(()-> new IllegalArgumentException("Error during validate"));

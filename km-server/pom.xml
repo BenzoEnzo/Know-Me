@@ -57,17 +57,12 @@
         <dependency>
             <groupId>io.vavr</groupId>
             <artifactId>vavr</artifactId>
-            <version>1.0.0-alpha-4</version>
+            <version>0.10.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>pl.benzo.enzo</groupId>
-            <artifactId>km-uploader</artifactId>
-            <version>0.0.13</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
