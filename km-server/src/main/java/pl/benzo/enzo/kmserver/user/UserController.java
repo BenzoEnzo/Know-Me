@@ -7,13 +7,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.benzo.enzo.kmserver.token.Jwt;
-import pl.benzo.enzo.kmserver.user.model.dto.UpdateRequest;
-import pl.benzo.enzo.kmserver.user.model.dto.CryptoDto;
-import pl.benzo.enzo.kmserver.user.model.dto.UserDto;
-import pl.benzo.enzo.kmserver.user.service.UserService;
-import reactor.core.Exceptions;
+import pl.benzo.enzo.kmserver.user.model.dto.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -30,47 +27,46 @@ public class UserController {
        final List<UserDto> usersResponse = userApi.getAll()
                .onSuccess(result -> log.info(String.valueOf(result.size())))
                .onFailure(throwable -> log.error("Error while fetching users list", throwable))
-               .getOrElseThrow(() -> new IllegalArgumentException("error"));
+               .getOrElseThrow(() -> new IllegalArgumentException("Error while fetching list"));
        return ResponseEntity.ok(usersResponse);
     }
     @PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> update(@RequestBody UpdateRequest updateRequest) {
-        userService.saveUser(updateRequest);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<UpdateUserResponse> update(@RequestBody UpdateUserRequest updateUserRequest) {
+        final UpdateUserResponse updateUserResponse = userApi.updateUser(updateUserRequest)
+                .onSuccess(result -> log.info("Successful {}", updateUserRequest.id()))
+                .onFailure(throwable -> log.error("Error while update user with id: {}", updateUserRequest.id()))
+                .getOrElseThrow(()-> new IllegalArgumentException("Error during update"));
+        return ResponseEntity.ok(updateUserResponse);
     }
 
     @PostMapping(value = "/validate", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> validate(@RequestBody CryptoDto cryptoDto) {
-        try {
-        final String crypto = cryptoDto.crypto();
-        final String token = jwt.generateToken(crypto);
-        Object validationResult = userService.validateIdUser(cryptoDto);
-        return ResponseEntity
-                .ok()
-                .header("Authorization",token)
-                .body(validationResult);
-    } catch (Exception e) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body("An error occurred: " + e.getMessage());
-        }
+    public ResponseEntity<ValidateUserResponse> validate(@RequestBody CryptoDto cryptoDto) {
+        final ValidateUserResponse validateUserResponse = userApi.validateUser(cryptoDto)
+                .onSuccess(result -> log.info("Successful"))
+                .onFailure(throwable -> log.error("Error while validate", throwable))
+                .getOrElseThrow(()-> new IllegalArgumentException("Error during validate"));
+        return ResponseEntity.ok(validateUserResponse);
     }
 
     @PostMapping(value = "/read",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> readUser(@RequestBody Long id) {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(userService.readUser(id));
+    public ResponseEntity<Optional<ReadUserResponse>> readUser(@RequestBody ReadUserRequest readUserRequest) {
+        final Optional<ReadUserResponse> readUserResponse = userApi.readUser(readUserRequest)
+                .onSuccess(result -> log.info("Successful"))
+                .onFailure(throwable -> log.error("Error while validate", throwable))
+                .getOrElseThrow(()-> new IllegalArgumentException("Error during validate"));
+        return ResponseEntity.ok(readUserResponse);
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> generate() {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(userService.generateUser());
+    public ResponseEntity<CryptoDto> generate() {
+        final CryptoDto getCryptoResponse = userApi.generateCrypto()
+                .onSuccess(result -> log.info("Successful"))
+                .onFailure(throwable -> log.error("Error while validate", throwable))
+                .getOrElseThrow(()-> new IllegalArgumentException("Error during validate"));
+        return ResponseEntity.ok(getCryptoResponse);
     }
 }

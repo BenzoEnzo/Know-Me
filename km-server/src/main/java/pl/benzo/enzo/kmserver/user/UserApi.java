@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public interface UserApi {
     Try<List<UserDto>> getAll();
-    Try<UpdateResponse> updateUser(UpdateRequest updateRequest);
+    Try<UpdateUserResponse> updateUser(UpdateUserRequest updateUserRequest);
     Try<CryptoDto> generateCrypto();
-    Try<ValidateResponse> validateUser(CryptoDto crypto);
+    Try<ValidateUserResponse> validateUser(CryptoDto crypto);
     Try<Optional<ReadUserResponse>> readUser(ReadUserRequest readUserRequest);
 }

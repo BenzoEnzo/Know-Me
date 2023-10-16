@@ -3,8 +3,6 @@ package pl.benzo.enzo.kmserver.user.service;
 
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.kmserver.token.Jwt;
 import pl.benzo.enzo.kmserver.user.UserApi;
@@ -15,7 +13,6 @@ import pl.benzo.enzo.kmserver.util.GenerateID;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -38,12 +35,12 @@ public class UserService implements UserApi {
     }
 
     @Override
-    public Try<UpdateResponse> updateUser(UpdateRequest updateRequest) {
+    public Try<UpdateUserResponse> updateUser(UpdateUserRequest updateUserRequest) {
         return Try.of(()-> {
                 final User user = User.builder()
-                        .name(updateRequest.name()).build();
+                        .name(updateUserRequest.name()).build();
                 userBaseService.update(user);
-            return new UpdateResponse(user.getCrypto());
+            return new UpdateUserResponse(user.getCrypto());
         });
     }
 
@@ -60,10 +57,10 @@ public class UserService implements UserApi {
     }
 
     @Override
-    public Try<ValidateResponse> validateUser(CryptoDto crypto) {
+    public Try<ValidateUserResponse> validateUser(CryptoDto crypto) {
         return Try.of(()-> {
             final User user = userRepository.findUserByCrypto(crypto.crypto());
-            return new ValidateResponse(user.getId(),jwt.generateToken(crypto.crypto()));
+            return new ValidateUserResponse(user.getId(),jwt.generateToken(crypto.crypto()));
         });
     }
 }
