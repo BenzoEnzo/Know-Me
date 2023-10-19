@@ -6,26 +6,42 @@ import org.springframework.stereotype.Service;
 import pl.benzo.enzo.kmserver.area.dto.AreaUserDto;
 import pl.benzo.enzo.kmserver.area.dto.QueueJoinDto;
 import pl.benzo.enzo.kmserver.area.mapper.AreaMapper;
+import pl.benzo.enzo.kmserver.chat.ChattService;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class QueueService {
     private final AreaRepossitory areaRepository;
-    public QueueJoinDto addUserToQueue(AreaUserDto areaUserDto){
+    private final ChattService chattService;
+
+    public QueueJoinDto addUserToQueue(AreaUserDto areaUserDto) {
         areaRepository.findByUser_Id(areaUserDto.userId()).ifPresent(a -> {
             a.setInQueue(true);
             areaRepository.save(a);
         });
-        return new QueueJoinDto(true, areaUserDto.keyId());
+        return new QueueJoinDto(true, areaUserDto.keyId(),areaUserDto.userId(),false);
     }
-    public List<Area> getRandomPair(QueueJoinDto queueJoinDto){
-        List<Area> usersInQueue = areaRepository.findAllByIsInQueueAndKey_Id(queueJoinDto.isInQueue(), queueJoinDto.keyId());
-        if(usersInQueue.size() < 2) return Collections.emptyList();
-        Collections.shuffle(usersInQueue);
-        return usersInQueue.subList(0,2);
+
+    public void getRandomPair() {
+        List<Area> usersInQueue = areaRepository.findAllByIsInQueueAndDuringConversation(true,false);
+        if(usersInQueue.size() < 2 ){
+            System.out.println("Za malo ludzi!");
+        }
+        Map<Long, List<Area>> groupedByRoom = usersInQueue.stream()
+                .collect(Collectors.groupingBy(area -> area.getKey().getId()));
+
+        for (Map.Entry<Long, List<Area>> entry : groupedByRoom.entrySet()) {
+            List<Area> usersInRoom = entry.getValue();
+            for (int i = 0; i < usersInRoom.size() - 1; i += 2) {
+                chattService.createChatt(usersInRoom.get(i).getId(),usersInRoom.get(i+1).getId());
+            }
+        }
+
     }
 }

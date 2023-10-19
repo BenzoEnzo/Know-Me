@@ -13,6 +13,6 @@ public interface AreaRepossitory extends JpaRepository<Area,Long> {
     Area findAreaBySessionId(String sessionId);
     void deleteAreaBySessionId(String sessionId);
     Optional<Area> findByUser_Id(Long id);
-    List<Area> findAllByIsInQueueAndKey_Id(boolean isInQueue,Long keyId);
+    List<Area> findAllByIsInQueueAndDuringConversation(boolean isInQueue,boolean duringConversation);
     Set<Area> findAllByKey_Id(Long id);
 }
