@@ -40,8 +40,8 @@ const Userable = () => {
 
     const fetchUserName = async () => {
         try {
-            const response = await axios.post('/api/user/read', userId);
-            setName(response.data);
+            const response = await axios.post('/api/user/read', {id: userId});
+            setName(response.data.name)
         } catch (error) {
             console.error('Error fetching keys:', error);
         }
@@ -90,7 +90,7 @@ const Userable = () => {
 
     useEffect(() => {
         fetchUserName();
-    }, [name]);
+    }, []);
 
     const handleEnterClick = async () => {
         const user = {

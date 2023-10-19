@@ -25,7 +25,5 @@ public class User {
     private LocalDateTime deleteAt;
     private Gender gender;
     private String photoId;
-    public User() {
-
-    }
+    public User(){}
 }

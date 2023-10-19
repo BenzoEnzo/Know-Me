@@ -1,4 +1,6 @@
 package pl.benzo.enzo.kmserver.user.model.dto;
 
-public record UpdateUserResponse(String crypto) {
+import pl.benzo.enzo.kmserver.user.model.Gender;
+
+public record UpdateUserResponse(Long id, String name, String describe, Gender gender) {
 }
