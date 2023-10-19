@@ -8,15 +8,21 @@ const Userable = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadedImageURL, setUploadedImageURL] = useState('');
     const [name, setName] = useState('');
+    const [gender,setGender] = useState('')
     const [newKey, setNewKey] = useState('');
     const [keys, setKeys] = useState([]);
     const [areaSize, setAreas] = useState('');
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("id");
+    const [isEditing, setIsEditing] = useState(false);
+    const [description, setDescription] = useState('Twój opis...');
 
     const onFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     };
+
+
+
 
     const onUpload = async () => {
         const formData = new FormData();
@@ -41,7 +47,10 @@ const Userable = () => {
     const fetchUserName = async () => {
         try {
             const response = await axios.post('/api/user/read', {id: userId});
-            setName(response.data.name)
+            setName(response.data.name);
+            setDescription(response.data.describe);
+            setGender(response.data.gender);
+            console.log(response);
         } catch (error) {
             console.error('Error fetching keys:', error);
         }
@@ -72,25 +81,38 @@ const Userable = () => {
     const payload = {
         id: userId,
         name: name,
-        describe: "",
-        gender: "K"
+        describe: description,
+        gender: gender
     }
     const updateUser = async () => {
         try {
             const response = await axios.post('/api/user/update', payload)
             if (response.data) {
                 setName([name])
+
             } } catch (error) {
             console.error('Error adding key:', error);
         }
     };
+
+  const updateGender = async (event) => {
+      try {
+          payload.gender = event.target.value;
+          const response = await axios.post('/api/user/update', payload)
+          if(response.data){
+              setGender([gender])
+          } }catch (error)
+          {
+              console.error('Error adding key:', error);
+          }
+      };
     useEffect(() => {
         fetchAllKeys();
     }, [newKey]);
 
     useEffect(() => {
         fetchUserName();
-    }, []);
+    }, [gender]);
 
     const handleEnterClick = async () => {
         const user = {
@@ -137,7 +159,21 @@ const Userable = () => {
                     )}
 
                 </div>
+                <div className="gender-container">
+                    <div className="gender-selection">
+                        <div className="gender-option">
+                            Kobieta
+                            <input type="radio" onChange={updateGender} name={gender}  value="K" checked={gender === 'K'} />
+                        </div>
+                        <div className="gender-option">
+                            Mężczyzna
+                            <input type="radio" onChange={updateGender} name={gender} value="M" checked={gender === 'M'} />
+                        </div>
+                    </div>
+
+                </div>
                 <div className="name-container">
+
                     <div className="sub-container">
                         <input
                             value={name}
@@ -146,9 +182,33 @@ const Userable = () => {
                         />
                         <button onClick={updateUser}>chng name</button>
                     </div>
+
                 </div>
-                <div className="sub-container description-container">
-                    <h1>MIEJSCE NA OPIS</h1>
+                <div className={`sub-container description-container ${isEditing ? 'edit-mode' : ''}`}>
+                    <div className="description-container-in">
+                        <div
+                            className="description-text"
+                            onClick={() => setIsEditing(true)}
+                        >
+                            {description}
+                        </div>
+
+                        <textarea
+                            className="edit-description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        ></textarea>
+
+                        <button
+                            className="edit-button mini-button"
+                            onClick={() => {
+                                setIsEditing(false);
+                                updateUser();
+                            }}
+                        >
+                            Zapisz
+                        </button>
+                    </div>
                 </div>
             </div>
             <div className="right-container">

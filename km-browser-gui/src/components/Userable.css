@@ -26,12 +26,17 @@ input {
 }
 
 .sub-container {
-    flex: 0.4;
+
 }
 
 .name-container {
-    flex: 0.2;
+
 }
+
+.gender-container {
+
+}
+
 
 .image-container {
 
@@ -45,6 +50,69 @@ input {
 }
 
 .description-container {
+    flex: 0.4;
+}
+
+.description-container-in {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.description-text, .edit-description {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.description-text {
+    padding-left: 0;
+    padding-right: 0;
+    color: #dcdcdc;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-description {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: #3e3e4f;
+    color: #dcdcdc;
+    border: none;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    resize: none;
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+}
+
+.edit-description:focus {
+    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.3);
+    background-color: #4e4e5f;
+}
+
+.edit-button {
+    display: none;
+    padding-bottom: 10%;
+    padding-right: 10%;
+    top: 10px;
+    right: 10px;
+}
+
+.description-container.edit-mode .description-text {
+    display: none;
+}
+
+.description-container.edit-mode .edit-description {
+    display: block;
+}
+
+.description-container.edit-mode .edit-button {
+    display: block;
 }
 
 .right-container {
@@ -52,6 +120,23 @@ input {
     background-color: #2a2a3f;
     flex-direction: column;
     display: flex;
+}
+
+.gender-selection {
+    display: flex;
+    padding-left: 30%;
+    gap: 20px;
+}
+
+.gender-option {
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.gender-option input[type="radio"]:checked + span {
+    color: darkred;
 }
 
 @keyframes neonPulse {

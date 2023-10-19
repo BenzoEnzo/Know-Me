@@ -32,7 +32,7 @@ public class UserService implements UserApi {
         return Try.of(()-> {
             final User user = userRepository.findById(readUserRequest.id()).orElseGet(null);
 
-            return new ReadUserResponse(user.getName());
+            return new ReadUserResponse(user.getName(), user.getDescribe(),user.getGender());
         });
     }
     @Override
