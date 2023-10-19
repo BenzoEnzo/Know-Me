@@ -14,10 +14,10 @@ import java.util.Set;
 public class ConnectionAreaService {
     private final AreaService areaService;
 
-    public Connect rouletteArea(Long keyId){
-        final Set<Long> usersOnArea = areaService.getAllUserIdsFromArea(keyId);
-        final RandomConnection randomConnection = new RandomConnection(usersOnArea);
-        return new Connect(randomConnection.pickTwoUniqueIds().getPerson1(), randomConnection.pickTwoUniqueIds().getPerson2());
-    }
+//    public Connect rouletteArea(Long keyId){
+//       final Set<Long> usersOnArea = areaService.getAllUserIdsFromArea(keyId);
+//        final RandomConnection randomConnection = new RandomConnection(usersOnArea);
+//        return new Connect(randomConnection.pickTwoUniqueIds().getPerson1(), randomConnection.pickTwoUniqueIds().getPerson2());
+//    }
 
 }

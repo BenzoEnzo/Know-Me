@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import pl.benzo.enzo.kmserver.key.Key;
+import pl.benzo.enzo.kmserver.user.model.Gender;
 import pl.benzo.enzo.kmserver.user.model.User;
 
 @Entity
@@ -30,9 +31,22 @@ public class Area {
 
     private String sessionId;
 
+    private boolean joined;
+    private boolean isInQueue;
+    private Gender partnerType;
+    private boolean duringConversation;
+
     public Area(User user, Key key, String sessionId) {
         this.user = user;
         this.key = key;
         this.sessionId = sessionId;
+    }
+
+    public Area(Long id, User user, Key key, boolean isInQueue, Gender partnerType){
+        this.id = id;
+        this.user = user;
+        this.key = key;
+        this.isInQueue = isInQueue;
+        this.partnerType = partnerType;
     }
 }

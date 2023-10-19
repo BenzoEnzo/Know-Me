@@ -11,5 +11,7 @@ import java.util.Set;
 public interface AreaRepossitory extends JpaRepository<Area,Long> {
     Area findAreaBySessionId(String sessionId);
     void deleteAreaBySessionId(String sessionId);
+    Area findAreaByUserId(Long id);
+    List<Area> findAllByIsInQueueAndKey_Id(boolean isInQueue,Long keyId);
     Set<Area> findAllByKey_Id(Long id);
 }

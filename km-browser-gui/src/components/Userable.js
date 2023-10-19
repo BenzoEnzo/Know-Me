@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import './Userable.css';
+import {useNavigate} from "react-router-dom";
+import Roullette from "./Roullette";
 
 
 
@@ -11,17 +13,31 @@ const Userable = () => {
     const [gender,setGender] = useState('')
     const [newKey, setNewKey] = useState('');
     const [keys, setKeys] = useState([]);
+    const [keyId, setKeyId] = useState([]);
     const [areaSize, setAreas] = useState('');
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("id");
+    const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
     const [description, setDescription] = useState('Twój opis...');
+    const [areasResp, setAreasResp] = useState(null);
+
 
     const onFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     };
 
+    const payload = {
+        id: userId,
+        name: name,
+        describe: description,
+        gender: gender
+    }
 
+    const join = {
+        joinerId: userId,
+        keyId: keyId
+    }
 
 
     const onUpload = async () => {
@@ -78,12 +94,7 @@ const Userable = () => {
             console.error('Error adding key:', error);
         }
     };
-    const payload = {
-        id: userId,
-        name: name,
-        describe: description,
-        gender: gender
-    }
+
     const updateUser = async () => {
         try {
             const response = await axios.post('/api/user/update', payload)
@@ -106,6 +117,8 @@ const Userable = () => {
               console.error('Error adding key:', error);
           }
       };
+
+
     useEffect(() => {
         fetchAllKeys();
     }, [newKey]);
@@ -114,13 +127,13 @@ const Userable = () => {
         fetchUserName();
     }, [gender]);
 
-    const handleEnterClick = async () => {
+    const handleEnterClick = async (event) => {
         const user = {
             id: userId
         };
 
         const key = {
-            id: 2
+            id: event.target.value
         };
 
         const requestPayload = {
@@ -137,7 +150,8 @@ const Userable = () => {
                 });
 
             if (response.status === 201) {
-                console.log("Area created successfully");
+                console.log("Successfully joined area");
+                navigate('/roulette', { state: {data: response.data}});
             }
         } catch (error) {
             console.error("Error creating the area:", error);
@@ -229,7 +243,7 @@ const Userable = () => {
                             <div className="table-row" key={keyObj.id}>
                                 <span>{keyParsed.name}</span>
                                 <span>{numOfPeople}</span>
-                                <button className="mini-button" onClick={handleEnterClick}>X</button>
+                                <button className="mini-button" onClick={handleEnterClick} value={keyObj.id}>X</button>
                             </div>
                         );
                     })}

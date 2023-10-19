@@ -1,0 +1,74 @@
+.roulette {
+    flex:1;
+    flex-direction: column;
+}
+
+.roulette-title {
+    flex: 0.3;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 3px solid #8b76a9;
+    color: #dcdcdc;
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    text-shadow: 0 0 5px #b0c4de, 0 0 10px #b0c4de, 0 0 15px #dcdcdc, 0 0 20px #dcdcdc, 0 0 25px #b0c4de, 0 0 30px #dcdcdc, 0 0 35px #dcdcdc;
+    animation: neonPulse 1.5s infinite alternate;
+}
+
+.play-container {
+    flex: 0.2;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.persona-lista {
+    flex: 0.5;
+    margin: 20px;
+    overflow: auto;
+}
+
+.table-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #8a79a6;
+}
+
+
+.gender-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.gender-container label {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.gender-container input[type="radio"] {
+    margin-right: 5px;
+}
+
+.play-button {
+    width: 15%;
+    cursor: pointer;
+    background-color: #8a79a6;
+    color: #FFF;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.play-button:hover {
+    background-color: #8a59a6;
+}
+
+.queue-text {
+    text-align: left;
+    font-size: 16px;
+    color: #777;
+}
