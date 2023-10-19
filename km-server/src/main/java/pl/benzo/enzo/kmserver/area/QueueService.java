@@ -16,7 +16,7 @@ import java.util.Set;
 public class QueueService {
     private final AreaRepossitory areaRepository;
     public QueueJoinDto addUserToQueue(AreaUserDto areaUserDto){
-        areaRepository.findById(areaUserDto.id()).ifPresent(a -> {
+        areaRepository.findByUser_Id(areaUserDto.userId()).ifPresent(a -> {
             a.setInQueue(true);
             areaRepository.save(a);
         });

@@ -15,7 +15,7 @@ const Userable = () => {
     const [keys, setKeys] = useState([]);
     const [keyId, setKeyId] = useState([]);
     const [areaSize, setAreas] = useState('');
-    const token = localStorage.getItem("token");
+    const areaId = localStorage.getItem("areaId");
     const userId = localStorage.getItem("id");
     const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);

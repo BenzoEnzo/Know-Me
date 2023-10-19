@@ -8,7 +8,7 @@ import pl.benzo.enzo.kmserver.area.dto.AreaUserDto;
 public class AreaMapper {
 
     public AreaUserDto mapToAreaUserDto(Area area){
-        return new AreaUserDto(area.getId(),area.getUser().getName(),area.getKey().getId(),area.isJoined(),area.isDuringConversation(),false);
+        return new AreaUserDto(area.getId(),area.getUser().getId(),area.getUser().getName(),area.getKey().getId(),area.isJoined(),area.isDuringConversation(),false);
     }
 
     public Area mapToArea(AreaUserDto areaUserDto){
