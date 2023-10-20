@@ -2,10 +2,6 @@ package pl.benzo.enzo.kmserver.area;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.benzo.enzo.kmserver.area.dto.JoinAreaRequest;
-import pl.benzo.enzo.kmserver.area.dto.JoinAreaResponse;
-import pl.benzo.enzo.kmserver.connect.Connect;
-import pl.benzo.enzo.kmserver.connect.RandomConnection;
 
 import java.util.Set;
 

@@ -11,7 +11,7 @@ export function validateId(crypto) {
     })
         .then(response => response.json())
         .then(data => {
-            if (data && data.sessionId) {
+            if (data) {
                 localStorage.setItem("id",data.id);
                 localStorage.setItem("token", data.sessionId);
                 if(data.photoId !== null){

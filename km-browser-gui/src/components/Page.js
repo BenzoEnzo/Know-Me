@@ -1,9 +1,9 @@
 import './Page.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import {validateId} from "../functions/validateId";
 import {useNavigate} from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+
 
 
 
@@ -13,8 +13,13 @@ function Page(){
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isButtonDisabled, setButtonDisabled] = useState(false);
+    const sessionId = localStorage.getItem("sessionId");
 
-
+    useEffect(() => {
+        if(sessionId !== null){
+            navigate("/user");
+        }
+    });
 
     const handleGenerateId = async () => {
         try {
@@ -34,6 +39,7 @@ function Page(){
     const handleValidate = async () => {
         validateId(crypto)
             .then(response => {
+                console.log(response);
                 navigate("/user")
         }).catch(error => {
             console.error("Wystąpił błąd podczas validacji id", error.message);

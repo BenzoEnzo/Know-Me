@@ -38,7 +38,7 @@ private Key getSignKey() {
         return Keys.hmacShaKeyFor(keyBytes);
         }
 
-public String extractUsername(String token) {
+public String extractCrypto(String token) {
         return extractClaim(token, Claims::getSubject);
         }
 

@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserDetailsService {
     private final UserRepository userRepository;
-    public UserDetails loadUserByUsername(String crypto) throws UsernameNotFoundException {
+    public UserDetails loadUserByCrypto(String crypto) throws UsernameNotFoundException {
 
         Optional<User> userDetail = Optional.ofNullable(userRepository.findUserByCrypto(crypto));
 

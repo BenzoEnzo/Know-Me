@@ -33,7 +33,7 @@ public class SecurityConfig {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
         httpSecurity.csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(
                 mvcMatcherBuilder.pattern("/api/**"), PathRequest.toH2Console()));
-        httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
         httpSecurity.authorizeHttpRequests(auth ->
                 auth
                         .requestMatchers(mvcMatcherBuilder.pattern("/api/**")).permitAll()

@@ -11,11 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.benzo.enzo.kmserver.token.Jwt;
 import pl.benzo.enzo.kmserver.user.model.User;
 import pl.benzo.enzo.kmserver.user.model.dto.*;
-
-import io.vavr.collection.List;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 
 @RestController
@@ -25,7 +23,7 @@ import java.io.IOException;
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     private final UserApi userApi;
-    private final Jwt jwt;
+
 
     @GetMapping()
     @ResponseBody

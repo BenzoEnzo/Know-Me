@@ -83,8 +83,10 @@ public class UserService implements UserApi {
     public Try<ValidateUserResponse> validateUser(CryptoDto crypto) {
         return Try.of(()-> {
             final User user = userRepository.findUserByCrypto(crypto.crypto());
-
-            return new ValidateUserResponse(user.getId(),jwt.generateToken(crypto.crypto()),user.getPhotoId());
+            if(user == null){
+                return new ValidateUserResponse(null,null,null,false);
+            }
+            return new ValidateUserResponse(user.getId(),jwt.generateToken(crypto.crypto()),user.getPhotoId(),true);
         });
     }
 
