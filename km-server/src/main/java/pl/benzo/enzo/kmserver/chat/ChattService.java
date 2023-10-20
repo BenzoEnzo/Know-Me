@@ -2,6 +2,7 @@ package pl.benzo.enzo.kmserver.chat;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.benzo.enzo.kmserver.area.dto.StartChattingDto;
 
 import java.util.List;
 
@@ -20,8 +21,11 @@ public class ChattService {
         chattRepository.save(chatt);
     }
 
-    public List<Chatt> getAll(){
-        return chattRepository.findAll();
+    public StartChattingDto getSession(Long id){
+        final Chatt chatt = chattRepository.findByTalkerId1OrTalkerId2(id,id).orElse(null);
+        if(chatt != null){
+            return new StartChattingDto(chatt.getSessionId());
+        } else return new StartChattingDto("0");
     }
 
 }

@@ -10,6 +10,7 @@ import pl.benzo.enzo.kmserver.user.model.User;
 @CrossOrigin(origins = "http://localhost:3000")
 @Builder
 @Data
+@Getter
 @AllArgsConstructor
 public class Chatt {
     @Id

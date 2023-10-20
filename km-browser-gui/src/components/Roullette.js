@@ -3,8 +3,7 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import SockJS from 'sockjs-client';
-import {Stomp} from '@stomp/stompjs';
+
 
 const Roullette = () => {
     const location = useLocation();
@@ -13,7 +12,8 @@ const Roullette = () => {
     console.log(data);
     const userId = localStorage.getItem("id");
     const [timer, setTimer] = useState(0);
-    localStorage.setItem("sessionChatId", "435");
+    const [sessionChattD, setSessionChattD] = useState("0");
+
 
 
     const [isInQueue, setIsInQueue] = useState(false);
@@ -36,10 +36,30 @@ const Roullette = () => {
             console.error("Error joining the queue:", error);
         }
     }
+    const getSession = async () => {
+        try {
+            const response = await axios.post('api/chatt/start', {id: userId})
+            if(response.data){
+                console.log(response.data);
+                setSessionChattD(response.data.sessionId);
+
+            }}catch (error) {
+                console.error("Erorrito", error);
+            }
+        }
+
+    const joinChat =   async () => {
+        if(sessionChattD !== 0){
+        localStorage.setItem("sessionChatId", sessionChattD);
+        navigate("/talking-room");
+        }
+    }
+
     useEffect(() => {
         let interval;
         if (isInQueue) {
             interval = setInterval(() => {
+                getSession();
                 setTimer(prevTime => prevTime + 1);
             }, 1000);
         }
@@ -77,8 +97,8 @@ const Roullette = () => {
                     <button className="play-button" onClick={joinQueue}>Losuj</button>
                 </div>
                     )}
-                {isInQueue && (<center>
-                    <button className="play-button" onClick={navigate("/talking-room")}>Rozmawiaj</button>
+                {isInQueue && (sessionChattD !== "undefined" && sessionChattD !== "0")  && (<center>
+                    <button className="play-button" onClick={joinChat}>Rozmawiaj</button>
                     </center>
                 )
                 }

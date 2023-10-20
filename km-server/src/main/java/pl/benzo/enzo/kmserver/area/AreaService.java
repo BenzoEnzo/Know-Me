@@ -34,6 +34,10 @@ public class AreaService {
         return areaRepossitory.findAll()
                 .stream().map(Area::getSessionId).collect(Collectors.toList());
     }
+
+    public void update(Area area){
+        areaRepossitory.save(area);
+    }
     public Set<AreaUserDto> getAllUserAreasUser(Long keyId){
         return areaRepossitory.findAllByKey_Id(keyId)
                 .stream().map(areaMapper::mapToAreaUserDto).

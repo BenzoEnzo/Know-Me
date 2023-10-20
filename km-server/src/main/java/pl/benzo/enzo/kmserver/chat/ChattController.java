@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.benzo.enzo.kmserver.area.CreateAreaRequest;
+import pl.benzo.enzo.kmserver.area.dto.StartDtoRequest;
 
 @RestController
 @Slf4j
@@ -16,11 +17,12 @@ import pl.benzo.enzo.kmserver.area.CreateAreaRequest;
 @CrossOrigin(origins = "http://localhost:3000")
 public class ChattController {
     private final ChattService chattService;
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> create() {
+
+    @PostMapping(value = "/start",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> startChatting(@RequestBody StartDtoRequest startDtoRequest) {
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(chattService.getAll());
+                .status(HttpStatus.OK)
+                .body(chattService.getSession(startDtoRequest.id()));
     }
 
 }

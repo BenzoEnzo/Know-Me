@@ -7,6 +7,7 @@ import pl.benzo.enzo.kmserver.area.dto.AreaUserDto;
 import pl.benzo.enzo.kmserver.area.dto.QueueJoinDto;
 import pl.benzo.enzo.kmserver.area.mapper.AreaMapper;
 import pl.benzo.enzo.kmserver.chat.ChattService;
+import pl.benzo.enzo.kmserver.user.model.User;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class QueueService {
     private final AreaRepossitory areaRepository;
     private final ChattService chattService;
+    private final AreaService areaService;
 
     public QueueJoinDto addUserToQueue(AreaUserDto areaUserDto) {
         areaRepository.findByUser_Id(areaUserDto.userId()).ifPresent(a -> {
@@ -30,23 +32,30 @@ public class QueueService {
 
     public void getRandomPair() {
         List<Area> usersInQueue = areaRepository.findAllByIsInQueueAndDuringConversation(true,false);
-        if(usersInQueue.size() < 2 ){
-            System.out.println("Za malo ludzi!");
-        }
+
         Map<Long, List<Area>> groupedByRoom = usersInQueue.stream()
                 .collect(Collectors.groupingBy(area -> area.getKey().getId()));
 
+        if(groupedByRoom.size() < 2){
+            System.out.println("Za malo ludzi!");
+        }
+
         for (Map.Entry<Long, List<Area>> entry : groupedByRoom.entrySet()) {
-            List<Area> usersInRoom = entry.getValue();
+            List<Area> usersInRoom = entry.getValue()
+                    .stream()
+                    .filter(area -> !area.isDuringConversation())
+                    .toList();
+
             for (int i = 0; i < usersInRoom.size() - 1; i += 2) {
-                if(!usersInRoom.get(i).isDuringConversation() && !usersInRoom.get(i+1).isDuringConversation()) {
-                    chattService.createChatt(usersInRoom.get(i).getId(), usersInRoom.get(i + 1).getId(), String.valueOf(i + (i + 2) + usersInRoom.get(i).getId()));
-                    usersInRoom.get(i).setDuringConversation(true);
-                    usersInRoom.get(i + 1).setDuringConversation(true);
-                    System.out.println("Dodano chatt");
-                } else {
-                    System.out.println("Uzytkownik zajety");
-                }
+                Area talkerId1 = usersInRoom.get(i);
+                Area talkerId2 = usersInRoom.get(i + 1);
+                String sessionId = String.valueOf(talkerId1.getId()*23 + talkerId2.getId()*54);
+                    chattService.createChatt(talkerId1.getId(), talkerId2.getId(), sessionId);
+                    talkerId1.setDuringConversation(true);
+                    talkerId2.setDuringConversation(true);
+                    areaService.update(talkerId1);
+                    areaService.update(talkerId2);
+                    System.out.println("Dodano chatt jego sessID: " + sessionId);
             }
         }
 
