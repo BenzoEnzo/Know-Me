@@ -86,7 +86,7 @@ public class UserService implements UserApi {
             if(user == null){
                 return new ValidateUserResponse(null,null,null,false);
             }
-            return new ValidateUserResponse(user.getId(),jwt.generateToken(crypto.crypto()),user.getPhotoId(),true);
+            return new ValidateUserResponse(user.getId(),jwt.generateToken(crypto),user.getPhotoId(),true);
         });
     }
 

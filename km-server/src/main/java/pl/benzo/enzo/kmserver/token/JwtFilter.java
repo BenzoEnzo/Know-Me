@@ -13,9 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import pl.benzo.enzo.kmserver.user.service.UserDetailsService;
-import pl.benzo.enzo.kmserver.user.service.UserService;
-import pl.benzo.enzo.kmserver.user.service.UserRepository;
+import pl.benzo.enzo.kmserver.user.service.ImplUserDetailsService;
 
 import java.util.List;
 
@@ -27,11 +25,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
 
     private final Jwt jwt;
-    private final UserDetailsService userDetailsService;
+    private final ImplUserDetailsService implUserDetailsService;
 
-    public JwtFilter(Jwt jwt, UserDetailsService userDetailsService) {
+    public JwtFilter(Jwt jwt, ImplUserDetailsService implUserDetailsService) {
         this.jwt = jwt;
-        this.userDetailsService = userDetailsService;
+        this.implUserDetailsService = implUserDetailsService;
     }
 
     @Override
@@ -51,7 +49,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        UserDetails userDetails = userDetailsService.loadUserByCrypto(jwt.extractCrypto(token));
+        UserDetails userDetails = implUserDetailsService.loadUserByCrypto(jwt.extractToken(token));
 
         UsernamePasswordAuthenticationToken
                 authentication = new UsernamePasswordAuthenticationToken(

@@ -8,6 +8,8 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import pl.benzo.enzo.kmserver.user.model.User;
+import pl.benzo.enzo.kmserver.user.model.dto.CryptoDto;
 
 
 import java.security.Key;
@@ -19,15 +21,15 @@ import java.util.function.Function;
 @Component
 public class Jwt{
 public static final String SECRET = "BENZOENZO98271282992109882773828993282211111111";
-public String generateToken(String userName) {
+public String generateToken(CryptoDto cryptoDto) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userName);
+        return createToken(claims, cryptoDto.crypto());
         }
 
-private String createToken(Map<String, Object> claims, String userName) {
+private String createToken(Map<String, Object> claims, String crypto) {
         return Jwts.builder()
         .setClaims(claims)
-        .setSubject(userName)
+        .setSubject(crypto)
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
         .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
@@ -38,7 +40,7 @@ private Key getSignKey() {
         return Keys.hmacShaKeyFor(keyBytes);
         }
 
-public String extractCrypto(String token) {
+public String extractToken(String token) {
         return extractClaim(token, Claims::getSubject);
         }
 

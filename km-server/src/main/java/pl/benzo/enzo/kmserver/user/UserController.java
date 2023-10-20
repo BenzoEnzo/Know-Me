@@ -1,11 +1,18 @@
 package pl.benzo.enzo.kmserver.user;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.benzo.enzo.kmserver.token.Jwt;
@@ -47,8 +54,9 @@ public class UserController {
         final ValidateUserResponse validateUserResponse = userApi.validateUser(cryptoDto)
                 .onSuccess(result -> log.info("Successful"))
                 .onFailure(throwable -> log.error("Error while validate", throwable))
-                .getOrElseThrow(()-> new IllegalArgumentException("Error during validate"));
-        return ResponseEntity.ok(validateUserResponse);
+                .getOrElseThrow(()-> new BadCredentialsException("Invalid credentials"));
+        return ResponseEntity.ok()
+                .body(validateUserResponse);
     }
 
     @PostMapping(value = "/read",produces = MediaType.APPLICATION_JSON_VALUE)

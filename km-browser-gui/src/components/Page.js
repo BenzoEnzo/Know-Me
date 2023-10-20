@@ -13,13 +13,6 @@ function Page(){
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isButtonDisabled, setButtonDisabled] = useState(false);
-    const sessionId = localStorage.getItem("sessionId");
-
-    useEffect(() => {
-        if(sessionId !== null){
-            navigate("/user");
-        }
-    });
 
     const handleGenerateId = async () => {
         try {
