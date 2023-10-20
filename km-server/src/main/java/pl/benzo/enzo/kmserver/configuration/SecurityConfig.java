@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
+import pl.benzo.enzo.kmserver.token.CryptoAuthenticationProvider;
 import pl.benzo.enzo.kmserver.token.JwtFilter;
 import pl.benzo.enzo.kmserver.user.service.ImplUserDetailsService;
 
@@ -25,11 +27,12 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
-    private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(JwtFilter jwtFilter, UserDetailsService userDetailsService) {
+    private final CryptoAuthenticationProvider cryptoAuthenticationProvider;
+
+    public SecurityConfig(JwtFilter jwtFilter, CryptoAuthenticationProvider cryptoAuthenticationProvider) {
         this.jwtFilter = jwtFilter;
-        this.userDetailsService = userDetailsService;
+        this.cryptoAuthenticationProvider = cryptoAuthenticationProvider;
     }
 
     @Bean
@@ -50,18 +53,8 @@ public class SecurityConfig {
         return httpSecurity.build();
     }
 
-
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        return authenticationProvider;
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(cryptoAuthenticationProvider);
     }
-
-    @Bean
-    public AuthenticationManager authenticationManager() {
-        return new ProviderManager(List.of(authenticationProvider()));
-    }
-
 
 }

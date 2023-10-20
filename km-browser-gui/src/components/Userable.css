@@ -14,6 +14,7 @@
     display: flex;
     border-right: 3px solid #8b76a9;
     flex-direction: column;
+
 }
 
 input {
@@ -24,6 +25,8 @@ input {
     box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
+
+
 
 .sub-container {
 
@@ -93,6 +96,50 @@ input {
 .edit-description:focus {
     box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.3);
     background-color: #4e4e5f;
+}
+
+.mode {
+    display: flex;
+    gap: 10px;
+}
+
+.mode-button {
+    padding: 10px 20px;
+    background-color: #3e3e4f;
+    color: #dcdcdc;
+    border: 1px solid #8a79a6;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+}
+
+.mode-button:hover {
+    background-color: #8b76a9;
+}
+
+.mode-button:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: skewX(-45deg);
+    transition: all 0.6s ease;
+}
+
+.mode-button:hover:after {
+    left: 200%;
+}
+
+.edit-mode-button.active,
+.preview-mode-button.active {
+    background-color: #8b76a9;
+    color: #2e2e3f;
 }
 
 .edit-button {
@@ -213,6 +260,50 @@ input {
     margin: 3px;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+.mode-button.active {
+    background-color: #6b59a0;
+    color: white;
+}
+.preview-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Rozmieszcza elementy na początku i na końcu kontenera */
+    height: 100vh; /* Wysokość kontenera. Możesz dostosować według potrzeb */
+    align-items: center;
+    gap: 30px;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: #6b59a0;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+
+}
+
+.image-preview img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid #4a3d7f;
+    object-fit: cover;
+    z-index: 2; /* Żeby zdjęcie było nad gradientem */
+}
+
+.gradient-divider {
+    width: 90%; /* Długość gradientu. Możesz dostosować według potrzeb */
+    height: 2px; /* Wysokość gradientu. Możesz dostosować według potrzeb */
+    background: linear-gradient(90deg, #6b59a0, #d1c4e9, #6b59a0); /* Gradient */
+    margin: 20px 0; /* Odstępy od zdjęcia i opisu */
+}
+
+.description-preview {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+    width: 100%;
+    text-align: center;
+    color: #d1c4e9;
+    overflow-wrap: break-word;
 }
 
 

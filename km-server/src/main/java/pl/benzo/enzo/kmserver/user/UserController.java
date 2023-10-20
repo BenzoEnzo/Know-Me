@@ -45,7 +45,8 @@ public class UserController {
                 .onSuccess(result -> log.info("Successful {}", updateUserRequest.id()))
                 .onFailure(throwable -> log.error("Error while update user with id: {}", updateUserRequest.id()))
                 .getOrElseThrow(()-> new IllegalArgumentException("Error during update"));
-        return ResponseEntity.ok(updateUserResponse);
+        return ResponseEntity.ok()
+                .body(updateUserResponse);
     }
 
     @PostMapping(value = "/validate", produces = MediaType.APPLICATION_JSON_VALUE)

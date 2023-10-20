@@ -23,6 +23,15 @@ const Userable = () => {
     const [areasResp, setAreasResp] = useState(null);
     const [imageSrc, setImageSrc] = useState(null);
     const fileName = localStorage.getItem("photoId");
+    const [mode, setMode] = useState('edit');
+
+    const switchToEditMode = () => {
+        setMode('edit');
+    }
+
+    const switchToPreviewMode = () => {
+        setMode('preview');
+    }
 
     useEffect(() => {
         // Pobieranie zdjęcia podczas ładowania komponentu
@@ -179,62 +188,90 @@ const Userable = () => {
     return (
         <div className="extended-panel">
             <div className="left-container">
-                <div className="sub-container image-container">
-                    {imageSrc && <img src={imageSrc} alt="Uploaded" />}
+                <div className="mode">
+                    <button className={`mode-button edit-mode-button ${mode === 'edit' ? 'active' : ''}`} onClick={switchToEditMode}>Edycja</button>
+                    <button className={`mode-button preview-mode-button ${mode === 'preview' ? 'active' : ''}`} onClick={switchToPreviewMode}>Podgląd</button>
+                </div>
+
+                {mode === 'edit' && (
+                    <>
+                        <div className="name-container">
+                            <input
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="Dodaj imie"
+                            />
+                            <button onClick={updateUser}>chng name</button>
+                        </div>
+                        <div className="image-container">
+                            {imageSrc && <img src={imageSrc} alt="Uploaded" />}
                             <input type="file" onChange={onFileChange} />
                             <button onClick={onUpload}>Prześlij</button>
-                </div>
-                <div className="gender-container">
-                    <div className="gender-selection">
-                        <div className="gender-option">
-                            Kobieta
-                            <input type="radio" onChange={updateGender} name={gender}  value="K" checked={gender === 'K'} />
                         </div>
-                        <div className="gender-option">
-                            Mężczyzna
-                            <input type="radio" onChange={updateGender} name={gender} value="M" checked={gender === 'M'} />
+                        <div className="gender-container">
+                            <div className="gender-selection">
+                                <div className="gender-option">
+                                    Kobieta
+                                    <input type="radio" onChange={updateGender} name={gender} value="K" checked={gender === 'K'} />
+                                </div>
+                                <div className="gender-option">
+                                    Mężczyzna
+                                    <input type="radio" onChange={updateGender} name={gender} value="M" checked={gender === 'M'} />
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                </div>
-                <div className="name-container">
+                        <div className={`sub-container description-container ${isEditing ? 'edit-mode' : ''}`}>
+                            <div className="description-container-in">
+                                {isEditing ? (
+                                    <>
+                                    <textarea
+                                        className="edit-description"
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                    ></textarea>
+                                        <button
+                                            className="edit-button mini-button"
+                                            onClick={() => {
+                                                setIsEditing(false);
+                                                updateUser();
+                                            }}
+                                        >
+                                            Zapisz
+                                        </button>
+                                    </>
+                                ) : (
+                                    <div
+                                        className="description-text"
+                                        onClick={() => setIsEditing(true)}
+                                    >
+                                        {description}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </>
+                )}
 
-                    <div className="sub-container">
-                        <input
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="Dodaj imie"
-                        />
-                        <button onClick={updateUser}>chng name</button>
-                    </div>
+                {mode === 'preview' && (
+                    <div className="preview-container">
+                        <div className="image-preview">
+                            {imageSrc && <img src={imageSrc} alt="User's uploaded image" />}
+                        </div>
+                        <div className="gradient-divider"></div>
+                        <div className="name-preview">
+                            {name}
+                        </div>
 
-                </div>
-                <div className={`sub-container description-container ${isEditing ? 'edit-mode' : ''}`}>
-                    <div className="description-container-in">
-                        <div
-                            className="description-text"
-                            onClick={() => setIsEditing(true)}
-                        >
+                        <div className="gender-preview">
+                            {gender === 'K' ? 'Kobieta' : 'Mężczyzna'}
+                        </div>
+
+                        <div className="description-preview">
                             {description}
                         </div>
-
-                        <textarea
-                            className="edit-description"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        ></textarea>
-
-                        <button
-                            className="edit-button mini-button"
-                            onClick={() => {
-                                setIsEditing(false);
-                                updateUser();
-                            }}
-                        >
-                            Zapisz
-                        </button>
                     </div>
-                </div>
+                )}
             </div>
             <div className="right-container">
                 <div className="sub-container keys-title">
