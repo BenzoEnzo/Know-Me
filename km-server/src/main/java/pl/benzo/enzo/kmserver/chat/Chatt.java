@@ -21,4 +21,7 @@ public class Chatt {
     private boolean talker2Accepted;
     private boolean inConversation;
 
+    public Chatt() {
+
+    }
 }

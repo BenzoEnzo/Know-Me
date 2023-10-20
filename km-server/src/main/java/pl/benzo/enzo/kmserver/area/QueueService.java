@@ -39,7 +39,14 @@ public class QueueService {
         for (Map.Entry<Long, List<Area>> entry : groupedByRoom.entrySet()) {
             List<Area> usersInRoom = entry.getValue();
             for (int i = 0; i < usersInRoom.size() - 1; i += 2) {
-                chattService.createChatt(usersInRoom.get(i).getId(),usersInRoom.get(i+1).getId());
+                if(!usersInRoom.get(i).isDuringConversation() && !usersInRoom.get(i+1).isDuringConversation()) {
+                    chattService.createChatt(usersInRoom.get(i).getId(), usersInRoom.get(i + 1).getId());
+                    usersInRoom.get(i).setDuringConversation(true);
+                    usersInRoom.get(i + 1).setDuringConversation(true);
+                    System.out.println("Dodano chatt");
+                } else {
+                    System.out.println("Uzytkownik zajety");
+                }
             }
         }
 
