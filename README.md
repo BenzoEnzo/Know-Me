@@ -19,5 +19,6 @@ Klucze, pozwalają na stworzenie przez użytkownika pokoju, w którym gromadzić
 Np. Łucznictwo. Po utworzeniu klucza, oraz dołączeniu do niego użytkowników, zachodzi relacja
 nazwana Areną, po dołączeniu do kolejki, następuje losowanie par, które zostaną przeniesione na kanał, na którym będą mogli się poznać.
 
-Aplikacja działa, ale dostarczone rozwiązania musza ulec znacznej optymalizacji, brakuje testów i walidacji pól
+Aplikacja działa, ale dostarczone rozwiązania musza ulec znacznej optymalizacji, brakuje testów i walidacji pól.
+W przyszłości projekt zostanie podzielony na mikroserwisy.
 
