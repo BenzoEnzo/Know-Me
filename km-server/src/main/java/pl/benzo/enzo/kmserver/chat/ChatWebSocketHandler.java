@@ -1,5 +1,7 @@
 package pl.benzo.enzo.kmserver.chat;
 
+import jakarta.persistence.Column;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -10,13 +12,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class ChatWebSocketHandler extends TextWebSocketHandler {
 
     private final Map<String, List<WebSocketSession>> sessionGroups = new HashMap<>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        String sessionId = String.valueOf(session.getAttributes().get("sessionId"));
+        Map<String, Object> attributes = session.getAttributes();
+        String sessionId;
+        if (!attributes.containsKey("sessionId")) {
+            String uri = session.getUri().toString();
+            sessionId = uri.substring(uri.lastIndexOf('/') + 1);
+            attributes.put("sessionId", sessionId);
+        } else {
+            sessionId = String.valueOf(attributes.get("sessionId"));
+        }
+
         sessionGroups
                 .computeIfAbsent(sessionId, k -> new ArrayList<>())
                 .add(session);
