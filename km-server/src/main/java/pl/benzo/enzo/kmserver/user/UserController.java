@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.benzo.enzo.kmserver.token.Jwt;
+import pl.benzo.enzo.kmserver.user.model.User;
 import pl.benzo.enzo.kmserver.user.model.dto.*;
 
 import io.vavr.collection.List;
@@ -28,11 +29,8 @@ public class UserController {
 
     @GetMapping()
     @ResponseBody
-    public ResponseEntity<List<UserDto>> getUsers() {
-       final List<UserDto> usersResponse = userApi.getAll()
-               .onSuccess(result -> log.info(String.valueOf(result.size())))
-               .onFailure(throwable -> log.error("Error while fetching users list", throwable))
-               .getOrElseThrow(() -> new IllegalArgumentException("Error while fetching list"));
+    public ResponseEntity<?> getUsers() {
+       final List<User> usersResponse = userApi.getAll();
        return ResponseEntity.ok(usersResponse);
     }
     @PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -3,15 +3,17 @@ package pl.benzo.enzo.kmserver.user;
 import io.vavr.control.Try;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
+import pl.benzo.enzo.kmserver.user.model.User;
 import pl.benzo.enzo.kmserver.user.model.dto.*;
 
-import io.vavr.collection.List;
+
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 
 public interface UserApi {
-    Try<List<UserDto>> getAll();
+    List<User> getAll();
     Try<UpdateUserResponse> updateUser(UpdateUserRequest updateUserRequest);
     Try<CryptoDto> generateCrypto();
     Try<ValidateUserResponse> validateUser(CryptoDto crypto);

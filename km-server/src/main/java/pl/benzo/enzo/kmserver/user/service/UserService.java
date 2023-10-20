@@ -3,7 +3,6 @@ package pl.benzo.enzo.kmserver.user.service;
 
 
 import io.vavr.control.Try;
-import io.vavr.collection.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -19,6 +18,7 @@ import pl.benzo.enzo.kmserver.util.GenerateID;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -41,13 +41,8 @@ public class UserService implements UserApi {
         });
     }
     @Override
-    public Try<io.vavr.collection.List<UserDto>> getAll() {
-        return Try.of(() -> {
-            final java.util.List<User> users = userRepository.findAll();
-
-            return List.ofAll(users)
-                    .map(userMapper::mapToUserDto);
-        });
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 
     @Override

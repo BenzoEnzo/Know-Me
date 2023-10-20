@@ -13,16 +13,13 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserDetailsService {
-    private final UploadService uploadService = new UploadService();
     private final UserRepository userRepository;
-    private String filename;
+    public UserDetails loadUserByUsername(String crypto) throws UsernameNotFoundException {
 
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        Optional<User> userDetail = Optional.ofNullable(userRepository.findUserByCrypto(username));
+        Optional<User> userDetail = Optional.ofNullable(userRepository.findUserByCrypto(crypto));
 
         return userDetail.map(ImplUserDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found " + crypto));
     }
 
 }
