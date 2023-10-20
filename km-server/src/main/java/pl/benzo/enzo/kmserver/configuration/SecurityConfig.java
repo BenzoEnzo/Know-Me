@@ -1,4 +1,4 @@
-package pl.benzo.enzo.kmserver.security;
+package pl.benzo.enzo.kmserver.configuration;
 
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

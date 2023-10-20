@@ -1,4 +1,4 @@
-package pl.benzo.enzo.kmserver.cors;
+package pl.benzo.enzo.kmserver.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
