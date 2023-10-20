@@ -1,2 +1,23 @@
-# know-me
-Serwer KnowMe
+# know-me Stan na 20.10.2023
+Aplikacja dostarcza rozwiązania umożliwiające poznawanie nowych ludzi.
+Strukturę warstwy serwerowej można podzielić na trzy filary:
+- Użytkownik
+- Klucz
+- Arena
+
+Głównym założeniem podczas tworzenia aplikacji było ograniczenie przechowywania danych personalnych.
+Aby rozpocząc korzystanie z know-me, wystarczy wygenerować cryptoId, za jego pomocą logujemy sie do systemu.
+Panel użytkownika składa się z 4 pól informacyjnych, które można zaktualizować:
+- Zdjęcie
+- Imię/Nazwa
+- Płeć
+- Opis
+
+Konta użytkowników czyszczone są co 24h.
+
+Klucze, pozwalają na stworzenie przez użytkownika pokoju, w którym gromadzić się mogą użytkownicy o wspólnych zainteresowaniach
+Np. Łucznictwo. Po utworzeniu klucza, oraz dołączeniu do niego użytkowników, zachodzi relacja
+nazwana Areną, po dołączeniu do kolejki, następuje losowanie par, które zostaną przeniesione na kanał, na którym będą mogli się poznać.
+
+Aplikacja działa, ale dostarczone rozwiązania musza ulec znacznej optymalizacji, brakuje testów i walidacji pól
+
