@@ -37,6 +37,8 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(auth ->
                 auth
                         .requestMatchers(mvcMatcherBuilder.pattern("/api/**")).permitAll()
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/images/**")).permitAll()
                         .requestMatchers(PathRequest.toH2Console()).authenticated()
                         .anyRequest().authenticated()
         ).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

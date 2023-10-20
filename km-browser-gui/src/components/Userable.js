@@ -21,7 +21,24 @@ const Userable = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [description, setDescription] = useState('Twój opis...');
     const [areasResp, setAreasResp] = useState(null);
+    const [imageSrc, setImageSrc] = useState(null);
+    const fileName = localStorage.getItem("photoId");
 
+    useEffect(() => {
+        // Pobieranie zdjęcia podczas ładowania komponentu
+        const loadImage = async () => {
+            try {
+                const response = await axios.get(`/api/user/profile-image/load/${fileName}`, { responseType: 'arraybuffer' });
+                console.log(response.data);
+                const base64Image = `data:image/jpeg;base64,${btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
+                setImageSrc(base64Image);
+            } catch (error) {
+                console.error("Błąd podczas ładowania zdjęcia:", error);
+            }
+        };
+
+        loadImage();
+    }, [fileName]);
 
     const onFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
@@ -43,9 +60,11 @@ const Userable = () => {
     const onUpload = async () => {
         const formData = new FormData();
         formData.append('file', selectedFile);
+        formData.append('userId', userId);
         try {
-            const response = await axios.post('/api/user/details', formData);
+            const response = await axios.post('/api/user/profile-image', formData);
             setUploadedImageURL(response.data);
+            localStorage.setItem("photoId", "azx" + userId + ".jpeg");
         } catch (error) {
             console.error('Error uploading file:', error);
         }
@@ -161,17 +180,9 @@ const Userable = () => {
         <div className="extended-panel">
             <div className="left-container">
                 <div className="sub-container image-container">
-                    {uploadedImageURL ? (
-                        <img src={uploadedImageURL} alt="Uploaded" />
-                    ) : (
-                        <>
-                            <img src="http://localhost:8061/ds.jpeg" alt="Załadowane zdjęcie" />
-                            {uploadedImageURL && <img src={uploadedImageURL} alt="Załadowane zdjęcie" />}
+                    {imageSrc && <img src={imageSrc} alt="Uploaded" />}
                             <input type="file" onChange={onFileChange} />
                             <button onClick={onUpload}>Prześlij</button>
-                        </>
-                    )}
-
                 </div>
                 <div className="gender-container">
                     <div className="gender-selection">

@@ -1,4 +1,4 @@
-import {setId} from "./userSlice";
+
 
 
 export function validateId(crypto) {
@@ -14,6 +14,9 @@ export function validateId(crypto) {
             if (data && data.sessionId) {
                 localStorage.setItem("id",data.id);
                 localStorage.setItem("token", data.sessionId);
+                if(data.photoId !== null){
+                localStorage.setItem("photoId", data.photoId);
+                }
             } else
             return data;
         });

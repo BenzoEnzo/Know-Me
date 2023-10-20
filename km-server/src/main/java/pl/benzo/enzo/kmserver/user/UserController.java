@@ -2,13 +2,19 @@ package pl.benzo.enzo.kmserver.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.benzo.enzo.kmserver.token.Jwt;
 import pl.benzo.enzo.kmserver.user.model.dto.*;
 
 import io.vavr.collection.List;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 @RestController
@@ -67,5 +73,15 @@ public class UserController {
                 .onFailure(throwable -> log.error("Error while validate", throwable))
                 .getOrElseThrow(()-> new IllegalArgumentException("Error during validate"));
         return ResponseEntity.ok(getCryptoResponse);
+    }
+
+    @PostMapping(value = "/profile-image",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadPhoto(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) throws IOException {
+        userApi.uploadImageOnServ(file,userId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+    @GetMapping(value = "/profile-image/load/{fileName}")
+    public ResponseEntity<Resource> getProfilePicture(@PathVariable String fileName) throws FileNotFoundException {
+        return ResponseEntity.status(HttpStatus.OK).body(userApi.loadFile(fileName));
     }
 }
