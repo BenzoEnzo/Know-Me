@@ -20,6 +20,7 @@ public class Chatt {
     private boolean talker1Accepted;
     private boolean talker2Accepted;
     private boolean inConversation;
+    private String sessionId;
 
     public Chatt() {
 

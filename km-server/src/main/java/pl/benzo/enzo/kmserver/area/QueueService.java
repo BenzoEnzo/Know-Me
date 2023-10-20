@@ -40,7 +40,7 @@ public class QueueService {
             List<Area> usersInRoom = entry.getValue();
             for (int i = 0; i < usersInRoom.size() - 1; i += 2) {
                 if(!usersInRoom.get(i).isDuringConversation() && !usersInRoom.get(i+1).isDuringConversation()) {
-                    chattService.createChatt(usersInRoom.get(i).getId(), usersInRoom.get(i + 1).getId());
+                    chattService.createChatt(usersInRoom.get(i).getId(), usersInRoom.get(i + 1).getId(), String.valueOf(i + (i + 2) + usersInRoom.get(i).getId()));
                     usersInRoom.get(i).setDuringConversation(true);
                     usersInRoom.get(i + 1).setDuringConversation(true);
                     System.out.println("Dodano chatt");

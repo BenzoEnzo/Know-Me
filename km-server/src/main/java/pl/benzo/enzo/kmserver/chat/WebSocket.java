@@ -12,7 +12,7 @@ import org.springframework.web.socket.config.annotation.*;
 public class WebSocket implements WebSocketConfigurer  {
 
 
-    private final static String CHAT_ENDPOINT = "/api/live-chat";
+    private final static String CHAT_ENDPOINT = "/api/live-chat/{sessionId}";
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {

@@ -2,15 +2,18 @@ import './Roulette.css';
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 import SockJS from 'sockjs-client';
 import {Stomp} from '@stomp/stompjs';
 
 const Roullette = () => {
     const location = useLocation();
     const data = location.state?.data;
+    const navigate = useNavigate();
     console.log(data);
     const userId = localStorage.getItem("id");
     const [timer, setTimer] = useState(0);
+    localStorage.setItem("sessionChatId", "435");
 
 
     const [isInQueue, setIsInQueue] = useState(false);
@@ -75,7 +78,7 @@ const Roullette = () => {
                 </div>
                     )}
                 {isInQueue && (<center>
-                    <button className="play-button" onClick={joinQueue}>Rozmawiaj</button>
+                    <button className="play-button" onClick={navigate("/talking-room")}>Rozmawiaj</button>
                     </center>
                 )
                 }

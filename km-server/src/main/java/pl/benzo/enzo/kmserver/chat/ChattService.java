@@ -9,12 +9,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChattService {
     private final ChattRepository chattRepository;
-    public void createChatt(Long talkerId1,Long talkerId2){
+    public void createChatt(Long talkerId1,Long talkerId2, String sessionId){
         final Chatt chatt = Chatt.builder()
                 .talkerId1(talkerId1)
                 .talkerId2(talkerId2)
                 .talker1Accepted(true)
                 .talker2Accepted(true)
+                .sessionId(sessionId)
                 .build();
         chattRepository.save(chatt);
     }
