@@ -27,7 +27,7 @@ public class ImplService implements UserFacadeApi {
     public ReadUserResponse readUser(ReadUserRequest readUserRequest) {
         return userService.readUser(readUserRequest);
     }
-
+    @Override
     public ValidateCrypto validateAccount(SendCrypto sendCrypto) {
         return signService.validateCrypto(sendCrypto);
     }

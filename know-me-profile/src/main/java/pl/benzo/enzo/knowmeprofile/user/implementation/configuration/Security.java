@@ -38,6 +38,9 @@ public class Security {
 
         http.csrf(csrfConfigurer ->
                 csrfConfigurer.ignoringRequestMatchers(mvcMatcherBuilder.pattern(API),
+                        mvcMatcherBuilder.pattern("/api/user/read"),
+                        mvcMatcherBuilder.pattern("/api/user/update"),
+                        mvcMatcherBuilder.pattern("/h2-console/**"),
                         PathRequest.toH2Console()));
 
         http.headers(headersConfigurer ->

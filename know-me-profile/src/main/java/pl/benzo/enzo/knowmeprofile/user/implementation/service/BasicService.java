@@ -19,7 +19,7 @@ public class BasicService {
         return userRepository.findUserByCrypto(crypto);
     }
     public User findUserById(Long id){
-        return userRepository.findUserById(id);
+        return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
     public List<User> findAllUsers(){

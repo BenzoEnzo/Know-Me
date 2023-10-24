@@ -23,15 +23,15 @@ public class UserController {
 
     @PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> update(@RequestBody UpdateUserRequest updateUserRequest) {
+    public ResponseEntity<UpdateUserResponse> update(@RequestBody UpdateUserRequest updateUserRequest) {
         final UpdateUserResponse updateUserResponse = userFacadeApi.updateUser(updateUserRequest);
         return ResponseEntity.ok()
                 .body(updateUserResponse);
     }
 
-    @PostMapping(value = "/read",produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/read", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> read(@RequestBody ReadUserRequest readUserRequest) {
+    public ResponseEntity<ReadUserResponse> read(@RequestBody ReadUserRequest readUserRequest) {
         final ReadUserResponse readUserResponse = userFacadeApi.readUser(readUserRequest);
         return ResponseEntity.ok()
                 .body(readUserResponse);

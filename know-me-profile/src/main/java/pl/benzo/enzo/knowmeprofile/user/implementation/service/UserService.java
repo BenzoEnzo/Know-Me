@@ -1,6 +1,7 @@
 package pl.benzo.enzo.knowmeprofile.user.implementation.service;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.UserRepository;
@@ -12,8 +13,8 @@ import pl.benzo.enzo.knowmeprofile.user.implementation.dto.UpdateUserResponse;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserService extends BasicService{
-
     public UserService(UserRepository userRepository) {
         super(userRepository);
     }

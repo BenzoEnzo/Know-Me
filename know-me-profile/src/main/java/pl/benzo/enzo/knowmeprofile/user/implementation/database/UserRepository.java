@@ -10,5 +10,4 @@ import java.time.LocalDateTime;
 public interface UserRepository extends JpaRepository<User,Long> {
     void deleteAllByDeleteAtBefore(LocalDateTime data);
     User findUserByCrypto(String crypto);
-    User findUserById(Long id);
 }
