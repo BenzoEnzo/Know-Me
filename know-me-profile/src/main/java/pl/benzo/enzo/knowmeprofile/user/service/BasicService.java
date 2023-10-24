@@ -11,15 +11,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BasicService {
     private final UserRepository userRepository;
-    public void createUser(User user){
+    public void createOrUpdateUser(User user){
         userRepository.save(user);
     }
 
     public User findUser(String crypto){
         return userRepository.findUserByCrypto(crypto);
     }
+    public User findUserById(Long id){
+        return userRepository.findUserById(id);
+    }
 
     public List<User> findAllUsers(){
         return userRepository.findAll();
     }
+
+
 }

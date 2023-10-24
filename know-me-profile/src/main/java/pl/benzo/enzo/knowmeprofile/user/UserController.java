@@ -5,7 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.benzo.enzo.knowmeprofile.user.dto.SendCrypto;
+import pl.benzo.enzo.knowmeprofile.user.dto.ReadUserRequest;
+import pl.benzo.enzo.knowmeprofile.user.dto.ReadUserResponse;
+import pl.benzo.enzo.knowmeprofile.user.dto.UpdateUserRequest;
+import pl.benzo.enzo.knowmeprofile.user.dto.UpdateUserResponse;
 
 @RestController
 @Slf4j
@@ -17,21 +20,22 @@ public class UserController {
         this.userFacadeApi = userFacadeApi;
     }
 
-    @GetMapping(value = "/query")
+    @PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> queryAllUsers(){
-        return ResponseEntity.ok(userFacadeApi.findAllUsers());
+    public ResponseEntity<?> update(@RequestBody UpdateUserRequest updateUserRequest) {
+        final UpdateUserResponse updateUserResponse = userFacadeApi.updateUser(updateUserRequest);
+        return ResponseEntity.ok()
+                .body(updateUserResponse);
     }
 
-    @PostMapping(value = "/sign-up", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> signUp(@RequestBody SendCrypto sendCrypto){
-        userFacadeApi.createAccount(sendCrypto);
-        return ResponseEntity.ok().build();
+    @PostMapping(value = "/read",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> read(@RequestBody ReadUserRequest readUserRequest) {
+        final ReadUserResponse readUserResponse = userFacadeApi.readUser(readUserRequest);
+        return ResponseEntity.ok()
+                .body(readUserResponse);
     }
 
-    @PostMapping(value = "/sign-in", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> signIn(@RequestBody SendCrypto sendCrypto){
-        return ResponseEntity.ok(userFacadeApi.validateAccount(sendCrypto));
-    }
+
 
 }

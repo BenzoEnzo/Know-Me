@@ -4,27 +4,70 @@ package pl.benzo.enzo.knowmeprofile.user.configuration;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
+import pl.benzo.enzo.knowmeprofile.user.authentication.JwtAuth;
+import pl.benzo.enzo.knowmeprofile.user.service.SecurityService;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class Security {
+    private final JwtAuth jwtAuth;
+    private static final String API = "/api/account/**";
+    private final SecurityService securityService;
+
+    public Security(JwtAuth jwtAuth, SecurityService securityService) {
+        this.jwtAuth = jwtAuth;
+        this.securityService = securityService;
+    }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
-                                                   HandlerMappingIntrospector
-                                                           introspector) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
-            httpSecurity.csrf(AbstractHttpConfigurer::disable);
-            httpSecurity.authorizeHttpRequests(authz -> authz.requestMatchers(mvcMatcherBuilder.pattern("/api/user/**"))
-                    .permitAll());
-            return httpSecurity.getOrBuild();
+
+        http.csrf(csrfConfigurer ->
+                csrfConfigurer.ignoringRequestMatchers(mvcMatcherBuilder.pattern(API),
+                        PathRequest.toH2Console()));
+
+        http.headers(headersConfigurer ->
+                headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
+
+        http.authorizeHttpRequests(auth ->
+                        auth
+                                .requestMatchers(mvcMatcherBuilder.pattern(API)).permitAll()
+                                .requestMatchers(PathRequest.toH2Console()).authenticated()
+                                .anyRequest().authenticated()
+                )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuth, UsernamePasswordAuthenticationFilter.class);
+
+
+        return http.getOrBuild();
     }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(securityService::loadUserByUsername);
+        return authenticationProvider;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+
 }
+

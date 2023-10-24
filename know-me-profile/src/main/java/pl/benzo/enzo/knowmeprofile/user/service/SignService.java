@@ -9,6 +9,10 @@ import pl.benzo.enzo.knowmeprofile.user.database.UserRepository;
 import pl.benzo.enzo.knowmeprofile.user.dto.SendCrypto;
 import pl.benzo.enzo.knowmeprofile.user.dto.ValidateCrypto;
 import pl.benzo.enzo.knowmeprofile.user.mapper.UserMapper;
+import pl.benzo.enzo.knowmeprofile.user.util.DateOperation;
+import pl.benzo.enzo.knowmeprofile.user.util.GenerateID;
+
+import java.time.LocalDateTime;
 
 @Service
 @Slf4j
@@ -21,17 +25,22 @@ public class SignService extends BasicService{
         this.userMapper = userMapper;
     }
 
-    public void createAccount(SendCrypto sendCrypto){
-        final User user = User.builder()
-                .crypto(sendCrypto.crypto())
-                .build();
-        createUser(user);
-    }
-
     public ValidateCrypto validateCrypto(SendCrypto sendCrypto){
         final User user = findUser(sendCrypto.crypto());
+
         if(user != null){
             return userMapper.validateCryptoMapping(user);
         } else throw new IllegalArgumentException("User doesnt exist");
+    }
+
+    public SendCrypto generateCrypto() {
+            final User user = User.builder()
+                    .crypto(GenerateID.create())
+                    .deleteAt(DateOperation.addHoursToDate(LocalDateTime.now(),24))
+                    .build();
+
+            createOrUpdateUser(user);
+
+            return new SendCrypto(user.getCrypto());
     }
 }
