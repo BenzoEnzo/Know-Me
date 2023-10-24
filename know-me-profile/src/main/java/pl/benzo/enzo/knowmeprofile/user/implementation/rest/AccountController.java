@@ -24,7 +24,7 @@ public class AccountController {
         this.jwtToken = jwtToken;
     }
 
-    @GetMapping(value = "/sign-up", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/sign-up")
     public ResponseEntity<?> signUp(){
         SendCrypto sendCrypto = profileFacadeApi.generateCrypto();
         return ResponseEntity.ok()
