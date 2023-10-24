@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.benzo.enzo.knowmeprofile.user.implementation.UserFacadeApi;
+import pl.benzo.enzo.knowmeprofile.user.implementation.ProfileFacadeApi;
 import pl.benzo.enzo.knowmeprofile.user.implementation.authentication.JwtToken;
 import pl.benzo.enzo.knowmeprofile.user.implementation.dto.SendCrypto;
 import pl.benzo.enzo.knowmeprofile.user.implementation.dto.ValidateCrypto;
@@ -16,24 +16,24 @@ import pl.benzo.enzo.knowmeprofile.user.implementation.dto.ValidateCrypto;
 @Slf4j
 @RequestMapping("/api/account")
 public class AccountController {
-    private final UserFacadeApi userFacadeApi;
+    private final ProfileFacadeApi profileFacadeApi;
     private final JwtToken jwtToken;
 
-    public AccountController(UserFacadeApi userFacadeApi, JwtToken jwtToken) {
-        this.userFacadeApi = userFacadeApi;
+    public AccountController(ProfileFacadeApi profileFacadeApi, JwtToken jwtToken) {
+        this.profileFacadeApi = profileFacadeApi;
         this.jwtToken = jwtToken;
     }
 
     @GetMapping(value = "/sign-up", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> signUp(){
-        SendCrypto sendCrypto = userFacadeApi.generateCrypto();
+        SendCrypto sendCrypto = profileFacadeApi.generateCrypto();
         return ResponseEntity.ok()
                 .body(sendCrypto);
     }
 
     @PostMapping(value = "/sign-in", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> signIn(@RequestBody SendCrypto sendCrypto){
-        final ValidateCrypto validateCrypto = userFacadeApi.validateAccount(sendCrypto);
+        final ValidateCrypto validateCrypto = profileFacadeApi.validateAccount(sendCrypto);
         if(validateCrypto != null){
             String token = jwtToken.generateToken(sendCrypto.crypto());
             HttpHeaders headers = new HttpHeaders();

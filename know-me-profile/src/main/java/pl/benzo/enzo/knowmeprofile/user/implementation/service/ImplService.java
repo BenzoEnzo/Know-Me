@@ -1,20 +1,23 @@
 package pl.benzo.enzo.knowmeprofile.user.implementation.service;
 
 import org.springframework.stereotype.Service;
-import pl.benzo.enzo.knowmeprofile.user.implementation.UserFacadeApi;
+import pl.benzo.enzo.knowmeprofile.user.implementation.ProfileFacadeApi;
+import pl.benzo.enzo.knowmeprofile.user.implementation.database.Key;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
 import pl.benzo.enzo.knowmeprofile.user.implementation.dto.*;
 
 import java.util.List;
 
 @Service
-public class ImplService implements UserFacadeApi {
+public class ImplService implements ProfileFacadeApi {
    private final SignService signService;
    private final UserService userService;
+   private final KeyService keyService;
 
-    public ImplService(SignService signService, UserService userService) {
+    public ImplService(SignService signService, UserService userService,KeyService keyService) {
         this.signService = signService;
         this.userService = userService;
+        this.keyService = keyService;
     }
 
 
@@ -41,4 +44,16 @@ public class ImplService implements UserFacadeApi {
     public UpdateUserResponse updateUser(UpdateUserRequest updateUserRequest) {
         return userService.updateUser(updateUserRequest);
     }
+
+    @Override
+    public List<Key> findAllKeys() {
+        return keyService.findAllKeys();
+    }
+
+    @Override
+    public boolean saveKey(String name) {
+        return keyService.saveKey(name);
+    }
+
+
 }
