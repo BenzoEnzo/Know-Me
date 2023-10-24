@@ -25,7 +25,7 @@ const Roullette = () => {
 
     const joinQueue = async () => {
         try {
-            const response = await axios.post('/api/area/queue', goQue);
+            const response = await axios.post('/api/public/person/chat-queue', goQue);
 
             if (response.data) {
                 setIsInQueue(true);

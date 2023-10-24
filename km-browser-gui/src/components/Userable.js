@@ -81,7 +81,7 @@ const Userable = () => {
 
     const fetchAllKeys = async () => {
         try {
-            const response = await axios.get('/api/key');
+            const response = await axios.get('/api/public/person/query-keys');
             setKeys(response.data);
         } catch (error) {
             console.error('Error fetching keys:', error);
@@ -90,7 +90,7 @@ const Userable = () => {
 
     const fetchUserName = async () => {
         try {
-            const response = await axios.post('/api/user/read', {id: userId});
+            const response = await axios.post('/api/public/person/read', {id: userId});
             setName(response.data.name);
             setDescription(response.data.describe);
             setGender(response.data.gender);
@@ -111,7 +111,7 @@ const Userable = () => {
 
     const addKey = async () => {
         try {
-            const response = await axios.post('/api/key', { name: newKey });
+            const response = await axios.post('/api/public/person/create-key', { name: newKey });
             if (response.data) {
                 setKeys(prevKeys => [...prevKeys, response.data]);
                 setNewKey('');
@@ -125,7 +125,7 @@ const Userable = () => {
 
     const updateUser = async () => {
         try {
-            const response = await axios.post('/api/user/update', payload)
+            const response = await axios.post('/api/public/person/update', payload)
             if (response.data) {
                 setName([name])
 
@@ -137,7 +137,7 @@ const Userable = () => {
   const updateGender = async (event) => {
       try {
           payload.gender = event.target.value;
-          const response = await axios.post('/api/user/update', payload)
+          const response = await axios.post('/api/public/person/update', payload)
           if(response.data){
               setGender([gender])
           } }catch (error)
@@ -170,7 +170,7 @@ const Userable = () => {
         };
 
         try {
-            const response = await axios.post('/api/area', requestPayload,
+            const response = await axios.post('/api/public/person/create-area', requestPayload,
                 {
                     headers: {
                         "Content-Type": "application/json"

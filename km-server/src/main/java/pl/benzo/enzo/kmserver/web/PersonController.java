@@ -2,13 +2,13 @@ package pl.benzo.enzo.kmserver.web;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.benzo.enzo.kmserver.resource.ProfileRestTemplate;
-import pl.benzo.enzo.kmserver.web.dto.SendCrypto;
+import pl.benzo.enzo.kmserver.web.dto.*;
+
+import java.util.List;
 
 
 @RestController
@@ -19,8 +19,42 @@ public class PersonController {
     @GetMapping(value = "/join")
     @ResponseBody
     public ResponseEntity<?> join(){
-        SendCrypto sendCrypto = profileRestTemplate.signUp();
-        return ResponseEntity.ok()
-                .body(sendCrypto);
+        return profileRestTemplate.signUp();
+    }
+
+    @PostMapping(value = "/validate", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> validate(@RequestBody SendCrypto sendCrypto){
+        return profileRestTemplate.signIn(sendCrypto);
+    }
+
+    @PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> update(@RequestBody UpdateUserRequest updateUserRequest) {
+        return profileRestTemplate.updateUser(updateUserRequest);
+    }
+
+    @PostMapping(value = "/read", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> read(@RequestBody ReadUserRequest readUserRequest) {
+        return profileRestTemplate.readUser(readUserRequest);
+    }
+
+    @GetMapping(value = "/query-keys")
+    public ResponseEntity<?> getKeys() {
+        return profileRestTemplate.getKeys();
+    }
+
+    @PostMapping(value = "/create-key", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createKey(@RequestBody String name) {
+        return profileRestTemplate.createKey(name);
+    }
+
+    @PostMapping(value = "/create-area", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createArea(@RequestBody CreateAreaRequest createAreaRequest) {
+        return profileRestTemplate.createArea(createAreaRequest);
+    }
+
+    @PostMapping(value = "/chat-queue", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> joinToQueue(@RequestBody AreaUserDto areaUserDto) {
+        return profileRestTemplate.joinToQueue(areaUserDto);
     }
 }

@@ -1,5 +1,5 @@
 export function validateId(crypto) {
-    return fetch("/api/user/validate", {
+    return fetch("/api/public/person/validate", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

@@ -16,7 +16,7 @@ function Page(){
 
     const handleGenerateId = async () => {
         try {
-            const response = await axios.post('/api/user');
+            const response = await axios.get('/api/public/person/join');
             setCrypto(response.data.crypto);
             setButtonDisabled(true);
             setTimeout(function () {
