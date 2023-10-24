@@ -39,19 +39,19 @@ const TalkingRoom = () => {
     };
 
     return (
-        <Container className="chat-container">
-            <Row className="chat-box">
+        <Container className="chatSession-container">
+            <Row className="chatSession-box">
                 <Col xs={12}>
                     <ListGroup>
                         {messages.map((message, index) => (
-                            <ListGroup.Item key={index} className={`chat-message ${message.type}`}>
+                            <ListGroup.Item key={index} className={`chatSession-message ${message.type}`}>
                                 {message.content}
                             </ListGroup.Item>
                         ))}
                     </ListGroup>
                 </Col>
             </Row>
-            <Row className="chat-input">
+            <Row className="chatSession-input">
                 <Col xs={10}>
                     <Form.Control
                         value={inputValue}
