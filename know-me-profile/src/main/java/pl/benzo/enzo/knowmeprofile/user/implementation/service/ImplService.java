@@ -7,6 +7,7 @@ import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
 import pl.benzo.enzo.knowmeprofile.user.implementation.dto.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ImplService implements ProfileFacadeApi {
@@ -14,10 +15,15 @@ public class ImplService implements ProfileFacadeApi {
    private final UserService userService;
    private final KeyService keyService;
 
-    public ImplService(SignService signService, UserService userService,KeyService keyService) {
+   private final QueueService queueService;
+   private final AreaService areaService;
+
+    public ImplService(SignService signService, UserService userService, KeyService keyService, QueueService queueService, AreaService areaService) {
         this.signService = signService;
         this.userService = userService;
         this.keyService = keyService;
+        this.queueService = queueService;
+        this.areaService = areaService;
     }
 
 
@@ -53,6 +59,16 @@ public class ImplService implements ProfileFacadeApi {
     @Override
     public boolean saveKey(String name) {
         return keyService.saveKey(name);
+    }
+
+    @Override
+    public Set<AreaUserDto> createArea(CreateAreaRequest createAreaRequest) {
+        return areaService.createArea(createAreaRequest);
+    }
+
+    @Override
+    public QueueJoinDto addUserToQueue(AreaUserDto areaUserDto) {
+        return queueService.addUserToQueue(areaUserDto);
     }
 
 

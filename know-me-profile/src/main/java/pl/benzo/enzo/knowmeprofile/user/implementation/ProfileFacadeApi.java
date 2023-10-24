@@ -5,6 +5,7 @@ import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
 import pl.benzo.enzo.knowmeprofile.user.implementation.dto.*;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProfileFacadeApi {
     SendCrypto generateCrypto();
@@ -18,4 +19,9 @@ public interface ProfileFacadeApi {
     List<Key> findAllKeys();
 
     boolean saveKey(String name);
+
+    Set<AreaUserDto> createArea(CreateAreaRequest createAreaRequest);
+
+    QueueJoinDto addUserToQueue(AreaUserDto areaUserDto);
+
 }
