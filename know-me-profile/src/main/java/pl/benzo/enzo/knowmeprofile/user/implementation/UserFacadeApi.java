@@ -1,7 +1,6 @@
 package pl.benzo.enzo.knowmeprofile.user.implementation;
 
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
-import pl.benzo.enzo.knowmeprofile.user.dto.*;
 import pl.benzo.enzo.knowmeprofile.user.implementation.dto.*;
 
 import java.util.List;

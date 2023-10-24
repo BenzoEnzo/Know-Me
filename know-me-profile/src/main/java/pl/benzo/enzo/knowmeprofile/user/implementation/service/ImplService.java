@@ -3,7 +3,6 @@ package pl.benzo.enzo.knowmeprofile.user.implementation.service;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.knowmeprofile.user.implementation.UserFacadeApi;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
-import pl.benzo.enzo.knowmeprofile.user.dto.*;
 import pl.benzo.enzo.knowmeprofile.user.implementation.dto.*;
 
 import java.util.List;
