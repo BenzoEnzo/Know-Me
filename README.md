@@ -1,4 +1,4 @@
-# know-me Stan na 20.10.2023 0.0.2
+# know-me Stan na 25.10.2023 0.0.2
 - Przejscie z monolitu na architekturę serwisową
 - Integracja głównego modułu backend oraz klienta z REST Api Know-Me-ProfileService 
 - Stworzenie usług SOAP dla know-me-uploader
