@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>pl.benzo.enzo</groupId>
 	<artifactId>km-service-dto</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<name>km-service-dto</name>
 	<description>km-service-dto</description>
 	<properties>
@@ -22,6 +22,11 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>4.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -32,7 +37,7 @@
 				<configuration>
 					<excludes>
 						<exclude>
-							<groupId>org.projectlombok</groupId>
+							<groupId>org.project-lombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>

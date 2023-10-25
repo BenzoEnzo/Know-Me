@@ -10,12 +10,13 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+import pl.benzo.enzo.kmservicedto.uploader.UploadImageResponse;
+import pl.benzo.enzo.kmservicedto.uploader.UploadImageRequest;
+import pl.benzo.enzo.kmservicedto.uploader.LoadImageRequest;
+import pl.benzo.enzo.kmservicedto.uploader.LoadImageResponse;
 import pl.benzo.enzo.knowmeuploader.implementation.service.DataHandlerImageService;
 import pl.benzo.enzo.knowmeuploader.implementation.service.ImplUploadService;
-import pl.benzo.enzo.knowmeuploader.implementation.soap.LoadImageRequest;
-import pl.benzo.enzo.knowmeuploader.implementation.soap.LoadImageResponse;
-import pl.benzo.enzo.knowmeuploader.implementation.soap.UploadImageRequest;
-import pl.benzo.enzo.knowmeuploader.implementation.soap.UploadImageResponse;
+
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
