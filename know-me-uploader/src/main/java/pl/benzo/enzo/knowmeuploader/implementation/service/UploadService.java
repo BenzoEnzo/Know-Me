@@ -1,4 +1,4 @@
-package pl.benzo.enzo.knowmeuploader.implementation;
+package pl.benzo.enzo.knowmeuploader.implementation.service;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -25,7 +25,7 @@ public class UploadService {
         ensureDirectoryExists(directoryPath);
 
         Path filePath = directoryPath.resolve(filename);
-        System.out.println("Attempting to write to: " + filePath.toString());
+        System.out.println("Attempting to write to: " + filePath);
 
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
     }
@@ -40,7 +40,7 @@ public class UploadService {
      */
     public Resource loadFile(String filename, String uploadDirectory) throws FileNotFoundException {
         Path filePath = Paths.get(uploadDirectory).resolve(filename);
-        System.out.println("Attempting to read from: " + filePath.toString());
+        System.out.println("Attempting to read from: " + filePath);
 
         try {
             Resource resource = new UrlResource(filePath.toUri());
