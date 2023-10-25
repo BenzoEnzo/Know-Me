@@ -2,7 +2,6 @@ package pl.benzo.enzo.knowmeprofile.user.implementation.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.benzo.enzo.knowmeprofile.user.implementation.database.Key;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.UserRepository;
 

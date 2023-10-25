@@ -5,8 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.Area;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.AreaRepossitory;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.AreaUserDto;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.CreateAreaRequest;
+import pl.benzo.enzo.kmservicedto.profile.AreaUserDto;
+import pl.benzo.enzo.kmservicedto.profile.CreateAreaRequest;
+import pl.benzo.enzo.knowmeprofile.user.implementation.database.Key;
+import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
 import pl.benzo.enzo.knowmeprofile.user.implementation.mapper.AreaMapper;
 
 import java.util.List;
@@ -23,7 +25,7 @@ public class AreaService {
         areaRepossitory.deleteAreaBySessionId(sessionId);
     }
     public Set<AreaUserDto> createArea(CreateAreaRequest createAreaRequest){
-        final Area area = new Area(createAreaRequest.user(),createAreaRequest.key(),httpSession.getId());
+        final Area area = new Area((User) createAreaRequest.user(), (Key) createAreaRequest.key(),httpSession.getId());
         area.setJoined(true);
         areaRepossitory.save(area);
         return areaRepossitory.findAllByKey_Id(area.getKey().getId())

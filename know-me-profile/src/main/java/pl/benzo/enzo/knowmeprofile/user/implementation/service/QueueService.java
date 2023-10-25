@@ -6,8 +6,8 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.Area;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.AreaRepossitory;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.AreaUserDto;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.QueueJoinDto;
+import pl.benzo.enzo.kmservicedto.profile.AreaUserDto;
+import pl.benzo.enzo.kmservicedto.profile.QueueJoinDto;
 
 import java.util.ArrayList;
 import java.util.List;

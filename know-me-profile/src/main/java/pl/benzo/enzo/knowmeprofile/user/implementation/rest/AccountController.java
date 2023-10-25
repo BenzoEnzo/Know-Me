@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.benzo.enzo.knowmeprofile.user.implementation.ProfileFacadeApi;
 import pl.benzo.enzo.knowmeprofile.user.implementation.authentication.JwtToken;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.SendCrypto;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.ValidateCrypto;
+import pl.benzo.enzo.kmservicedto.profile.SendCrypto;
+import pl.benzo.enzo.kmservicedto.profile.ValidateCrypto;
 
 @RestController
 @Slf4j

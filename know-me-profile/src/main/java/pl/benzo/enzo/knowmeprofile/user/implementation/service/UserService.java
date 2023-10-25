@@ -5,10 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.UserRepository;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.ReadUserRequest;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.ReadUserResponse;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.UpdateUserRequest;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.UpdateUserResponse;
+import pl.benzo.enzo.kmservicedto.profile.ReadUserRequest;
+import pl.benzo.enzo.kmservicedto.profile.ReadUserResponse;
+import pl.benzo.enzo.kmservicedto.profile.UpdateUserRequest;
+import pl.benzo.enzo.kmservicedto.profile.UpdateUserResponse;
 
 import java.util.Optional;
 

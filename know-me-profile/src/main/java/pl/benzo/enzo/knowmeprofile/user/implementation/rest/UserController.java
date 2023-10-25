@@ -6,10 +6,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.benzo.enzo.knowmeprofile.user.implementation.ProfileFacadeApi;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.ReadUserRequest;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.ReadUserResponse;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.UpdateUserRequest;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.UpdateUserResponse;
+import pl.benzo.enzo.kmservicedto.profile.ReadUserRequest;
+import pl.benzo.enzo.kmservicedto.profile.ReadUserResponse;
+import pl.benzo.enzo.kmservicedto.profile.UpdateUserRequest;
+import pl.benzo.enzo.kmservicedto.profile.UpdateUserResponse;
 
 @RestController
 @Slf4j

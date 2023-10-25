@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import pl.benzo.enzo.knowmeprofile.user.implementation.util.Gender;
+import pl.benzo.enzo.kmservicedto.shared.Gender;
 
 
 @Entity

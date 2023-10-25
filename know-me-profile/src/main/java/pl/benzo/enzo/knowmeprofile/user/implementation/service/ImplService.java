@@ -4,10 +4,11 @@ import org.springframework.stereotype.Service;
 import pl.benzo.enzo.knowmeprofile.user.implementation.ProfileFacadeApi;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.Key;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.*;
+import pl.benzo.enzo.kmservicedto.profile.*;
 
 import java.util.List;
 import java.util.Set;
+
 
 @Service
 public class ImplService implements ProfileFacadeApi {

@@ -1,8 +1,9 @@
 package pl.benzo.enzo.knowmeprofile.user.implementation.mapper;
 
 import org.springframework.stereotype.Component;
+import pl.benzo.enzo.kmservicedto.profile.AreaUserDto;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.Area;
-import pl.benzo.enzo.knowmeprofile.user.implementation.dto.AreaUserDto;
+
 
 
 @Component

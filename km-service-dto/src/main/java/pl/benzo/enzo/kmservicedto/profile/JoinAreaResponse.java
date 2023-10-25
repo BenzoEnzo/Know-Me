@@ -1,4 +1,4 @@
-package pl.benzo.enzo.knowmeprofile.user.implementation.dto;
+package pl.benzo.enzo.kmservicedto.profile;
 
 public record JoinAreaResponse(Long id, boolean joined) {
 }

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import pl.benzo.enzo.knowmeprofile.user.implementation.util.Gender;
+import pl.benzo.enzo.kmservicedto.shared.Gender;
 
 import java.time.LocalDateTime;
 

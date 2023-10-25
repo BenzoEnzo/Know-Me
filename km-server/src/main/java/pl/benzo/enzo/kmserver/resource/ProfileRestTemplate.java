@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pl.benzo.enzo.kmserver.web.dto.*;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
