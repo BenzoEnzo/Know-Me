@@ -1,6 +1,6 @@
 package pl.benzo.enzo.knowmeuploader.implementation.soap;
 
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 @XmlAccessorType(XmlAccessType.FIELD)

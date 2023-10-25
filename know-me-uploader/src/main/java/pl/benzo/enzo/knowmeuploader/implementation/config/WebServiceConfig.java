@@ -35,6 +35,6 @@ public class WebServiceConfig {
 
     @Bean
     public XsdSchema uploadsSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("uploads.xsd"));
+        return new SimpleXsdSchema(new ClassPathResource("ws/uploads.xsd"));
     }
 }
