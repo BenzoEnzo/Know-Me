@@ -6,7 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.benzo.enzo.kmserver.resource.ProfileRestTemplate;
-import pl.benzo.enzo.kmserver.web.dto.*;
+import pl.benzo.enzo.kmservicedto.profile.*;
+
 
 import java.util.List;
 

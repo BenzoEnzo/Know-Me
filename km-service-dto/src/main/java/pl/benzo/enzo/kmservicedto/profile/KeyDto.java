@@ -1,4 +1,4 @@
-package pl.benzo.enzo.kmserver.web.dto;
+package pl.benzo.enzo.kmservicedto.profile;
 
 public record KeyDto(Long id,String name) {
 }

@@ -4,7 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import pl.benzo.enzo.kmserver.web.dto.*;
+import pl.benzo.enzo.kmservicedto.profile.*;
+
 
 import java.util.List;
 import java.util.Set;
