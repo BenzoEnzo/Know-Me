@@ -12,11 +12,10 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ImplUploadService {
     private final UploadService uploadService = new UploadService();
-    private String filename;
     private final static String uploadDir = "/home/devk/Pulpit/IdeaProjects/know-me/know-me-uploader/src/main/resources/static/photos";
     public void uploadImageOnServ(MultipartFile file, String photoId) {
         try {
-            filename = "azx" + photoId + ".jpeg";
+            String filename = "azx" + photoId + ".jpeg";
             uploadService.storeFile(file, filename, uploadDir);
         } catch(IOException ignored){}
     }
