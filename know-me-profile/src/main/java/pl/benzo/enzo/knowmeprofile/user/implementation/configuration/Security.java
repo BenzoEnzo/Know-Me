@@ -24,7 +24,7 @@ import pl.benzo.enzo.knowmeprofile.user.implementation.service.SecurityService;
 @EnableMethodSecurity
 public class Security {
     private final JwtAuth jwtAuth;
-    private static final String API = "/api/account/**";
+    private static final String API = "/api/**";
     private final SecurityService securityService;
 
     public Security(JwtAuth jwtAuth, SecurityService securityService) {
@@ -38,8 +38,6 @@ public class Security {
 
         http.csrf(csrfConfigurer ->
                 csrfConfigurer.ignoringRequestMatchers(mvcMatcherBuilder.pattern(API),
-                        mvcMatcherBuilder.pattern("/api/user/read"),
-                        mvcMatcherBuilder.pattern("/api/user/update"),
                         mvcMatcherBuilder.pattern("/h2-console/**"),
                         PathRequest.toH2Console()));
 

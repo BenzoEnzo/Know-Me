@@ -13,17 +13,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/public/person")
+@CrossOrigin("http://localhost:3000")
 @RequiredArgsConstructor
 public class PersonController {
     private final ProfileRestTemplate profileRestTemplate;
     @GetMapping(value = "/join")
-    @ResponseBody
     public ResponseEntity<?> join(){
         return profileRestTemplate.signUp();
     }
 
     @PostMapping(value = "/validate", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
     public ResponseEntity<?> validate(@RequestBody SendCrypto sendCrypto){
         return profileRestTemplate.signIn(sendCrypto);
     }

@@ -37,8 +37,8 @@ public class AccountController {
         if(validateCrypto != null){
             String token = jwtToken.generateToken(sendCrypto.crypto());
             HttpHeaders headers = new HttpHeaders();
-            headers.add("Authorization", "Bearer " + token);
-            return new ResponseEntity<>(headers, HttpStatus.OK);
+            headers.add("Authorization","Bearer " + token);
+            return new ResponseEntity<>(validateCrypto, headers, HttpStatus.OK);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }

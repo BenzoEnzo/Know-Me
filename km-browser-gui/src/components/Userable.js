@@ -286,11 +286,10 @@ const Userable = () => {
                     {keys.map(keyObj => {
                         let keyParsed = parseJSON(keyObj.name);
                         if(!keyParsed) return null;
-                        let numOfPeople = areaSize[keyObj.id]
+
                         return (
                             <div className="table-row" key={keyObj.id}>
                                 <span>{keyParsed.name}</span>
-                                <span>{numOfPeople}</span>
                                 <button className="mini-button" onClick={handleEnterClick} value={keyObj.id}>X</button>
                             </div>
                         );
