@@ -1,10 +1,12 @@
 package pl.benzo.enzo.knowmesocket.chat;
 
+import lombok.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import reactor.util.annotation.NonNullApi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +23,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         Map<String, Object> attributes = session.getAttributes();
         String sessionId;
         if (!attributes.containsKey("sessionId")) {
-            String uri = session.getUri().toString();
+            String uri = String.valueOf(session.getUri());
             sessionId = uri.substring(uri.lastIndexOf('/') + 1);
             attributes.put("sessionId", sessionId);
         } else {

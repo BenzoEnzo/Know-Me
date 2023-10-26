@@ -4,10 +4,9 @@ package pl.benzo.enzo.knowmesocket.chat.redis;
 import lombok.*;
 
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+
+@Builder
+@Data
 public class ChatSession {
     private String sessionId;
     private Long talkerId1;

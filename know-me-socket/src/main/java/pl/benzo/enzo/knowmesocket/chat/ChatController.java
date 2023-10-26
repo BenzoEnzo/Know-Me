@@ -20,12 +20,13 @@ public class ChatController {
     @PostMapping("/session")
     public ResponseEntity<ChatSession> createSession(@RequestBody ChatSession session) {
         chatSessionService.createSession(session);
-        return ResponseEntity.ok(session);
+        return ResponseEntity.ok().body(session);
     }
 
-    @GetMapping("/session/{sessionId}")
-    public ResponseEntity<ChatSession> getSession(@PathVariable String sessionId) {
-        ChatSession session = chatSessionService.getSession(sessionId);
-        return ResponseEntity.ok(session);
+    @PostMapping("/session/delete")
+    public ResponseEntity<?> deleteSession(@RequestBody ChatSession session) {
+        chatSessionService.endSession(session.getSessionId());
+        return ResponseEntity.ok().build();
     }
+
 }
