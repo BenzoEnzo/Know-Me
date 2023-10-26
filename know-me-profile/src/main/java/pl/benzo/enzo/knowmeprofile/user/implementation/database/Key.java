@@ -20,4 +20,8 @@ public class Key {
     public Key(String name){
         this.name = name;
     }
+    public Key(Long id,String name){
+        this.id = id;
+        this.name = name;
+    }
 }

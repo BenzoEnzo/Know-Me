@@ -71,7 +71,7 @@ const Userable = () => {
         formData.append('file', selectedFile);
         formData.append('userId', userId);
         try {
-            const response = await axios.post('/api/user/profile-image', formData);
+            const response = await axios.post('/api/public/person/upload-image', formData);
             setUploadedImageURL(response.data);
             localStorage.setItem("photoId", "azx" + userId + ".jpeg");
         } catch (error) {

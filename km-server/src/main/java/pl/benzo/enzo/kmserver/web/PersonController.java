@@ -5,10 +5,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.benzo.enzo.kmserver.resource.ProfileRestTemplate;
+import pl.benzo.enzo.kmserver.resource.UploaderSoapService;
+import pl.benzo.enzo.kmserver.web.dto.UploadImageResponseImpl;
 import pl.benzo.enzo.kmservicedto.profile.*;
 
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -18,13 +22,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PersonController {
     private final ProfileRestTemplate profileRestTemplate;
+    private final UploaderSoapService uploaderSoapService;
+
     @GetMapping(value = "/join")
-    public ResponseEntity<?> join(){
+    public ResponseEntity<?> join() {
         return profileRestTemplate.signUp();
     }
 
     @PostMapping(value = "/validate", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> validate(@RequestBody SendCrypto sendCrypto){
+    public ResponseEntity<?> validate(@RequestBody SendCrypto sendCrypto) {
         return profileRestTemplate.signIn(sendCrypto);
     }
 
@@ -56,5 +62,19 @@ public class PersonController {
     @PostMapping(value = "/chat-queue", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> joinToQueue(@RequestBody AreaUserDto areaUserDto) {
         return profileRestTemplate.joinToQueue(areaUserDto);
+    }
+
+    @PostMapping(value = "/upload-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile image,
+                                         @RequestParam("photoId") String photoId) {
+        try {
+            UploadImageResponseImpl response = uploaderSoapService.uploadImageOnServer(image, photoId);
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body("Error processing the image.");
+        } catch (Exception e) {
+
+            return ResponseEntity.status(500).body("Internal server error.");
+        }
     }
 }

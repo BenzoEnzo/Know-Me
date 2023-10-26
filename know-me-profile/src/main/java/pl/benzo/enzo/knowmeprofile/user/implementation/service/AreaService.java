@@ -18,14 +18,13 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AreaService {
-    private final HttpSession httpSession;
     private final AreaRepossitory areaRepossitory;
     private final AreaMapper areaMapper;
     public void deleteArea(String sessionId){
         areaRepossitory.deleteAreaBySessionId(sessionId);
     }
     public Set<AreaUserDto> createArea(CreateAreaRequest createAreaRequest){
-        final Area area = new Area((User) createAreaRequest.user(), (Key) createAreaRequest.key(),httpSession.getId());
+        final Area area = areaMapper.createAreaRequestMapper(createAreaRequest);
         area.setJoined(true);
         areaRepossitory.save(area);
         return areaRepossitory.findAllByKey_Id(area.getKey().getId())

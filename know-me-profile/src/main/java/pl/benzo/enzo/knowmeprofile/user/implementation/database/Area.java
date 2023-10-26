@@ -38,6 +38,11 @@ public class Area {
         this.sessionId = sessionId;
     }
 
+    public Area(User user, Key key) {
+        this.user = user;
+        this.key = key;
+    }
+
     public Area(Long id, User user, Key key, boolean isInQueue, Gender partnerType){
         this.id = id;
         this.user = user;

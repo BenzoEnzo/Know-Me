@@ -24,6 +24,13 @@ public class AdminController {
                 .body(profileFacadeApi.findAllUsers());
     }
 
+    @GetMapping(value = "/queue")
+    @ResponseBody
+    public ResponseEntity<?> getRandomPairs(){
+        return ResponseEntity.ok()
+                .body(profileFacadeApi.getRandomPairs());
+    }
+
     }
 
 

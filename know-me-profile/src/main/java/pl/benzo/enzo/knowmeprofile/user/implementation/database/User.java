@@ -26,4 +26,10 @@ public class User {
     private Gender gender;
     private String photoId;
     public User(){}
+
+    public User(Long id, String name,Gender gender){
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+    }
 }

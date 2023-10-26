@@ -1,5 +1,6 @@
 package pl.benzo.enzo.knowmeprofile.user.implementation.service;
 
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.knowmeprofile.user.implementation.ProfileFacadeApi;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.Key;
@@ -70,6 +71,11 @@ public class ImplService implements ProfileFacadeApi {
     @Override
     public QueueJoinDto addUserToQueue(AreaUserDto areaUserDto) {
         return queueService.addUserToQueue(areaUserDto);
+    }
+
+    @Override
+    public List<Pair<Long, Long>> getRandomPairs() {
+        return queueService.getRandomPairs();
     }
 
 

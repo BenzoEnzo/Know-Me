@@ -6,7 +6,7 @@
     <xs:element name="uploadImageRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="fileBase64" type="xs:string"/>
+                <xs:element name="file" type="xs:string"/>
                 <xs:element name="photoId" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>

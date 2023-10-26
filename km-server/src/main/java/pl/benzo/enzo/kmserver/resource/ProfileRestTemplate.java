@@ -1,5 +1,8 @@
 package pl.benzo.enzo.kmserver.resource;
 
+import ch.qos.logback.core.joran.sanity.Pair;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -64,6 +67,13 @@ public class ProfileRestTemplate {
     public ResponseEntity<?> joinToQueue(AreaUserDto areaUserDto) {
         QueueJoinDto queue = restTemplate.postForObject(SERVICE_API + "/area/queue", areaUserDto, QueueJoinDto.class);
         return ResponseEntity.ok(queue);
+    }
+
+    public ResponseEntity<?> getPairsFromQueue() {
+        ResponseEntity<List<Pair<Long, Long>>> response = restTemplate.exchange(SERVICE_API + "/admin/queue", HttpMethod.GET, null,
+                new ParameterizedTypeReference<>() {
+                });
+        return ResponseEntity.ok().body(response.getBody());
     }
 
 }

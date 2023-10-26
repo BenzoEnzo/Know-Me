@@ -1,5 +1,6 @@
 package pl.benzo.enzo.knowmeprofile.user.implementation;
 
+import org.springframework.data.util.Pair;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.Key;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
 import pl.benzo.enzo.kmservicedto.profile.*;
@@ -23,5 +24,7 @@ public interface ProfileFacadeApi {
     Set<AreaUserDto> createArea(CreateAreaRequest createAreaRequest);
 
     QueueJoinDto addUserToQueue(AreaUserDto areaUserDto);
+
+    List<Pair<Long,Long>> getRandomPairs();
 
 }
