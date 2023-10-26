@@ -5,15 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-
-import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import pl.benzo.enzo.kmservicedto.socket.ChatSession;
 
 @Service
 @RequiredArgsConstructor

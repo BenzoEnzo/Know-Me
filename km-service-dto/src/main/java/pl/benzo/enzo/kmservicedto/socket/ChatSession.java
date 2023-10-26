@@ -1,4 +1,4 @@
-package pl.benzo.enzo.knowmesocket.chat.redis;
+package pl.benzo.enzo.kmservicedto.socket;
 
 
 import lombok.*;

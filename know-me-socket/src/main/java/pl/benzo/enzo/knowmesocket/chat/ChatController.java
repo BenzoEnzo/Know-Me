@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.benzo.enzo.knowmesocket.chat.redis.ChatSession;
+import pl.benzo.enzo.kmservicedto.socket.ChatSession;
 import pl.benzo.enzo.knowmesocket.chat.redis.ChatSessionService;
 
 

@@ -40,6 +40,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>pl.benzo.enzo</groupId>
+            <artifactId>km-service-dto</artifactId>
+            <version>0.0.5</version>
+        </dependency>
+        <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
