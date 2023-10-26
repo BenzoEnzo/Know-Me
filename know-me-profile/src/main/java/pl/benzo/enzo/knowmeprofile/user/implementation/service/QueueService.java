@@ -11,6 +11,7 @@ import pl.benzo.enzo.knowmeprofile.user.implementation.database.Area;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.AreaRepossitory;
 import pl.benzo.enzo.kmservicedto.profile.AreaUserDto;
 import pl.benzo.enzo.kmservicedto.profile.QueueJoinDto;
+import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
 import pl.benzo.enzo.knowmeprofile.user.implementation.util.GenerateID;
 
 import java.util.ArrayList;
@@ -57,7 +58,9 @@ public class QueueService {
             List<Long> usersInRoom = entry.getValue()
                     .stream()
                     .filter(area -> !area.isDuringConversation())
-                    .map(Area::getId)
+                    .filter(Area::isInQueue)
+                    .map(Area::getUser)
+                    .map(User::getId)
                     .toList();
 
             for (int i = 0; i < usersInRoom.size() - 1; i += 2) {

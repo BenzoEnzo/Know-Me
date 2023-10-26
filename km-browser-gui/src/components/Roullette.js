@@ -38,11 +38,10 @@ const Roullette = () => {
     }
     const getSession = async () => {
         try {
-            const response = await axios.post('api/chatt/start', {id: userId})
+            const response = await axios.post('api/public/person/go-talk', {userId: userId})
             if(response.data){
                 console.log(response.data);
                 setSessionChattD(response.data.sessionId);
-
             }}catch (error) {
                 console.error("Erorrito", error);
             }

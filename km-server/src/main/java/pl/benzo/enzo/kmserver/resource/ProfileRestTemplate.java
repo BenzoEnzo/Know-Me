@@ -1,6 +1,8 @@
 package pl.benzo.enzo.kmserver.resource;
 
-import ch.qos.logback.core.joran.sanity.Pair;
+
+
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import pl.benzo.enzo.kmservicedto.profile.*;
 
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -20,7 +23,7 @@ public class ProfileRestTemplate {
     private final String SERVICE_API;
     public ProfileRestTemplate(RestTemplate restTemplate, External external){
         this.restTemplate = restTemplate;
-        this.SERVICE_API = external.getProfile();
+        this.SERVICE_API = external.getRestProfile();
     }
 
     public ResponseEntity<?> signUp() {
@@ -69,11 +72,18 @@ public class ProfileRestTemplate {
         return ResponseEntity.ok(queue);
     }
 
-    public ResponseEntity<?> getPairsFromQueue() {
-        ResponseEntity<List<Pair<Long, Long>>> response = restTemplate.exchange(SERVICE_API + "/admin/queue", HttpMethod.GET, null,
-                new ParameterizedTypeReference<>() {
-                });
-        return ResponseEntity.ok().body(response.getBody());
+    public ResponseEntity<Pair<Long, Long>> getPairsFromQueue() {
+        final Long[] response = restTemplate.getForObject(SERVICE_API + "/admin/queue", Long[].class);
+
+        if (response == null || response.length != 2) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(Pair.of(response[0],response[1]));
+    }
+
+    public void sendInfoSessionRoom(AreaUserDto areaUserDto) {
+        restTemplate.put(SERVICE_API + "/area/on-conversation", HttpMethod.POST);
     }
 
 }

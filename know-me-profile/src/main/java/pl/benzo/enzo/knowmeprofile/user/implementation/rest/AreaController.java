@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.benzo.enzo.knowmeprofile.user.implementation.ProfileFacadeApi;
 import pl.benzo.enzo.kmservicedto.profile.AreaUserDto;
 import pl.benzo.enzo.kmservicedto.profile.CreateAreaRequest;
@@ -30,5 +27,12 @@ private final ProfileFacadeApi profileFacadeApi;
     public ResponseEntity<?> joinToQueue(@RequestBody AreaUserDto areaUserDto) {
         return ResponseEntity
                 .ok().body(profileFacadeApi.addUserToQueue(areaUserDto));
+    }
+
+    @PutMapping(value = "/on-conversation", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> onConversation(@RequestBody AreaUserDto areaUserDto) {
+        profileFacadeApi.refreshAreaState(areaUserDto);
+        return ResponseEntity
+                .ok().build();
     }
 }

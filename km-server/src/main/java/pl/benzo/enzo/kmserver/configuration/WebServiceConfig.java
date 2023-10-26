@@ -12,7 +12,7 @@ public class WebServiceConfig {
     @Bean
     public WebServiceTemplate webServiceTemplate(External external) {
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
-        webServiceTemplate.setDefaultUri(external.getUploader());
+        webServiceTemplate.setDefaultUri(external.getSoapUploader());
         return webServiceTemplate;
     }
 }

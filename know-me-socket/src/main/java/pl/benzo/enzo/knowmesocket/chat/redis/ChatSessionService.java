@@ -9,6 +9,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.kmservicedto.socket.ChatSession;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -41,7 +43,7 @@ public class ChatSessionService {
                 .sessionId(randomSession).build();
     }
 
-    public void endSession(String sessionId){
+    public void endSession(String sessionId) {
         Long talkerId1 = (Long) redisTemplate.opsForHash().get(SESSION_PREFIX + sessionId, "talkerId1");
         Long talkerId2 = (Long) redisTemplate.opsForHash().get(SESSION_PREFIX + sessionId, "talkerId2");
 
@@ -51,5 +53,15 @@ public class ChatSessionService {
         loggerChatSessionService.info("Zamknieto sesje uzytkownika: " + talkerId1 + " oraz" + talkerId2);
     }
 
+    public Optional<ChatSession> findSessionByTalkerId(Long talkerId) {
+        if (!redisTemplate.opsForHash().hasKey(TALKER_INDEX, talkerId.toString())) {
+            return Optional.empty();
+        }
+
+        final String sessionId = (String) redisTemplate.opsForHash().get(TALKER_INDEX, talkerId.toString());
+        return Optional.of(ChatSession.builder()
+                .sessionId(sessionId)
+                .build());
+    }
 }
 

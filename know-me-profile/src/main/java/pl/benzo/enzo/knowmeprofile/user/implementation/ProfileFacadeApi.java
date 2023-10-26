@@ -27,4 +27,6 @@ public interface ProfileFacadeApi {
 
     List<Pair<Long,Long>> getRandomPairs();
 
+   void refreshAreaState(AreaUserDto areaUserDto);
+
 }

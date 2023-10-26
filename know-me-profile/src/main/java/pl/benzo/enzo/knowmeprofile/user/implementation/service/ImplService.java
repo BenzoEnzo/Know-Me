@@ -78,5 +78,10 @@ public class ImplService implements ProfileFacadeApi {
         return queueService.getRandomPairs();
     }
 
+    @Override
+    public void refreshAreaState(AreaUserDto areaUserDto) {
+        areaService.refreshAreaState(areaUserDto);
+    }
+
 
 }

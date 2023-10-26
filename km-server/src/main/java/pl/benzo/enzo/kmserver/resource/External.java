@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource(value = "classpath:integration.properties")
 @ConfigurationProperties(prefix = "service")
 public class External {
-    private String profile;
-    private String uploader;
-    private String socket;
+    private String restProfile;
+    private String restChat;
+    private String soapUploader;
 }

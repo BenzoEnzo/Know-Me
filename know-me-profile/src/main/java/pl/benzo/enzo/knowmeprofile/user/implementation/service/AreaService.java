@@ -47,6 +47,15 @@ public class AreaService {
 
     }
 
+
+    public void refreshAreaState(AreaUserDto areaUserDto){
+        final Area area = areaRepossitory.findAreaByUser_Id(areaUserDto.id());
+        area.setDuringConversation(true);
+        area.setInQueue(false);
+        area.setJoined(true);
+        areaRepossitory.save(area);
+    }
+
     public int getAllUserIdsFromArenaSize(Long keyId){
        return getAllUserAreasUser(keyId).size();
     }

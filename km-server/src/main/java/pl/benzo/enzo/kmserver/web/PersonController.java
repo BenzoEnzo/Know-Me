@@ -6,14 +6,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.benzo.enzo.kmserver.resource.ChatRestTemplate;
 import pl.benzo.enzo.kmserver.resource.ProfileRestTemplate;
 import pl.benzo.enzo.kmserver.resource.UploaderSoapService;
 import pl.benzo.enzo.kmserver.web.dto.UploadImageResponseImpl;
 import pl.benzo.enzo.kmservicedto.profile.*;
+import pl.benzo.enzo.kmservicedto.socket.ChatSession;
 
 
 import java.io.IOException;
-import java.util.List;
 
 
 @RestController
@@ -23,6 +24,7 @@ import java.util.List;
 public class PersonController {
     private final ProfileRestTemplate profileRestTemplate;
     private final UploaderSoapService uploaderSoapService;
+    private final ChatRestTemplate chatRestTemplate;
 
     @GetMapping(value = "/join")
     public ResponseEntity<?> join() {
@@ -62,6 +64,17 @@ public class PersonController {
     @PostMapping(value = "/chat-queue", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> joinToQueue(@RequestBody AreaUserDto areaUserDto) {
         return profileRestTemplate.joinToQueue(areaUserDto);
+    }
+
+    @PostMapping(value = "/go-talk", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> goTalk(@RequestBody AreaUserDto areaUserDto) {
+        final ChatSession chatSession = ChatSession.builder()
+                .talkerId1(areaUserDto.userId()).build();
+        final ResponseEntity<?> response = chatRestTemplate.validateSession(chatSession);
+        if(response.getStatusCode().is2xxSuccessful()){
+            profileRestTemplate.sendInfoSessionRoom(areaUserDto);
+            return response;
+        } else throw new RuntimeException();
     }
 
     @PostMapping(value = "/upload-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
