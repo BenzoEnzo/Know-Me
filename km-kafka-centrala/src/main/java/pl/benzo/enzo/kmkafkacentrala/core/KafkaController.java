@@ -1,4 +1,4 @@
-package pl.benzoenzo.kmkafkacentrala.core;
+package pl.benzo.enzo.kmkafkacentrala.core;
 
 
 import org.springframework.web.bind.annotation.PostMapping;

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.kmserver.resource.ChatRestTemplate;
+import pl.benzo.enzo.kmserver.resource.KafkaLogService;
 import pl.benzo.enzo.kmserver.resource.ProfileRestTemplate;
 import pl.benzo.enzo.kmserver.web.dto.MainSession;
 import pl.benzo.enzo.kmservicedto.profile.AreaUserDto;
@@ -19,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class ConnectionLogic {
-    private static final Logger loggerConnectionLogic = LoggerFactory.getLogger(ConnectionLogic.class);
+    private final KafkaLogService kafkaLogService;
     private final ProfileRestTemplate profileRestTemplate;
     private final ChatRestTemplate chatRestTemplate;
     private boolean extensionForScheduler(){
@@ -29,21 +30,20 @@ public class ConnectionLogic {
 
 
     private void coreFetching() {
-        final List<MainSession> response = profileRestTemplate.getPairsFromQueue();
-        for (MainSession e : response) {
-            loggerConnectionLogic.info("Para" + e.talkerId1() + e.talkerId2() + "rozpoczyna sesje");
+        final MainSession response = profileRestTemplate.getPairsFromQueue();
             ChatSession chatSessionSender = ChatSession.builder()
-                    .talkerId1(e.talkerId1())
-                    .talkerId2(e.talkerId2())
+                    .talkerId1(response.talkerId1())
+                    .talkerId2(response.talkerId2())
                     .build();
             chatRestTemplate.createSession(chatSessionSender);
+            kafkaLogService.sendLog("Queue zakończone sukcesem");
         }
-    }
+
 
     public void getFromQue(){
         boolean init = extensionForScheduler();
         if(init){
             coreFetching();
-        } else throw new IllegalArgumentException("Scheduler couldnt start");
+        } else kafkaLogService.sendLog("Brak ludzi w kolejce");
     }
 }

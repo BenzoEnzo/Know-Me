@@ -2,18 +2,14 @@ package pl.benzo.enzo.kmserver.resource;
 
 
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pl.benzo.enzo.kmserver.web.dto.MainSession;
 import pl.benzo.enzo.kmservicedto.profile.*;
-import pl.benzo.enzo.kmservicedto.socket.ChatSession;
 
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -22,9 +18,11 @@ public class ProfileRestTemplate {
 
     private final RestTemplate restTemplate;
     private final String SERVICE_API;
-    public ProfileRestTemplate(RestTemplate restTemplate, External external){
+    private final KafkaLogService kafkaLogService;
+    public ProfileRestTemplate(RestTemplate restTemplate, External external, KafkaLogService kafkaLogService){
         this.restTemplate = restTemplate;
         this.SERVICE_API = external.getRestProfile();
+        this.kafkaLogService = kafkaLogService;
     }
 
     public ResponseEntity<?> signUp() {
@@ -77,14 +75,9 @@ public class ProfileRestTemplate {
         return restTemplate.getForObject(SERVICE_API + "/area/query-areas", List.class);
     }
 
-    public List<MainSession> getPairsFromQueue() {
-        final List<MainSession> response = restTemplate.getForObject(SERVICE_API + "/admin/queue", List.of(MainSession.class).getClass());
+    public MainSession getPairsFromQueue() {
 
-        if (response == null) {
-            return Collections.emptyList();
-        }
-
-        return response;
+        return restTemplate.getForObject(SERVICE_API + "/admin/queue", MainSession.class);
     }
 
     public void sendInfoSessionRoom(AreaUserDto areaUserDto) {

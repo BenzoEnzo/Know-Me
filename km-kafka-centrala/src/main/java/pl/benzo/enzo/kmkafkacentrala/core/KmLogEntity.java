@@ -1,9 +1,10 @@
-package pl.benzoenzo.kmkafkacentrala.core;
+package pl.benzo.enzo.kmkafkacentrala.core;
 
 
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.annotation.Collation;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@Collation("KmLogsEntities")
 public class KmLogEntity {
     @Id
     private Long id;

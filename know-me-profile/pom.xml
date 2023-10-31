@@ -43,7 +43,6 @@
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
-
         <!-- H2 Database -->
         <dependency>
             <groupId>com.h2database</groupId>

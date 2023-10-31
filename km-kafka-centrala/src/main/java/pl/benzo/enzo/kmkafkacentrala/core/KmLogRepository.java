@@ -1,4 +1,4 @@
-package pl.benzoenzo.kmkafkacentrala.core;
+package pl.benzo.enzo.kmkafkacentrala.core;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

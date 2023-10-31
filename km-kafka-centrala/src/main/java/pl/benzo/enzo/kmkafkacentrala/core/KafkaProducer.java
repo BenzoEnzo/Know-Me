@@ -1,4 +1,4 @@
-package pl.benzoenzo.kmkafkacentrala.core;
+package pl.benzo.enzo.kmkafkacentrala.core;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public final class KafkaProducer {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private final String TOPIC = "kafkaTopic";
+    private final String TOPIC = "all-service-logs";
 
     public KafkaProducer(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
@@ -15,6 +15,6 @@ public final class KafkaProducer {
 
 
     public void sendMessage(String message) {
-        this.kafkaTemplate.send(TOPIC, message);
+        kafkaTemplate.send(TOPIC, message);
     }
 }

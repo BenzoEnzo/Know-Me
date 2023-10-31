@@ -15,9 +15,7 @@ import pl.benzo.enzo.kmservicedto.profile.QueueJoinDto;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
 import pl.benzo.enzo.knowmeprofile.user.implementation.util.GenerateID;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,44 +34,44 @@ public class QueueService {
         return new QueueJoinDto(true, areaUserDto.keyId(),areaUserDto.userId(),false);
     }
 
-    public List<ChatSession> getRandomPairs() {
-        List<ChatSession> gotUsers = new ArrayList<>();
+    public ChatSession getRandomPairs() {
+       final Set<Pair<Long, Long>> pairedUsersHistory = new HashSet<>();
+            List<Area> usersInQueue = areaRepository.findAllByIsInQueueAndDuringConversation(true, false);
 
-        List<Area> usersInQueue = areaRepository.findAllByIsInQueueAndDuringConversation(true,false);
-
-        for(Area a: usersInQueue){
-            loggerQueueService.info("Aktywni Uczestnicy:" + a.getId());
-        }
-
-        Map<Long, List<Area>> groupedByRoom = usersInQueue.stream()
-                .collect(Collectors.groupingBy(area -> area.getKey().getId()));
-
-        for(Long l: groupedByRoom.keySet()){
-            loggerQueueService.info("Aktywne pokoje:" + l);
-        }
-
-
-        for (Map.Entry<Long, List<Area>> entry : groupedByRoom.entrySet()) {
-            List<Long> usersInRoom = entry.getValue()
-                    .stream()
-                    .map(Area::getUser)
-                    .map(User::getId)
-                    .toList();
-
-            for (int i = 0; i < usersInRoom.size() - 1; i += 2) {
-                Long talkerIdd1 = usersInRoom.get(i);
-                Long talkerIdd2 = usersInRoom.get(i + 1);
-
-                ChatSession chatSession = ChatSession.builder()
-                        .talkerId1(talkerIdd1)
-                        .talkerId2(talkerIdd2).build();
-
-                gotUsers.add(chatSession);
-
-                loggerQueueService.info("Połączono:" + talkerIdd1 + " " + talkerIdd2);
+            for (Area a : usersInQueue) {
+                loggerQueueService.info("Aktywni Uczestnicy:" + a.getId());
             }
-        }
 
-        return gotUsers;
+            Map<Long, List<Area>> groupedByRoom = usersInQueue.stream()
+                    .collect(Collectors.groupingBy(area -> area.getKey().getId()));
+
+            for (Long l : groupedByRoom.keySet()) {
+                loggerQueueService.info("Aktywne pokoje:" + l);
+            }
+
+            for (Map.Entry<Long, List<Area>> entry : groupedByRoom.entrySet()) {
+                List<Long> usersInRoom = entry.getValue()
+                        .stream()
+                        .map(Area::getUser)
+                        .map(User::getId)
+                        .collect(Collectors.toList());
+
+                Collections.shuffle(usersInRoom);
+
+                for (int i = 0; i < usersInRoom.size() - 1; i += 2) {
+                    Long talkerId1 = usersInRoom.get(i);
+                    Long talkerId2 = usersInRoom.get(i + 1);
+
+
+                    if (!pairedUsersHistory.contains(Pair.of(talkerId1, talkerId2)) && !pairedUsersHistory.contains(Pair.of(talkerId2, talkerId1))) {
+
+                        pairedUsersHistory.add(Pair.of(talkerId1, talkerId2));
+                        return ChatSession.builder()
+                                .talkerId1(talkerId1)
+                                .talkerId2(talkerId2).build();
+                    }
+                }
+            }
+            return null;
     }
 }

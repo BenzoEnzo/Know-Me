@@ -1,8 +1,7 @@
-package pl.benzoenzo.kmkafkacentrala;
+package pl.benzo.enzo.kmkafkacentrala;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 public class KmKafkaCentralaApplication {

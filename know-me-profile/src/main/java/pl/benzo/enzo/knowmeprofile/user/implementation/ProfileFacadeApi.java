@@ -26,7 +26,7 @@ public interface ProfileFacadeApi {
 
     QueueJoinDto addUserToQueue(AreaUserDto areaUserDto);
 
-    List<ChatSession> getRandomPairs();
+    ChatSession getRandomPairs();
 
     List<AreaUserDto> getAllAreas();
 

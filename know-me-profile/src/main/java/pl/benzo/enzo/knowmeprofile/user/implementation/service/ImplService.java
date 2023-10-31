@@ -75,7 +75,7 @@ public class ImplService implements ProfileFacadeApi {
     }
 
     @Override
-    public List<ChatSession> getRandomPairs() {
+    public ChatSession getRandomPairs() {
         return queueService.getRandomPairs();
     }
 

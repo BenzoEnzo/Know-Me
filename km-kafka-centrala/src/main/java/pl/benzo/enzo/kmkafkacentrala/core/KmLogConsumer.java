@@ -1,4 +1,4 @@
-package pl.benzoenzo.kmkafkacentrala.core;
+package pl.benzo.enzo.kmkafkacentrala.core;
 
 
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class KmLogConsumer {
     private final KmLogRepository kmLogRepository;
-    @KafkaListener(topics = "logs-from-km-profile")
+    @KafkaListener(topics = "know-me-logs")
     public void consumeLogs(String msg){
         KmLogEntity kmLogEntity = new KmLogEntity();
         kmLogEntity.setMessage(msg);

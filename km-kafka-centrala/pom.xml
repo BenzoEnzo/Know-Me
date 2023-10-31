@@ -8,7 +8,7 @@
 		<version>3.1.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>pl.benzoenzo</groupId>
+	<groupId>pl.benzo.enzo</groupId>
 	<artifactId>km-kafka-centrala</artifactId>
 	<version>0.0.1</version>
 	<name>km-kafka-centrala</name>
