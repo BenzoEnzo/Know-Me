@@ -11,6 +11,7 @@ import pl.benzo.enzo.knowmeprofile.user.implementation.ProfileFacadeApi;
 import pl.benzo.enzo.knowmeprofile.user.implementation.authentication.JwtToken;
 import pl.benzo.enzo.kmservicedto.profile.SendCrypto;
 import pl.benzo.enzo.kmservicedto.profile.ValidateCrypto;
+import pl.benzo.enzo.knowmeprofile.user.implementation.util.KafkaLogService;
 
 @RestController
 @Slf4j
@@ -18,15 +19,18 @@ import pl.benzo.enzo.kmservicedto.profile.ValidateCrypto;
 public class AccountController {
     private final ProfileFacadeApi profileFacadeApi;
     private final JwtToken jwtToken;
+    private final KafkaLogService kafkaLogService;
 
-    public AccountController(ProfileFacadeApi profileFacadeApi, JwtToken jwtToken) {
+    public AccountController(ProfileFacadeApi profileFacadeApi, JwtToken jwtToken, KafkaLogService kafkaLogService) {
         this.profileFacadeApi = profileFacadeApi;
         this.jwtToken = jwtToken;
+        this.kafkaLogService = kafkaLogService;
     }
 
     @GetMapping(value = "/sign-up")
     public ResponseEntity<?> signUp(){
         SendCrypto sendCrypto = profileFacadeApi.generateCrypto();
+        kafkaLogService.sendLog("Dodano cryptoID " + sendCrypto.crypto());
         return ResponseEntity.ok()
                 .body(sendCrypto);
     }
