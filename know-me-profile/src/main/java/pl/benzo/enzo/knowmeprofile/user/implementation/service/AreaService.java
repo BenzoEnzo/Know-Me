@@ -32,9 +32,11 @@ public class AreaService {
                 collect(Collectors.toSet());
     }
 
-    public List<String> getAll(){
+    public List<AreaUserDto> getAllAreas(){
         return areaRepossitory.findAll()
-                .stream().map(Area::getSessionId).collect(Collectors.toList());
+                .stream()
+                .map(areaMapper::mapToAreaUserDto)
+                .collect(Collectors.toList());
     }
 
     public void update(Area area){

@@ -3,7 +3,6 @@ package pl.benzo.enzo.kmserver.resource;
 
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,18 +71,22 @@ public class ProfileRestTemplate {
         return ResponseEntity.ok(queue);
     }
 
-    public ResponseEntity<Pair<Long, Long>> getPairsFromQueue() {
-        final Long[] response = restTemplate.getForObject(SERVICE_API + "/admin/queue", Long[].class);
+    public List<AreaUserDto> queryAreas(){
+        return restTemplate.getForObject(SERVICE_API + "/area/query-areas", List.class);
+    }
 
-        if (response == null || response.length != 2) {
-            return ResponseEntity.notFound().build();
+    public List<Pair<Long,Long>> getPairsFromQueue() {
+        final List<Pair<Long,Long>> response = restTemplate.getForObject(SERVICE_API + "/admin/queue", List.class);
+
+        if (response == null) {
+            return Collections.emptyList();
         }
 
-        return ResponseEntity.ok().body(Pair.of(response[0],response[1]));
+        return response;
     }
 
     public void sendInfoSessionRoom(AreaUserDto areaUserDto) {
-        restTemplate.put(SERVICE_API + "/area/on-conversation", HttpMethod.POST);
+        restTemplate.put(SERVICE_API + "/area/on-conversation", areaUserDto);
     }
 
 }

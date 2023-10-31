@@ -7,7 +7,7 @@ function Chat() {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-        const socket = new SockJS('http://localhost:8061/chat');
+        const socket = new SockJS('http://localhost:8064/chat');
         const client = new Client({
             webSocketFactory: () => socket
         });

@@ -8,7 +8,7 @@ const TalkingRoom = () => {
     const sessionId = localStorage.getItem("sessionChatId");
     useEffect(() => {
         console.log(sessionId);
-        const websocket = new WebSocket(`ws://localhost:8061/api/live-chat/${sessionId}`);
+        const websocket = new WebSocket(`ws://localhost:8064/api/live-chat/${sessionId}`);
         websocket.onopen = () => {
             console.log("Connected to the websocket");
         };

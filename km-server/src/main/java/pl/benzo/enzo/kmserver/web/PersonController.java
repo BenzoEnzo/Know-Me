@@ -67,12 +67,10 @@ public class PersonController {
     }
 
     @PostMapping(value = "/go-talk", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> goTalk(@RequestBody AreaUserDto areaUserDto) {
-        final ChatSession chatSession = ChatSession.builder()
-                .talkerId1(areaUserDto.userId()).build();
+    public ResponseEntity<?> goTalk(@RequestBody ChatSession chatSession) {
         final ResponseEntity<?> response = chatRestTemplate.validateSession(chatSession);
         if(response.getStatusCode().is2xxSuccessful()){
-            profileRestTemplate.sendInfoSessionRoom(areaUserDto);
+
             return response;
         } else throw new RuntimeException();
     }

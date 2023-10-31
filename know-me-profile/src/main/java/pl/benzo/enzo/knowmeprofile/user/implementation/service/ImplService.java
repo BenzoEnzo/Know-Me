@@ -83,5 +83,9 @@ public class ImplService implements ProfileFacadeApi {
         areaService.refreshAreaState(areaUserDto);
     }
 
+    public List<AreaUserDto> getAllAreas(){
+        return areaService.getAllAreas();
+    }
+
 
 }

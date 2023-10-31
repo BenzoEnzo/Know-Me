@@ -35,4 +35,9 @@ private final ProfileFacadeApi profileFacadeApi;
         return ResponseEntity
                 .ok().build();
     }
+
+    @GetMapping(value = "/query-areas")
+    public ResponseEntity<?> queryAreas(){
+        return ResponseEntity.ok().body(profileFacadeApi.getAllAreas());
+    }
 }

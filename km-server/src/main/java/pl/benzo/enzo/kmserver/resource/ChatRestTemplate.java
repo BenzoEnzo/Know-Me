@@ -16,7 +16,7 @@ public class ChatRestTemplate {
     }
 
     public void createSession(ChatSession session) {
-        restTemplate.put(SERVICE_API + "/session/create", session);
+        restTemplate.postForObject(SERVICE_API + "/chat/session/create", session,ChatSession.class);
     }
 
     public ResponseEntity<?> deleteSession(ChatSession session) {
@@ -25,7 +25,7 @@ public class ChatRestTemplate {
     }
 
     public ResponseEntity<?> validateSession(ChatSession session) {
-        ChatSession response = restTemplate.postForObject(SERVICE_API + "/session/validate", session, ChatSession.class);
+        ChatSession response = restTemplate.postForObject(SERVICE_API + "/chat/session/validate", session, ChatSession.class);
         return ResponseEntity.ok().body(response);
     }
 }
