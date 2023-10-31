@@ -3,6 +3,7 @@ package pl.benzo.enzo.knowmesocket.chat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.benzo.enzo.kmservicedto.socket.ChatSession;
@@ -28,9 +29,9 @@ public class ChatController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/session/validate")
+    @PostMapping(value = "/session/validate")
     public ResponseEntity<?> validateSession(@RequestBody ChatSession session){
-        return ResponseEntity.ok().body(chatSessionService.findSessionByTalkerId(session.getTalkerId1()));
+        return ResponseEntity.ok().body(chatSessionService.findSessionByTalkerId(session));
     }
 
 }

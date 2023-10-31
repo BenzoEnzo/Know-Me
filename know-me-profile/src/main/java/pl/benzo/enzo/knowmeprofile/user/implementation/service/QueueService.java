@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
+import pl.benzo.enzo.kmservicedto.socket.ChatSession;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.Area;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.AreaRepossitory;
 import pl.benzo.enzo.kmservicedto.profile.AreaUserDto;
@@ -35,8 +36,9 @@ public class QueueService {
         return new QueueJoinDto(true, areaUserDto.keyId(),areaUserDto.userId(),false);
     }
 
-    public List<Pair<Long, Long>> getRandomPairs() {
-        List<Pair<Long, Long>> gotUsers = new ArrayList<>();
+    public List<ChatSession> getRandomPairs() {
+        List<ChatSession> gotUsers = new ArrayList<>();
+
         List<Area> usersInQueue = areaRepository.findAllByIsInQueueAndDuringConversation(true,false);
 
         for(Area a: usersInQueue){
@@ -50,15 +52,10 @@ public class QueueService {
             loggerQueueService.info("Aktywne pokoje:" + l);
         }
 
-        if(groupedByRoom.size() < 2){
-            loggerQueueService.info("Za malo ludzi !");
-        }
 
         for (Map.Entry<Long, List<Area>> entry : groupedByRoom.entrySet()) {
             List<Long> usersInRoom = entry.getValue()
                     .stream()
-                    .filter(area -> !area.isDuringConversation())
-                    .filter(Area::isInQueue)
                     .map(Area::getUser)
                     .map(User::getId)
                     .toList();
@@ -66,12 +63,17 @@ public class QueueService {
             for (int i = 0; i < usersInRoom.size() - 1; i += 2) {
                 Long talkerIdd1 = usersInRoom.get(i);
                 Long talkerIdd2 = usersInRoom.get(i + 1);
-                gotUsers.add(Pair.of(talkerIdd1,talkerIdd2));
-                for(Long l: groupedByRoom.keySet()){
-                    loggerQueueService.info("Połączono:" + talkerIdd1 + " " + talkerIdd2);
-                }
+
+                ChatSession chatSession = ChatSession.builder()
+                        .talkerId1(talkerIdd1)
+                        .talkerId2(talkerIdd2).build();
+
+                gotUsers.add(chatSession);
+
+                loggerQueueService.info("Połączono:" + talkerIdd1 + " " + talkerIdd2);
             }
         }
+
         return gotUsers;
     }
 }

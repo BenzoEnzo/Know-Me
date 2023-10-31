@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import pl.benzo.enzo.kmserver.web.dto.MainSession;
 import pl.benzo.enzo.kmservicedto.profile.*;
+import pl.benzo.enzo.kmservicedto.socket.ChatSession;
 
 
 import java.util.Collections;
@@ -75,8 +77,8 @@ public class ProfileRestTemplate {
         return restTemplate.getForObject(SERVICE_API + "/area/query-areas", List.class);
     }
 
-    public List<Pair<Long,Long>> getPairsFromQueue() {
-        final List<Pair<Long,Long>> response = restTemplate.getForObject(SERVICE_API + "/admin/queue", List.class);
+    public List<MainSession> getPairsFromQueue() {
+        final List<MainSession> response = restTemplate.getForObject(SERVICE_API + "/admin/queue", List.of(MainSession.class).getClass());
 
         if (response == null) {
             return Collections.emptyList();
@@ -86,7 +88,7 @@ public class ProfileRestTemplate {
     }
 
     public void sendInfoSessionRoom(AreaUserDto areaUserDto) {
-        restTemplate.put(SERVICE_API + "/area/on-conversation", areaUserDto);
+        restTemplate.postForObject(SERVICE_API + "/area/on-conversation", areaUserDto, AreaUserDto.class);
     }
 
 }

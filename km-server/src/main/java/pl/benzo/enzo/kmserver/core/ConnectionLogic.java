@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.kmserver.resource.ChatRestTemplate;
 import pl.benzo.enzo.kmserver.resource.ProfileRestTemplate;
+import pl.benzo.enzo.kmserver.web.dto.MainSession;
 import pl.benzo.enzo.kmservicedto.profile.AreaUserDto;
 import pl.benzo.enzo.kmservicedto.socket.ChatSession;
 
@@ -26,18 +27,23 @@ public class ConnectionLogic {
         return areas.size() > 2;
     }
 
-    public void coreFetching(){
-        final boolean init = extensionForScheduler();
-        if(init) {
-            final List<Pair<Long, Long>> response = profileRestTemplate.getPairsFromQueue();
-            for (Pair<Long, Long> e : response) {
-                loggerConnectionLogic.info("Para" + e.getLeft() + e.getRight() + "rozpoczyna sesje");
-                    final ChatSession chatSession = ChatSession.builder()
-                            .talkerId1(e.getLeft())
-                            .talkerId2(e.getRight())
-                            .build();
-                    chatRestTemplate.createSession(chatSession);
-            }
-        } else throw new IllegalArgumentException("Error during fetching");
+
+    private void coreFetching() {
+        final List<MainSession> response = profileRestTemplate.getPairsFromQueue();
+        for (MainSession e : response) {
+            loggerConnectionLogic.info("Para" + e.talkerId1() + e.talkerId2() + "rozpoczyna sesje");
+            ChatSession chatSessionSender = ChatSession.builder()
+                    .talkerId1(e.talkerId1())
+                    .talkerId2(e.talkerId2())
+                    .build();
+            chatRestTemplate.createSession(chatSessionSender);
+        }
+    }
+
+    public void getFromQue(){
+        boolean init = extensionForScheduler();
+        if(init){
+            coreFetching();
+        } else throw new IllegalArgumentException("Scheduler couldnt start");
     }
 }

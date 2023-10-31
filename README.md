@@ -1,3 +1,13 @@
+// TODO pilnie
+- testy jednostkowe
+- poprawa struktury projektu
+- walidacje pól 
+- ui dla czatu
+
+# know-me Stan na 31.10.2023 0.0.3
+- Integracja kolejki/sesji oraz live-chatu
+- Stworzenie współdzielonego modułu z dtosami
+
 # know-me Stan na 25.10.2023 0.0.2
 - Przejscie z monolitu na architekturę serwisową
 - Integracja głównego modułu backend oraz klienta z REST Api Know-Me-ProfileService 

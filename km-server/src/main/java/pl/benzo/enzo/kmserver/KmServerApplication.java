@@ -7,7 +7,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 @SpringBootApplication
-@EnableConfigurationProperties
 @EnableScheduling
 public class KmServerApplication {
 

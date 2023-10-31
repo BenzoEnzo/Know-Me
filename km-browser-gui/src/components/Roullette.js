@@ -23,6 +23,12 @@ const Roullette = () => {
         isInQueue: true
     }
 
+    const chatSession = {
+        sessionId: "",
+        talkerId1: Number(userId),
+        talkerId2: Number(userId)
+    }
+
     const joinQueue = async () => {
         try {
             const response = await axios.post('/api/public/person/chat-queue', goQue);
@@ -38,7 +44,7 @@ const Roullette = () => {
     }
     const getSession = async () => {
         try {
-            const response = await axios.post('api/public/person/go-talk', {talkerId1: userId})
+            const response = await axios.post('/api/public/person/go-talk', chatSession)
             if(response.data){
                 console.log(response.data);
                 setSessionChattD(response.data.sessionId);

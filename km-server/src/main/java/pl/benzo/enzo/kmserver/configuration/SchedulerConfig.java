@@ -23,9 +23,9 @@ import java.util.Random;
 public class SchedulerConfig {
 private final ConnectionLogic connectionLogic;
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 20000)
     public void fetchPairs(){
-        connectionLogic.coreFetching();
+        connectionLogic.getFromQue();
     }
 
 

@@ -2,6 +2,7 @@ package pl.benzo.enzo.knowmeprofile.user.implementation.service;
 
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
+import pl.benzo.enzo.kmservicedto.socket.ChatSession;
 import pl.benzo.enzo.knowmeprofile.user.implementation.ProfileFacadeApi;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.Key;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
@@ -74,7 +75,7 @@ public class ImplService implements ProfileFacadeApi {
     }
 
     @Override
-    public List<Pair<Long, Long>> getRandomPairs() {
+    public List<ChatSession> getRandomPairs() {
         return queueService.getRandomPairs();
     }
 

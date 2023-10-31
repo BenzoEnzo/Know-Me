@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.benzo.enzo.kmserver.resource.ChatRestTemplate;
 import pl.benzo.enzo.kmserver.resource.ProfileRestTemplate;
 import pl.benzo.enzo.kmserver.resource.UploaderSoapService;
+import pl.benzo.enzo.kmserver.web.dto.MainSession;
 import pl.benzo.enzo.kmserver.web.dto.UploadImageResponseImpl;
 import pl.benzo.enzo.kmservicedto.profile.*;
 import pl.benzo.enzo.kmservicedto.socket.ChatSession;
@@ -67,13 +68,15 @@ public class PersonController {
     }
 
     @PostMapping(value = "/go-talk", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> goTalk(@RequestBody ChatSession chatSession) {
-        final ResponseEntity<?> response = chatRestTemplate.validateSession(chatSession);
-        if(response.getStatusCode().is2xxSuccessful()){
-
+    public ResponseEntity<?> goTalk(@RequestBody MainSession mainSession) {
+            ResponseEntity<?> response = chatRestTemplate.validateSession(mainSession);
+            AreaUserDto areaUserDto = new AreaUserDto(mainSession.talkerId1(), mainSession.talkerId1(), null, null, true, true, false);
+            if(response.hasBody() && response.getStatusCode().is2xxSuccessful()) {
+                profileRestTemplate.sendInfoSessionRoom(areaUserDto);
+            }
             return response;
-        } else throw new RuntimeException();
     }
+
 
     @PostMapping(value = "/upload-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile image,

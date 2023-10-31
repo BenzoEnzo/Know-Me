@@ -29,7 +29,7 @@ private final ProfileFacadeApi profileFacadeApi;
                 .ok().body(profileFacadeApi.addUserToQueue(areaUserDto));
     }
 
-    @PutMapping(value = "/on-conversation", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/on-conversation", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> onConversation(@RequestBody AreaUserDto areaUserDto) {
         profileFacadeApi.refreshAreaState(areaUserDto);
         return ResponseEntity

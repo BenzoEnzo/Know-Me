@@ -51,7 +51,7 @@ public class AreaService {
 
 
     public void refreshAreaState(AreaUserDto areaUserDto){
-        final Area area = areaRepossitory.findAreaByUser_Id(areaUserDto.id());
+        final Area area = areaRepossitory.findAreaByUser_Id(areaUserDto.userId());
         area.setDuringConversation(true);
         area.setInQueue(false);
         area.setJoined(true);

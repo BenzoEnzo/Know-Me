@@ -53,15 +53,16 @@ public class ChatSessionService {
         loggerChatSessionService.info("Zamknieto sesje uzytkownika: " + talkerId1 + " oraz" + talkerId2);
     }
 
-    public Optional<ChatSession> findSessionByTalkerId(Long talkerId) {
-        if (!redisTemplate.opsForHash().hasKey(TALKER_INDEX, talkerId.toString())) {
-            return Optional.empty();
+    public ChatSession findSessionByTalkerId(ChatSession session) {
+        final String talkerId1 = session.getTalkerId1().toString();
+        if (!redisTemplate.opsForHash().hasKey(TALKER_INDEX, talkerId1)) {
+            return null;
         }
 
-        final String sessionId = (String) redisTemplate.opsForHash().get(TALKER_INDEX, talkerId.toString());
-        return Optional.of(ChatSession.builder()
+        final String sessionId = (String) redisTemplate.opsForHash().get(TALKER_INDEX, talkerId1);
+        return ChatSession.builder()
                 .sessionId(sessionId)
-                .build());
+                .build();
     }
 }
 
