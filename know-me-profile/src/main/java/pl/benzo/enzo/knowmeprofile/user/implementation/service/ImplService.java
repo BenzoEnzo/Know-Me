@@ -88,5 +88,9 @@ public class ImplService implements ProfileFacadeApi {
         return areaService.getAllAreas();
     }
 
+    public int getAllUserIdsFromArenaSize(Long keyId){
+        return areaService.getAllUserIdsFromArenaSize(keyId);
+    }
+
 
 }

@@ -67,6 +67,10 @@ public class PersonController {
         return profileRestTemplate.joinToQueue(areaUserDto);
     }
 
+    @PostMapping(value = "/area-people", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> postSizeArea(@RequestBody Long keyId) {
+        return profileRestTemplate.postSizeArea(keyId);
+    }
     @PostMapping(value = "/go-talk", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> goTalk(@RequestBody MainSession mainSession) {
             ResponseEntity<?> response = chatRestTemplate.validateSession(mainSession);

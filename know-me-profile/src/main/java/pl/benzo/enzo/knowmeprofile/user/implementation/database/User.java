@@ -1,10 +1,12 @@
 package pl.benzo.enzo.knowmeprofile.user.implementation.database;
 
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.antlr.v4.runtime.misc.NotNull;
 import pl.benzo.enzo.kmservicedto.shared.Gender;
 
 import java.time.LocalDateTime;
@@ -18,6 +20,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Nonnull
     private String name;
     @Column(unique = true)
     private String crypto;
@@ -27,7 +30,7 @@ public class User {
     private String photoId;
     public User(){}
 
-    public User(Long id, String name,Gender gender){
+    public User(Long id, String name, Gender gender){
         this.id = id;
         this.name = name;
         this.gender = gender;

@@ -33,8 +33,11 @@ public class SignService extends BasicService{
     }
 
     public SendCrypto generateCrypto() {
+            final int id = findAllUsers().size() + 1;
             final User user = User.builder()
                     .crypto(GenerateID.create())
+                    .name("DUCH_" + id)
+                    .describe("Tutaj wpisz swój opis.....")
                     .deleteAt(DateOperation.addHoursToDate(LocalDateTime.now(),24))
                     .build();
 

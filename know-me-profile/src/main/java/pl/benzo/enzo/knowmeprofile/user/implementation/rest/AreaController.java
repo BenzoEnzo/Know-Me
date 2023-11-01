@@ -36,6 +36,12 @@ private final ProfileFacadeApi profileFacadeApi;
                 .ok().build();
     }
 
+    @PostMapping(value = "/area-people", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> peopleOnArea(@RequestBody Long keyId) {
+        return ResponseEntity
+                .ok().body(profileFacadeApi.getAllUserIdsFromArenaSize(keyId));
+    }
+
     @GetMapping(value = "/query-areas")
     public ResponseEntity<?> queryAreas(){
         return ResponseEntity.ok().body(profileFacadeApi.getAllAreas());
