@@ -1,38 +1,79 @@
-.chat-container {
-    max-width: 600px;
+.chatSession-container {
+    max-width: 700px;
     margin: 50px auto;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.chat-box {
-    height: 400px;
-    overflow-y: scroll;
+    background-color: #282a36;
+    border-radius: 10px;
     padding: 20px;
-    border-bottom: 1px solid #ddd;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
-.chat-input {
-    padding: 20px;
+.chatSession-box {
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border: 3px solid #8b76a9;
+    border-radius: 10px;
 }
 
-.chat-message {
-    border: none;
-    padding: 10px 20px;
-    margin-bottom: 5px;
-    border-radius: 15px;
-    background-color: #f1f1f1;
-    max-width: 70%;
+.chatSession-message {
+    padding: 12px 25px;
+    margin: 10px 0;
+    border-radius: 20px;
+    background-color: #3a3c4e;
+    color: #dcdcdc;
+    font-size: 17px;
 }
 
-.chat-message.user {
-    background-color: #007bff;
-    color: white;
+.chatSession-message.bot {
+    background-color: #a394c1;
     align-self: flex-end;
+    order: 1;
 }
 
-.chat-message.bot {
-    background-color: #e9ecef;
-    align-self: flex-start;
+.chatSession-message.user {
+    background-color: #8b76a9;
+    align-self: flex-end;
+    order: 1;
+}
+
+.chatSession-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.chatSession-input Form.Control {
+    height: 60px;
+    font-size: 18px;
+    padding-left: 20px;
+}
+
+.chatSession-input Button {
+    height: 60px;
+    background-color: #8b76a9;
+    color: #FFF;
+    border: none;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.chatSession-input Button:hover {
+    background-color: #8a59a6;
+}
+
+
+
+@keyframes neonPulse {
+    from {
+        text-shadow: 0 0 5px #8a59a6, 0 0 10px #8a59a6, 0 0 15px #dcdcdc, 0 0 20px #dcdcdc, 0 0 25px #8a59a6, 0 0 30px #dcdcdc, 0 0 35px #dcdcdc;
+    }
+    to {
+        text-shadow: 0 0 10px #8a59a6, 0 0 15px #8a59a6, 0 0 20px #dcdcdc, 0 0 25px #dcdcdc, 0 0 30px #8a59a6, 0 0 35px #dcdcdc, 0 0 40px #dcdcdc;
+    }
+}
+
+.chatSession-input Button:hover {
+    animation: neonPulse 1.5s infinite alternate;
 }

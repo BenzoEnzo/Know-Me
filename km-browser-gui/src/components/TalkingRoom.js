@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './TalkingRoom.css'
 import { Container, Row, Col, Button, Form, ListGroup } from 'react-bootstrap';
 
 const TalkingRoom = () => {
@@ -26,7 +27,6 @@ const TalkingRoom = () => {
 
     const handleSendMessage = () => {
         if (inputValue.trim() !== '') {
-            setMessages([...messages, { type: 'user', content: inputValue }]);
             sendMessage(inputValue);
             setInputValue('');
         }
@@ -52,7 +52,7 @@ const TalkingRoom = () => {
                 </Col>
             </Row>
             <Row className="chatSession-input">
-                <Col xs={10}>
+                <Col xs={12}>
                     <Form.Control
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
