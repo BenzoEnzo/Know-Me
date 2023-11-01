@@ -1,76 +1,72 @@
 .chatSession-container {
-    max-width: 700px;
-    margin: 50px auto;
+    max-width: 80vw;
+    margin: 5vh auto;
     background-color: #282a36;
     border-radius: 10px;
-    padding: 20px;
+    padding: 2vh;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .chatSession-box {
-    max-height: 500px;
+    max-height: 50vh;
     overflow-y: auto;
-    margin-bottom: 20px;
-    border: 3px solid #8b76a9;
-    border-radius: 10px;
+    margin-bottom: 2vh;
+    border: 0.3vw solid #8b76a9;
+    border-radius: 1vw;
 }
 
 .chatSession-message {
-    padding: 12px 25px;
-    margin: 10px 0;
-    border-radius: 20px;
+    padding: 1vw 3vw;
+    margin: 1vh 0;
+    border-radius: 2vw;
     background-color: #3a3c4e;
     color: #dcdcdc;
-    font-size: 17px;
+    font-size: 1.2em;
+}
+
+.chatSession-message.bot,
+.chatSession-message.user {
+    align-self: flex-end;
+    order: 1;
 }
 
 .chatSession-message.bot {
     background-color: #a394c1;
-    align-self: flex-end;
-    order: 1;
 }
 
 .chatSession-message.user {
     background-color: #8b76a9;
-    align-self: flex-end;
-    order: 1;
 }
 
 .chatSession-input {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 2vh;
 }
 
 .chatSession-input Form.Control {
-    height: 60px;
-    font-size: 18px;
-    padding-left: 20px;
+    height: 10vh;
+    font-size: 1.5em;
+    padding-left: 1.5vw;
 }
 
 .chatSession-input Button {
-    height: 60px;
+    height: 8vh;
     background-color: #8b76a9;
     color: #FFF;
     border: none;
-    border-radius: 10px;
+    border-radius: 1vw;
     transition: background-color 0.3s;
     width: 100%;
 }
 
-.chatSession-input Button:hover {
-    background-color: #8a59a6;
-}
-
-
-
 @keyframes neonPulse {
     from {
-        text-shadow: 0 0 5px #8a59a6, 0 0 10px #8a59a6, 0 0 15px #dcdcdc, 0 0 20px #dcdcdc, 0 0 25px #8a59a6, 0 0 30px #dcdcdc, 0 0 35px #dcdcdc;
+        text-shadow: 0 0 0.5vw #8a59a6, 0 0 1vw #8a59a6, 0 0 1.5vw #dcdcdc, 0 0 2vw #dcdcdc, 0 0 2.5vw #8a59a6, 0 0 3vw #dcdcdc, 0 0 3.5vw #dcdcdc;
     }
     to {
-        text-shadow: 0 0 10px #8a59a6, 0 0 15px #8a59a6, 0 0 20px #dcdcdc, 0 0 25px #dcdcdc, 0 0 30px #8a59a6, 0 0 35px #dcdcdc, 0 0 40px #dcdcdc;
+        text-shadow: 0 0 1vw #8a59a6, 0 0 1.5vw #8a59a6, 0 0 2vw #dcdcdc, 0 0 2.5vw #dcdcdc, 0 0 3vw #8a59a6, 0 0 3.5vw #dcdcdc, 0 0 4vw #dcdcdc;
     }
 }
 

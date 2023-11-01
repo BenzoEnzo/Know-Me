@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import pl.benzo.enzo.kmservicedto.socket.ChatSession;
 
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,8 @@ public class ChatSessionService {
     private final RedisTemplate<String, Object> redisTemplate;
 
     public ChatSession createSession(ChatSession session) {
-        final String randomSession = String.valueOf(session.getTalkerId1() + session.getTalkerId2());
+        final int randVal = new Random().nextInt(9873);
+        final String randomSession = String.valueOf((session.getTalkerId1() + session.getTalkerId2()) * randVal);
 
         if (redisTemplate.opsForHash().hasKey(TALKER_INDEX, session.getTalkerId1().toString()) ||
                 redisTemplate.opsForHash().hasKey(TALKER_INDEX, session.getTalkerId2().toString())) {

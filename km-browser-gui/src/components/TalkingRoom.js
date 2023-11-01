@@ -27,6 +27,7 @@ const TalkingRoom = () => {
 
     const handleSendMessage = () => {
         if (inputValue.trim() !== '') {
+            setMessages([...messages, { type: 'user', content: inputValue }]);
             sendMessage(inputValue);
             setInputValue('');
         }

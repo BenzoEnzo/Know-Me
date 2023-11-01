@@ -32,6 +32,6 @@ public interface ProfileFacadeApi {
 
    void refreshAreaState(AreaUserDto areaUserDto);
 
-    int getAllUserIdsFromArenaSize(Long keyId);
+    AreaSizeDto getAllUserIdsFromArenaSize(Long keyId);
 
 }

@@ -14,7 +14,7 @@ const Userable = () => {
     const [newKey, setNewKey] = useState('');
     const [keys, setKeys] = useState([]);
     const [keyId, setKeyId] = useState([]);
-    const [areaSize, setAreas] = useState('');
+    const [areas, setAreas] = useState('');
     const areaId = localStorage.getItem("areaId");
     const userId = localStorage.getItem("id");
     const navigate = useNavigate();
@@ -88,6 +88,19 @@ const Userable = () => {
         }
     };
 
+    const fetchAreaSize = async (keyId) => {
+        try {
+            const response = await axios.post("/api/public/person/area-people", {keyId: keyId});
+            if(response.data && response.data.size) {
+                return response.data.size;
+            } else {
+                console.warn("Nieoczekiwana struktura odpowiedzi");
+            }
+        } catch(error){
+            console.error(error);
+        }
+    }
+
     const fetchUserName = async () => {
         try {
             const response = await axios.post('/api/public/person/read', {id: userId});
@@ -154,6 +167,19 @@ const Userable = () => {
     useEffect(() => {
         fetchUserName();
     }, [gender]);
+
+    useEffect(() => {
+        keys.forEach(keyObj => {
+            fetchAreaSize(keyObj.id).then(size => {
+                setAreas(prevAreas => ({
+                    ...prevAreas,
+                    [keyObj.id]: size
+                }));
+            });
+        });
+    }, [keys]);
+
+
 
     const handleEnterClick = async (event) => {
         const user = {
@@ -290,7 +316,7 @@ const Userable = () => {
                         return (
                             <div className="table-row" key={keyObj.id}>
                                 <span>{keyParsed.name}</span>
-                                <span>0</span>
+                                <span>{areas[keyObj.id]}</span>
                                 <button className="mini-button" onClick={handleEnterClick} value={keyObj.id}>X</button>
                             </div>
                         );

@@ -68,8 +68,8 @@ public class PersonController {
     }
 
     @PostMapping(value = "/area-people", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> postSizeArea(@RequestBody Long keyId) {
-        return profileRestTemplate.postSizeArea(keyId);
+    public ResponseEntity<?> postSizeArea(@RequestBody AreaJoinDto areaJoinDto) {
+        return profileRestTemplate.postSizeArea(areaJoinDto);
     }
     @PostMapping(value = "/go-talk", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> goTalk(@RequestBody MainSession mainSession) {

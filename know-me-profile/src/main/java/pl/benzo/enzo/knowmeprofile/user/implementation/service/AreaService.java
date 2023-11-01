@@ -3,6 +3,7 @@ package pl.benzo.enzo.knowmeprofile.user.implementation.service;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.benzo.enzo.kmservicedto.profile.AreaSizeDto;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.Area;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.AreaRepossitory;
 import pl.benzo.enzo.kmservicedto.profile.AreaUserDto;
@@ -58,7 +59,7 @@ public class AreaService {
         areaRepossitory.save(area);
     }
 
-    public int getAllUserIdsFromArenaSize(Long keyId){
-       return getAllUserAreasUser(keyId).size();
+    public AreaSizeDto getAllUserIdsFromArenaSize(Long keyId){
+      return new AreaSizeDto((long) getAllUserAreasUser(keyId).size(), null);
     }
 }

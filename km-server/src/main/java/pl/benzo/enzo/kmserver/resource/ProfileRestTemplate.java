@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import pl.benzo.enzo.kmserver.web.dto.AreaSize;
+import pl.benzo.enzo.kmservicedto.profile.AreaSizeDto;
 import pl.benzo.enzo.kmserver.web.dto.MainSession;
 import pl.benzo.enzo.kmservicedto.profile.*;
 
@@ -81,8 +81,8 @@ public class ProfileRestTemplate {
         return restTemplate.getForObject(SERVICE_API + "/admin/queue", MainSession.class);
     }
 
-    public ResponseEntity<?> postSizeArea(Long keyId) {
-        return ResponseEntity.ok().body(restTemplate.postForObject(SERVICE_API + "/area/area-people", keyId, AreaSize.class));
+    public ResponseEntity<?> postSizeArea(AreaJoinDto areaJoinDto) {
+        return ResponseEntity.ok().body(restTemplate.postForObject(SERVICE_API + "/area/area-people", areaJoinDto, AreaSizeDto.class));
     }
 
     public void sendInfoSessionRoom(AreaUserDto areaUserDto) {

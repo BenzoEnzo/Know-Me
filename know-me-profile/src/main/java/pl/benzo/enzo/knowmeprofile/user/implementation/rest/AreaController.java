@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.benzo.enzo.kmservicedto.profile.AreaJoinDto;
 import pl.benzo.enzo.knowmeprofile.user.implementation.ProfileFacadeApi;
 import pl.benzo.enzo.kmservicedto.profile.AreaUserDto;
 import pl.benzo.enzo.kmservicedto.profile.CreateAreaRequest;
@@ -37,9 +38,9 @@ private final ProfileFacadeApi profileFacadeApi;
     }
 
     @PostMapping(value = "/area-people", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> peopleOnArea(@RequestBody Long keyId) {
+    public ResponseEntity<?> peopleOnArea(@RequestBody AreaJoinDto areaJoinDto) {
         return ResponseEntity
-                .ok().body(profileFacadeApi.getAllUserIdsFromArenaSize(keyId));
+                .ok().body(profileFacadeApi.getAllUserIdsFromArenaSize(areaJoinDto.keyId()));
     }
 
     @GetMapping(value = "/query-areas")

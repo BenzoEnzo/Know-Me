@@ -225,6 +225,11 @@ input {
     border-bottom: 1px solid #8a79a6;
 }
 
+.table-row > span {
+    display: flex;
+    text-align: center;
+}
+
 .table-header {
     font-weight: bold;
 }
@@ -269,8 +274,8 @@ input {
 .preview-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Rozmieszcza elementy na początku i na końcu kontenera */
-    height: 100vh; /* Wysokość kontenera. Możesz dostosować według potrzeb */
+    justify-content: space-between;
+    height: 100vh;
     align-items: center;
     gap: 30px;
     padding: 40px;
@@ -291,10 +296,10 @@ input {
 }
 
 .gradient-divider {
-    width: 90%; /* Długość gradientu. Możesz dostosować według potrzeb */
-    height: 2px; /* Wysokość gradientu. Możesz dostosować według potrzeb */
-    background: linear-gradient(90deg, #6b59a0, #d1c4e9, #6b59a0); /* Gradient */
-    margin: 20px 0; /* Odstępy od zdjęcia i opisu */
+    width: 90%;
+    height: 2px;
+    background: linear-gradient(90deg, #6b59a0, #d1c4e9, #6b59a0);
+    margin: 20px 0;
 }
 
 .description-preview {
