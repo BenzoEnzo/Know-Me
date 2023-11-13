@@ -10,20 +10,21 @@ import {useNavigate} from "react-router-dom";
 const Userable = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadedImageURL, setUploadedImageURL] = useState('');
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [name, setName] = useState('');
     const [gender,setGender] = useState('')
     const [newKey, setNewKey] = useState('');
     const [keys, setKeys] = useState([]);
     const [keyId, setKeyId] = useState([]);
     const [areas, setAreas] = useState('');
-    const areaId = localStorage.getItem("areaId");
-    const userId = localStorage.getItem("id");
+    const areaId = sessionStorage.getItem("areaId");
+    const userId = sessionStorage.getItem("id");
     const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
     const [description, setDescription] = useState('Twój opis...');
     const [areasResp, setAreasResp] = useState(null);
     const [imageSrc, setImageSrc] = useState(null);
-    const fileName = localStorage.getItem("photoId");
+    const fileName = sessionStorage.getItem("photoId");
     const [mode, setMode] = useState('edit');
 
     const switchToEditMode = () => {
@@ -33,6 +34,11 @@ const Userable = () => {
     const switchToPreviewMode = () => {
         setMode('preview');
     }
+
+    useEffect(() => {
+        const inArea = sessionStorage.getItem('inArea') === 'true';
+        setIsButtonDisabled(inArea);
+    }, []);
 
     useEffect(() => {
         // Pobieranie zdjęcia podczas ładowania komponentu
@@ -196,6 +202,7 @@ const Userable = () => {
 
             if (response.status === 201) {
                 console.log("Successfully joined area");
+                sessionStorage.setItem("inArea", true);
                 navigate('/roulette', { state: {data: response.data}});
             }
         } catch (error) {
@@ -308,7 +315,7 @@ const Userable = () => {
                             <div className="table-row" key={keyObj.id}>
                                 <span>{keyParsed.name}</span>
                                 <span>{areas[keyObj.id]}</span>
-                                <button className="mini-button" onClick={handleEnterClick} value={keyObj.id}>X</button>
+                                <button className="mini-button" onClick={handleEnterClick} disabled={isButtonDisabled} value={keyObj.id}>X</button>
                             </div>
                         );
                     })}

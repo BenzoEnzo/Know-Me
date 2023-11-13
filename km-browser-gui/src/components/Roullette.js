@@ -10,7 +10,7 @@ const Roullette = () => {
     const data = location.state?.data;
     const navigate = useNavigate();
     console.log(data);
-    const userId = localStorage.getItem("id");
+    const userId = sessionStorage.getItem("id");
     const [timer, setTimer] = useState(0);
     const [sessionChattD, setSessionChattD] = useState("0");
 
@@ -55,7 +55,7 @@ const Roullette = () => {
 
     const joinChat =   async () => {
         if(sessionChattD !== 0){
-        localStorage.setItem("sessionChatId", sessionChattD);
+        sessionStorage.setItem("sessionChatId", sessionChattD);
         navigate("/talking-room");
         }
     }

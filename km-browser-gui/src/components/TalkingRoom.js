@@ -6,7 +6,7 @@ const TalkingRoom = () => {
     const [ws, setWs] = useState(null);
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
-    const sessionId = localStorage.getItem("sessionChatId");
+    const sessionId = sessionStorage.getItem("sessionChatId");
     useEffect(() => {
         console.log(sessionId);
         const websocket = new WebSocket(`ws://localhost:8064/api/live-chat/${sessionId}`);

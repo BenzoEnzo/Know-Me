@@ -12,7 +12,7 @@ function Page(){
     const [isButtonDisabled, setButtonDisabled] = useState(false);
 
     useEffect(() => {
-        const sessionId = localStorage.getItem('authToken');
+        const sessionId = sessionStorage.getItem('authToken');
         if (sessionId) {
             navigate('/user');
         }

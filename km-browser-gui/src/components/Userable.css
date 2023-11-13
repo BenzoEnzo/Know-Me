@@ -267,6 +267,14 @@ input {
     transition: background-color 0.3s;
 }
 
+.mini-button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    border: 1px solid #999999;
+    cursor: not-allowed;
+}
+
+
 .mode-button.active {
     background-color: #6b59a0;
     color: white;

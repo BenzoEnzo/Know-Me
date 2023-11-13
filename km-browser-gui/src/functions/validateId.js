@@ -9,7 +9,7 @@ export function validateId(crypto) {
         .then(response => {
             const authToken = response.headers.get('AUTHORIZATION');
             if (authToken) {
-                localStorage.setItem("authToken", authToken);
+                sessionStorage.setItem("authToken", authToken);
             }
 
             if (response.ok && response.headers.get("content-type").includes("application/json")) {
@@ -20,9 +20,9 @@ export function validateId(crypto) {
         })
         .then(data => {
             if (data) {
-                localStorage.setItem("id", data.id);
+                sessionStorage.setItem("id", data.id);
                 if (data.photoId !== null) {
-                    localStorage.setItem("photoId", data.photoId);
+                    sessionStorage.setItem("photoId", data.photoId);
                 }
             }
             return data;
