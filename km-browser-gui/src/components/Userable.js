@@ -1,8 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import './Userable.css';
+import {parseJSON} from "../functions/jsonParser";
 import {useNavigate} from "react-router-dom";
-import Roullette from "./Roullette";
+
 
 
 
@@ -109,15 +110,6 @@ const Userable = () => {
             console.log(response);
         } catch (error) {
             console.error('Error fetching keys:', error);
-        }
-    };
-
-    const parseJSON = (data) => {
-        try {
-            return JSON.parse(data);
-        } catch (error) {
-            console.error('Error parsing JSON:', error);
-            return null;
         }
     };
 

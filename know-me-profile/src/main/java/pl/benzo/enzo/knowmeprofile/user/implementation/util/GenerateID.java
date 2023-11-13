@@ -2,7 +2,7 @@ package pl.benzo.enzo.knowmeprofile.user.implementation.util;
 
 import java.security.SecureRandom;
 
-public class GenerateID {
+public final class GenerateID {
 
     private static final SecureRandom secureRandom = new SecureRandom();
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@";

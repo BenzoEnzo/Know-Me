@@ -4,15 +4,19 @@ import axios from "axios";
 import {validateId} from "../functions/validateId";
 import {useNavigate} from "react-router-dom";
 
-
-
-
 function Page(){
     const [crypto, setCrypto] = useState('');
     const navigate = useNavigate();
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isButtonDisabled, setButtonDisabled] = useState(false);
+
+    useEffect(() => {
+        const sessionId = localStorage.getItem('authToken');
+        if (sessionId) {
+            navigate('/user');
+        }
+    }, [navigate]);
 
     const handleGenerateId = async () => {
         try {
@@ -37,7 +41,8 @@ function Page(){
         }).catch(error => {
             console.error("Wystąpił błąd podczas validacji id", error.message);
             setIsError(true);
-            setErrorMessage("Wprowadzono błędne ID!");
+            setErrorMessage("Wprowadzono błędne ID!" +
+                " Albo jesteś już zalogowany !");
             setTimeout(function () {
                setIsError(false);
             }, 2000);
@@ -61,6 +66,7 @@ function Page(){
                         className={isButtonDisabled ? "disabled-button" : ""}>Wygeneruj ID</button>
             </div>
         </div>
+            {crypto && <div className="error-message">Wygenerowane ID: {crypto}</div>}
             {isError && <div className="error-message">{errorMessage}</div>}
         </main>
     );
