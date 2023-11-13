@@ -37,7 +37,7 @@ const Userable = () => {
         // Pobieranie zdjęcia podczas ładowania komponentu
         const loadImage = async () => {
             try {
-                const response = await axios.get(`/api/user/profile-image/load/${fileName}`, { responseType: 'arraybuffer' });
+                const response = await axios.get(`/api/public/person/load/${fileName}`, { responseType: 'arraybuffer' });
                 console.log(response.data);
                 const base64Image = `data:image/jpeg;base64,${btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
                 setImageSrc(base64Image);
@@ -73,7 +73,6 @@ const Userable = () => {
         try {
             const response = await axios.post('/api/public/person/upload-image', formData);
             setUploadedImageURL(response.data);
-            localStorage.setItem("photoId", "azx" + userId + ".jpeg");
         } catch (error) {
             console.error('Error uploading file:', error);
         }

@@ -17,7 +17,6 @@ import pl.benzo.enzo.kmservicedto.uploader.LoadImageResponse;
 import pl.benzo.enzo.knowmeuploader.implementation.service.DataHandlerImageService;
 import pl.benzo.enzo.knowmeuploader.implementation.service.ImplUploadService;
 
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Base64;

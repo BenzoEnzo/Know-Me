@@ -2,12 +2,14 @@ package pl.benzo.enzo.kmserver.web;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.benzo.enzo.kmserver.resource.ChatRestTemplate;
 import pl.benzo.enzo.kmserver.resource.ProfileRestTemplate;
+import pl.benzo.enzo.kmserver.resource.UploaderRestTemplate;
 import pl.benzo.enzo.kmserver.resource.UploaderSoapService;
 import pl.benzo.enzo.kmserver.web.dto.MainSession;
 import pl.benzo.enzo.kmserver.web.dto.UploadImageResponseImpl;
@@ -24,7 +26,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class PersonController {
     private final ProfileRestTemplate profileRestTemplate;
-    private final UploaderSoapService uploaderSoapService;
+//    private final UploaderSoapService uploaderSoapService;
+    private final UploaderRestTemplate uploaderRestTemplate;
     private final ChatRestTemplate chatRestTemplate;
 
     @GetMapping(value = "/join")
@@ -82,17 +85,25 @@ public class PersonController {
     }
 
 
-    @PostMapping(value = "/upload-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile image,
-                                         @RequestParam("photoId") String photoId) {
-        try {
-            UploadImageResponseImpl response = uploaderSoapService.uploadImageOnServer(image, photoId);
+    @PostMapping("/upload-image")
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file,
+                                              @RequestParam("photoId") String photoId) {
+        String response = uploaderRestTemplate.uploadImage(file, photoId);
+        if ("SUCCESS".equals(response)) {
             return ResponseEntity.ok(response);
-        } catch (IOException e) {
-            return ResponseEntity.badRequest().body("Error processing the image.");
-        } catch (Exception e) {
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
 
-            return ResponseEntity.status(500).body("Internal server error.");
+    @GetMapping("/load/{filename}")
+    public ResponseEntity<byte[]> loadImage(@PathVariable String filename) {
+        byte[] fileBytes = uploaderRestTemplate.loadImage(filename);
+        if (fileBytes != null) {
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(fileBytes);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }
+
