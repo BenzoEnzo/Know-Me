@@ -1,7 +1,5 @@
 pipeline {
     agent any
-    tools {
-    }
     stages {
            stage('Build and Test km-service-dto') {
                steps {
