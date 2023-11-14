@@ -10,7 +10,7 @@
     </parent>
     <groupId>pl.benzo.enzo</groupId>
     <artifactId>know-me-profile</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.4</version>
     <name>know-me-profile</name>
     <description>know-me-profile</description>
     <properties>

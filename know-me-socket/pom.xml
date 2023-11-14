@@ -10,7 +10,7 @@
     </parent>
     <groupId>pl.benzo.enzo</groupId>
     <artifactId>know-me-socket</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.4</version>
     <name>know-me-socket</name>
     <description>know-me-socket</description>
     <properties>
