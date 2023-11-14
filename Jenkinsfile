@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
     maven 'maven'
-    docker 'dockerK'
+    docker 'docker'
     }
     stages {
            stage('Build and Test km-service-dto') {
