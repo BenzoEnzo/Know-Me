@@ -7,42 +7,42 @@ pipeline {
            stage('Build and Test km-service-dto') {
                steps {
                    dir('km-service-dto') {
-                       sh 'mvn clean install -Dmaven.repo.local=$WORKSPACE/.m2/repository'
+                       sh 'mvn clean install'
                    }
                }
            }
         stage('Build and Test km-kafka-centrala') {
             steps {
                 dir('km-kafka-centrala') {
-                    sh 'mvn clean install -Dmaven.repo.local=$WORKSPACE/.m2/repository'
+                    sh 'mvn clean install'
                 }
             }
         }
         stage('Build and Test know-me-socket') {
             steps {
                 dir('know-me-socket') {
-                    sh 'mvn clean install -Dmaven.repo.local=$WORKSPACE/.m2/repository'
+                    sh 'mvn clean install'
                 }
             }
         }
         stage('Build and Test know-me-profile') {
             steps {
                 dir('know-me-profile') {
-                    sh 'mvn clean install -Dmaven.repo.local=$WORKSPACE/.m2/repository'
+                    sh 'mvn clean install'
                 }
             }
         }
         stage('Build and Test km-server') {
             steps {
                 dir('km-server') {
-                    sh 'mvn clean install -Dmaven.repo.local=$WORKSPACE/.m2/repository'
+                    sh 'mvn clean install'
                 }
             }
         }
         stage('Build and Test know-me-uploader') {
             steps {
                 dir('know-me-uploader') {
-                    sh 'mvn clean install -Dmaven.repo.local=$WORKSPACE/.m2/repository'
+                    sh 'mvn clean install'
                 }
             }
         }
