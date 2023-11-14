@@ -84,6 +84,11 @@ public class PersonController {
             return response;
     }
 
+    @PostMapping(value = "/delete-session", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> deleteSession(@RequestBody ChatSession chatSession) {
+        return chatRestTemplate.deleteSession(chatSession);
+    }
+
 
     @PostMapping("/upload-image")
     public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file,
@@ -104,6 +109,12 @@ public class PersonController {
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+
+    @DeleteMapping("/delete-area/{id}")
+    public ResponseEntity<?> deleteArea(@RequestParam("id") Long id){
+        profileRestTemplate.deleteArea(id);
+        return ResponseEntity.ok().build();
     }
 }
 

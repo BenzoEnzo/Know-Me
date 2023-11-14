@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './TalkingRoom.css'
 import { Container, Row, Col, Button, Form, ListGroup } from 'react-bootstrap';
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const TalkingRoom = () => {
     const [ws, setWs] = useState(null);
     const [messages, setMessages] = useState([]);
+    const navigate = useNavigate();
     const [inputValue, setInputValue] = useState('');
     const sessionId = sessionStorage.getItem("sessionChatId");
     useEffect(() => {
@@ -32,6 +35,24 @@ const TalkingRoom = () => {
             setInputValue('');
         }
     };
+
+    const chatSession = {
+        sessionId: sessionId,
+        talkerId1: "",
+        talkerId2: ""
+    }
+
+    const endSession = async () => {
+        try {
+            navigate("/user")
+            const response = await axios.post('/api/public/person/delete-session', chatSession)
+            if(response.data){
+
+                console.log(response.data);
+            }}catch (error) {
+            console.error("Erorrito", error);
+        }
+    }
 
     const sendMessage = (message) => {
         if (ws) {
@@ -62,6 +83,9 @@ const TalkingRoom = () => {
                 </Col>
                 <Col xs={2}>
                     <Button onClick={handleSendMessage}>Wyślij</Button>
+                </Col>
+                <Col xs={3}>
+                    <Button onClick={endSession}>Exit</Button>
                 </Col>
             </Row>
         </Container>

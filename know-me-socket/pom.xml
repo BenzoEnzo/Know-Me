@@ -43,6 +43,7 @@
             <groupId>pl.benzo.enzo</groupId>
             <artifactId>km-service-dto</artifactId>
             <version>0.0.53</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>redis.clients</groupId>

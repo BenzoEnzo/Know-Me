@@ -7,7 +7,7 @@ pipeline {
            stage('Build and Test km-service-dto') {
                steps {
                    dir('km-service-dto') {
-                       sh 'mvn clean package'
+                       sh 'mvn clean install'
                    }
                }
            }

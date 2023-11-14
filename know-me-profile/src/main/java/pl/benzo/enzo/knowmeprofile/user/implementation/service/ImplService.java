@@ -92,5 +92,9 @@ public class ImplService implements ProfileFacadeApi {
         return areaService.getAllUserIdsFromArenaSize(keyId);
     }
 
+    public void deleteArea(Long id){
+        areaService.deleteArea(id);
+    }
+
 
 }

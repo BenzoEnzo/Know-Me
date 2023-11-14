@@ -13,9 +13,7 @@
 	<version>0.0.53</version>
 	<name>km-service-dto</name>
 	<description>km-service-dto</description>
-	<properties>
-		<java.version>17</java.version>
-	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -27,24 +25,12 @@
 			<artifactId>jakarta.xml.bind-api</artifactId>
 			<version>4.0.0</version>
 		</dependency>
-
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.project-lombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+	<properties>
+		<spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+	</properties>
 
 </project>

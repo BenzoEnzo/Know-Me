@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 public class AreaService {
     private final AreaRepossitory areaRepossitory;
     private final AreaMapper areaMapper;
-    public void deleteArea(String sessionId){
-        areaRepossitory.deleteAreaBySessionId(sessionId);
+    public void deleteArea(Long id){
+        areaRepossitory.deleteAreaByUser_Id(id);
     }
     public Set<AreaUserDto> createArea(CreateAreaRequest createAreaRequest){
         final Area area = areaMapper.createAreaRequestMapper(createAreaRequest);

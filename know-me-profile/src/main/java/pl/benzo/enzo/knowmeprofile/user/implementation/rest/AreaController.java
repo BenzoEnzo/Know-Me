@@ -47,4 +47,10 @@ private final ProfileFacadeApi profileFacadeApi;
     public ResponseEntity<?> queryAreas(){
         return ResponseEntity.ok().body(profileFacadeApi.getAllAreas());
     }
+
+    @DeleteMapping(value = "/delete-area/{id}")
+    public ResponseEntity<?> deleteArea(@RequestParam ("id") Long id){
+        profileFacadeApi.deleteArea(id);
+        return ResponseEntity.ok().build();
+    }
 }

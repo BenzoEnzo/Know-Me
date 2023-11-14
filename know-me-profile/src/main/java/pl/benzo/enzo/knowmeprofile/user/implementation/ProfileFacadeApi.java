@@ -34,4 +34,6 @@ public interface ProfileFacadeApi {
 
     AreaSizeDto getAllUserIdsFromArenaSize(Long keyId);
 
+    void deleteArea(Long id);
+
 }

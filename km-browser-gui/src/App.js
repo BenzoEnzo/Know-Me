@@ -5,6 +5,7 @@ import Userable from "./components/Userable";
 import { Provider } from 'react-redux';
 import { store } from './components/Store';
 import TalkingRoom  from './components/TalkingRoom';
+import NotificationModal from './extra/NotificationModal';
 
 
 import {
@@ -15,8 +16,14 @@ import {
 import Roullette from "./components/Roullette";
 
 function App() {
-  return (
+    const sessionChattD = sessionStorage.getItem("sessionChatId");
+    const isModalOpen = sessionChattD !== "undefined" && sessionChattD !== "0";
+
+    return (
       <Provider store={store}>
+        <div>
+          <NotificationModal isOpen={!isModalOpen} />
+        </div>
       <Router>
         <Routes>
           <Route path="/" element={<Page/>}/>

@@ -89,4 +89,7 @@ public class ProfileRestTemplate {
         restTemplate.postForObject(SERVICE_API + "/area/on-conversation", areaUserDto, AreaUserDto.class);
     }
 
+    public void deleteArea(Long id){
+        restTemplate.delete(SERVICE_API + "/area/delete-area/{id}", id);
+    }
 }
