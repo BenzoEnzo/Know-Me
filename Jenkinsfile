@@ -2,12 +2,13 @@ pipeline {
     agent any
     tools {
     maven 'maven'
+    docker 'dockerK'
     }
     stages {
            stage('Build and Test km-service-dto') {
                steps {
                    dir('km-service-dto') {
-                       sh 'mvn clean install'
+                       sh 'mvn clean package'
                    }
                }
            }
