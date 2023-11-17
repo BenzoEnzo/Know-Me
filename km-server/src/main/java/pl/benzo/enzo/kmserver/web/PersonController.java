@@ -88,7 +88,7 @@ public class PersonController {
 
 
     @PostMapping(value = "/profile-image",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> uploadPhoto(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) throws IOException {
+    public ResponseEntity<?> uploadPhoto(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId)  {
         implUploadService.uploadImageOnServ(file, String.valueOf(userId));
         return ResponseEntity.status(HttpStatus.OK).build();
     }

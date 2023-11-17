@@ -13,9 +13,9 @@ import java.io.IOException;
 public class ImplUploadService {
     private final UploadService uploadService = new UploadService();
     private final static String uploadDir = "/home/devk/Pulpit/IdeaProjects/know-me/know-me-uploader/src/main/resources/static/photos";
-    public void uploadImageOnServ(MultipartFile file, String photoId) {
+    public void uploadImageOnServ(MultipartFile file, String userId) {
         try {
-            String filename = "azx" + photoId + ".jpeg";
+            String filename = "azx" + userId + ".jpeg";
             uploadService.storeFile(file, filename, uploadDir);
         } catch(IOException ignored){}
     }
