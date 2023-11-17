@@ -21,9 +21,7 @@ export function validateId(crypto) {
         .then(data => {
             if (data) {
                 sessionStorage.setItem("id", data.id);
-                if (data.photoId !== null) {
-                    sessionStorage.setItem("photoId", data.photoId);
-                }
+                localStorage.setItem("photoId", data.id);
             }
             return data;
         });

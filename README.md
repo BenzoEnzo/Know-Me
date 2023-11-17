@@ -1,3 +1,5 @@
+
+
 # know-me Stan na 14.11.2023 0.0.4
 - Inicjalizacja apache kafka/Moduł do przekazywania logów
 - Przygotowania do procesu CI/CD -> jenkins na AWS

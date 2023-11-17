@@ -2,22 +2,20 @@ package pl.benzo.enzo.kmserver.web;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.benzo.enzo.kmserver.core.ImplUploadService;
 import pl.benzo.enzo.kmserver.resource.ChatRestTemplate;
 import pl.benzo.enzo.kmserver.resource.ProfileRestTemplate;
-import pl.benzo.enzo.kmserver.resource.UploaderRestTemplate;
-import pl.benzo.enzo.kmserver.resource.UploaderSoapService;
 import pl.benzo.enzo.kmserver.web.dto.MainSession;
-import pl.benzo.enzo.kmserver.web.dto.UploadImageResponseImpl;
 import pl.benzo.enzo.kmservicedto.profile.*;
 import pl.benzo.enzo.kmservicedto.socket.ChatSession;
 
-
-import java.io.IOException;
+import java.io.FileNotFoundException;
 
 
 @RestController
@@ -26,8 +24,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class PersonController {
     private final ProfileRestTemplate profileRestTemplate;
-//    private final UploaderSoapService uploaderSoapService;
-    private final UploaderRestTemplate uploaderRestTemplate;
+    private final ImplUploadService implUploadService;
     private final ChatRestTemplate chatRestTemplate;
 
     @GetMapping(value = "/join")
@@ -90,27 +87,15 @@ public class PersonController {
     }
 
 
-    @PostMapping("/upload-image")
-    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file,
-                                              @RequestParam("photoId") String photoId) {
-        String response = uploaderRestTemplate.uploadImage(file, photoId);
-        if ("SUCCESS".equals(response)) {
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
+    @PostMapping(value = "/profile-image",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadPhoto(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) throws IOException {
+        implUploadService.uploadImageOnServ(file, String.valueOf(userId));
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
-
-    @GetMapping("/load/{filename}")
-    public ResponseEntity<byte[]> loadImage(@PathVariable String filename) {
-        byte[] fileBytes = uploaderRestTemplate.loadImage(filename);
-        if (fileBytes != null) {
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(fileBytes);
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    @GetMapping(value = "/profile-image/load/{fileName}")
+    public ResponseEntity<Resource> getProfilePicture(@PathVariable String fileName) throws FileNotFoundException {
+        return ResponseEntity.status(HttpStatus.OK).body(implUploadService.loadFile(fileName));
     }
-
     @DeleteMapping("/delete-area/{id}")
     public ResponseEntity<?> deleteArea(@RequestParam("id") Long id){
         profileRestTemplate.deleteArea(id);

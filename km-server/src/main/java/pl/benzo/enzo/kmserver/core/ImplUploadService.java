@@ -1,4 +1,4 @@
-package pl.benzo.enzo.knowmeuploader.implementation.service;
+package pl.benzo.enzo.kmserver.core;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
