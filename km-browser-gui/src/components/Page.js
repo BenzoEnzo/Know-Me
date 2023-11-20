@@ -55,7 +55,7 @@ function Page(){
         <main>
         <div className="panel">
             {!crypto && (
-            <input placeholder="ID..." /> )}
+            <input label="ID..." value={crypto} onChange={e => {setCrypto(e.target.value)}}/> )}
             {crypto && (
                 <input placeholder={crypto}/>
             )}
@@ -66,7 +66,7 @@ function Page(){
                         className={isButtonDisabled ? "disabled-button" : ""}>Wygeneruj ID</button>
             </div>
         </div>
-            {crypto && <div className="error-message">Wygenerowane ID: {crypto}</div>}
+            {crypto && isButtonDisabled && <div className="error-message">Wygenerowane ID: {crypto}</div>}
             {isError && <div className="error-message">{errorMessage}</div>}
         </main>
     );

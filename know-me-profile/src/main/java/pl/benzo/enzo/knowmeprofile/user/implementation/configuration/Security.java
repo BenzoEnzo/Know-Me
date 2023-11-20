@@ -45,7 +45,6 @@ public class Security {
         http.authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(mvcMatcherBuilder.pattern(API)).permitAll()
-                                .requestMatchers(PathRequest.toH2Console()).authenticated()
                                 .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
