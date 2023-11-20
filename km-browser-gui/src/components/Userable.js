@@ -317,7 +317,7 @@ const Userable = () => {
                             <div className="table-row" key={keyObj.id}>
                                 <span>{keyParsed.name}</span>
                                 <span>{areas[keyObj.id]}</span>
-                                <button className="mini-button" onClick={handleEnterClick} disabled={isButtonDisabled} value={keyObj.id}>X</button>
+                                <button className="mini-button" onClick={handleEnterClick} value={keyObj.id}>X</button>
                             </div>
                         );
                     })}

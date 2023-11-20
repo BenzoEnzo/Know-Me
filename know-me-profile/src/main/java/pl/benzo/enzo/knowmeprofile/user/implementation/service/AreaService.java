@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class AreaService {
     private final AreaRepository areaRepository;
     private final AreaMapper areaMapper;
+    private final KafkaLogService kafkaLogService;
     public void deleteArea(Long id){
         areaRepository.deleteAreaByUser_Id(id);
     }
@@ -48,12 +49,19 @@ public class AreaService {
     }
 
 
-    public void refreshAreaState(AreaUserDto areaUserDto){
+    public void refreshAreaState(AreaUserDto areaUserDto)  {
         final Area area = areaRepository.findAreaByUser_Id(areaUserDto.userId());
         area.setDuringConversation(true);
         area.setInQueue(false);
         area.setJoined(true);
         areaRepository.save(area);
+        try {
+            Thread.sleep(5000);
+            areaRepository.delete(area);
+            kafkaLogService.sendLog("Usuwanie areny o id: " + area.getId());
+        } catch(InterruptedException e) {
+            kafkaLogService.sendLog("Wielowątkowość w tym wypadku nie zadziała......");
+        }
     }
 
     public AreaSizeDto getAllUserIdsFromArenaSize(Long keyId){
