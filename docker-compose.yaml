@@ -23,10 +23,9 @@ services:
   postgres:
     image: postgres:latest
     environment:
-      POSTGRES_DB: profile
-      POSTGRES_USER: ''
-      POSTGRES_PASSWORD: ''
-      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: 'profile'
+      POSTGRES_USER: 'profile1'
+      POSTGRES_PASSWORD: 'profile2'
     ports:
       - "5432:5432"
     volumes:
