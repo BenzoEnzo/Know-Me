@@ -11,6 +11,6 @@ public class KafkaLogService {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     public void sendLog(String message) {
-        kafkaTemplate.send("all-service-logs", message);
+        kafkaTemplate.send("know-me-profile", message);
     }
 }

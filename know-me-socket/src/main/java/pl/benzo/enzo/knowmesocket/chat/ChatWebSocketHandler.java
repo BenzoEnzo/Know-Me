@@ -19,7 +19,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private final Map<String, List<WebSocketSession>> sessionGroups = new HashMap<>();
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+    public void afterConnectionEstablished(WebSocketSession session)  {
         Map<String, Object> attributes = session.getAttributes();
         String sessionId;
         if (!attributes.containsKey("sessionId")) {

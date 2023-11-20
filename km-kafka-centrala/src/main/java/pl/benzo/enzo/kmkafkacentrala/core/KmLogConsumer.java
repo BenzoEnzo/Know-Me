@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class KmLogConsumer {
     private final KmLogRepository kmLogRepository;
-    @KafkaListener(topics = "know-me-logs")
+    @KafkaListener(topics = "know-me-profile")
     public void consumeLogs(String msg){
         KmLogEntity kmLogEntity = new KmLogEntity();
         kmLogEntity.setMessage(msg);
