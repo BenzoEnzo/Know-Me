@@ -12,7 +12,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ImplUploadService {
     private final UploadService uploadService = new UploadService();
-    private final static String uploadDir = "/home/devk/Pulpit/IdeaProjects/know-me/know-me-uploader/src/main/resources/static/photos";
+    private final static String uploadDir = "/home/devk/Pulpit/IdeaProjects/know-me/km-server/src/main/resources/static/images";
     public void uploadImageOnServ(MultipartFile file, String userId) {
         try {
             String filename = "azx" + userId + ".jpeg";

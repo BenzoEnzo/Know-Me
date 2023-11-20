@@ -24,7 +24,7 @@ const Userable = () => {
     const [description, setDescription] = useState('Twój opis...');
     const [areasResp, setAreasResp] = useState(null);
     const [imageSrc, setImageSrc] = useState(null);
-    const fileName = sessionStorage.getItem("photoId");
+    const fileName = sessionStorage.getItem("id");
     const [mode, setMode] = useState('edit');
 
     const switchToEditMode = () => {
@@ -44,7 +44,8 @@ const Userable = () => {
         // Pobieranie zdjęcia podczas ładowania komponentu
         const loadImage = async () => {
             try {
-                const response = await axios.get(`/api/public/person/load/${fileName}`, { responseType: 'arraybuffer' });
+                const dataIMG = "azx" + fileName + ".jpeg";
+                const response = await axios.get(`/api/public/person/profile-image/load/${dataIMG}`, { responseType: 'arraybuffer' });
                 console.log(response.data);
                 const base64Image = `data:image/jpeg;base64,${btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
                 setImageSrc(base64Image);

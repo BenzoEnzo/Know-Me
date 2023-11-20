@@ -13,5 +13,4 @@ import org.springframework.context.annotation.PropertySource;
 public class External {
     private String restProfile;
     private String restChat;
-    private String soapUploader;
 }

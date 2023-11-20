@@ -1,4 +1,8 @@
-
+# know-me 20.11.2023 0.0.5
+- Usunięcie komponentu odpowiedzialnego za upload zdjęć, funkcjonalność dorzucona do głównej aplikacji
+- Naprawienie funkcjonalności odpowiedzialnej za upload i wyświetlanie zdjęć.
+- Walidacja pól 
+- Wyświetlanie informacji na temat ilości osób w pokoju(Arenie)
 
 # know-me Stan na 14.11.2023 0.0.4
 - Inicjalizacja apache kafka/Moduł do przekazywania logów
