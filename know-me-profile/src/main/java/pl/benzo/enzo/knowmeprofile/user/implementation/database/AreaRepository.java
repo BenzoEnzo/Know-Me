@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-public interface AreaRepossitory extends JpaRepository<Area,Long> {
+public interface AreaRepository extends JpaRepository<Area,Long> {
     Area findAreaByUser_Id(Long id);
     void deleteAreaBySessionId(String sessionId);
     void deleteAreaByUser_Id(Long id);

@@ -77,7 +77,6 @@ public class ProfileRestTemplate {
     }
 
     public MainSession getPairsFromQueue() {
-
         return restTemplate.getForObject(SERVICE_API + "/admin/queue", MainSession.class);
     }
 

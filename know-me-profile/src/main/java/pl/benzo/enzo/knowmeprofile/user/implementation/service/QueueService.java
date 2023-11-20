@@ -9,11 +9,10 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.kmservicedto.socket.ChatSession;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.Area;
-import pl.benzo.enzo.knowmeprofile.user.implementation.database.AreaRepossitory;
+import pl.benzo.enzo.knowmeprofile.user.implementation.database.AreaRepository;
 import pl.benzo.enzo.kmservicedto.profile.AreaUserDto;
 import pl.benzo.enzo.kmservicedto.profile.QueueJoinDto;
 import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
-import pl.benzo.enzo.knowmeprofile.user.implementation.util.GenerateID;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class QueueService {
     private static final Logger loggerQueueService = LoggerFactory.getLogger(QueueService.class);
-    private final AreaRepossitory areaRepository;
+    private final AreaRepository areaRepository;
     private final AreaService areaService;
 
     public QueueJoinDto addUserToQueue(AreaUserDto areaUserDto) {
