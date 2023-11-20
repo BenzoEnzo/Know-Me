@@ -18,10 +18,11 @@ import java.time.LocalDateTime;
 public class SignService extends BasicService{
 
     private final UserMapper userMapper;
-
-    public SignService(UserRepository userRepository, UserMapper userMapper) {
+    private final KafkaLogService kafkaLogService;
+    public SignService(UserRepository userRepository, UserMapper userMapper, KafkaLogService kafkaLogService) {
         super(userRepository);
         this.userMapper = userMapper;
+        this.kafkaLogService = kafkaLogService;
     }
 
     public ValidateCrypto validateCrypto(SendCrypto sendCrypto){
@@ -34,6 +35,7 @@ public class SignService extends BasicService{
 
     public SendCrypto generateCrypto() {
             final int id = findAllUsers().size() + 1;
+
             final User user = User.builder()
                     .crypto(GenerateID.create())
                     .name("DUCH_" + id)
@@ -42,6 +44,8 @@ public class SignService extends BasicService{
                     .build();
 
             createOrUpdateUser(user);
+
+            kafkaLogService.sendLog("Stworzono cryptoUsera o ID = " + id);
 
             return new SendCrypto(user.getCrypto());
     }

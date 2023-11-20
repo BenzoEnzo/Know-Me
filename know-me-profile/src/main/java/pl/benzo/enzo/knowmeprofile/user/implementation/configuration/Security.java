@@ -37,9 +37,7 @@ public class Security {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
         http.csrf(csrfConfigurer ->
-                csrfConfigurer.ignoringRequestMatchers(mvcMatcherBuilder.pattern(API),
-                        mvcMatcherBuilder.pattern("/h2-console/**"),
-                        PathRequest.toH2Console()));
+                csrfConfigurer.ignoringRequestMatchers(mvcMatcherBuilder.pattern(API)));
 
         http.headers(headersConfigurer ->
                 headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
