@@ -9,8 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import pl.benzo.enzo.kmservicedto.socket.ChatSession;
 
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -65,6 +64,32 @@ public class ChatSessionService {
         return ChatSession.builder()
                 .sessionId(sessionId)
                 .build();
+    }
+
+    public List<ChatSession> getAllSessions() {
+        Set<String> sessionKeys = redisTemplate.keys(SESSION_PREFIX + "*");
+        List<ChatSession> sessions = new ArrayList<>();
+
+        if (sessionKeys != null) {
+            for (String key : sessionKeys) {
+                try {
+                    Long talkerId1 = (Long) redisTemplate.opsForHash().get(key, "talkerId1");
+                    Long talkerId2 = (Long) redisTemplate.opsForHash().get(key, "talkerId2");
+                    String sessionId = key.substring(SESSION_PREFIX.length());
+
+                    ChatSession session = ChatSession.builder()
+                            .talkerId1(talkerId1)
+                            .talkerId2(talkerId2)
+                            .sessionId(sessionId)
+                            .build();
+                    sessions.add(session);
+                } catch (Exception e) {
+                    loggerChatSessionService.error("Błąd podczas pobierania informacji o sesji: " + key, e);
+                }
+            }
+        }
+
+        return sessions;
     }
 }
 

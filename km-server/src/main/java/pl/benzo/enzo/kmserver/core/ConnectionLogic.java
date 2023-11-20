@@ -24,7 +24,7 @@ public class ConnectionLogic {
     private final ProfileRestTemplate profileRestTemplate;
     private final ChatRestTemplate chatRestTemplate;
     private boolean extensionForScheduler(){
-        final List<AreaUserDto> areas = profileRestTemplate.queryAreas();
+        final List<?> areas = profileRestTemplate.queryAreas();
         return areas.size() > 2;
     }
 

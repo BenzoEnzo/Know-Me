@@ -12,26 +12,31 @@ import pl.benzo.enzo.knowmesocket.chat.redis.ChatSessionService;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/chat")
+@RequestMapping("/api/chat/session")
 @RequiredArgsConstructor
 public class ChatController {
 
     private final ChatSessionService chatSessionService;
 
-    @PostMapping("/session/create")
+    @PostMapping("/create")
     public ResponseEntity<ChatSession> createSession(@RequestBody ChatSession session) {
         return ResponseEntity.ok().body(chatSessionService.createSession(session));
     }
 
-    @PostMapping("/session/delete")
+    @PostMapping("/delete")
     public ResponseEntity<?> deleteSession(@RequestBody ChatSession session) {
         chatSessionService.endSession(session.getSessionId());
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(value = "/session/validate")
+    @PostMapping(value = "/validate")
     public ResponseEntity<?> validateSession(@RequestBody ChatSession session){
         return ResponseEntity.ok().body(chatSessionService.findSessionByTalkerId(session));
+    }
+
+    @GetMapping(value = "/read-all")
+    public ResponseEntity<?> getAllOfSessions(){
+        return ResponseEntity.ok().body(chatSessionService.getAllSessions());
     }
 
 }

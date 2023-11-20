@@ -72,7 +72,7 @@ public class ProfileRestTemplate {
         return ResponseEntity.ok(queue);
     }
 
-    public List<AreaUserDto> queryAreas(){
+    public List<?> queryAreas(){
         return restTemplate.getForObject(SERVICE_API + "/area/query-areas", List.class);
     }
 
