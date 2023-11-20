@@ -1,6 +1,8 @@
 package pl.benzo.enzo.knowmesocket.chat;
 
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -18,6 +20,12 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
     private final Map<String, List<WebSocketSession>> sessionGroups = new HashMap<>();
 
+    @Autowired
+    private KafkaLogService kafkaLogService;
+
+    public ChatWebSocketHandler() {
+    }
+
     @Override
     public void afterConnectionEstablished(WebSocketSession session)  {
         Map<String, Object> attributes = session.getAttributes();
@@ -33,6 +41,10 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         sessionGroups
                 .computeIfAbsent(sessionId, k -> new ArrayList<>())
                 .add(session);
+
+        sessionGroups.forEach((sesID,ogSession) ->
+                kafkaLogService.sendLog("KNOW_ME_SOCKET -> sesja: " + sesID));
+
     }
 
     @Override
@@ -41,6 +53,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         List<WebSocketSession> sessions = sessionGroups.get(sessionId);
         if (sessions != null) {
             for (WebSocketSession webSocketSession : sessions) {
+                kafkaLogService.sendLog("KNOW_ME_SOCKET wysłano wiadomość w czacie o ID: " + sessionId);
                 webSocketSession.sendMessage(message);
             }
         }

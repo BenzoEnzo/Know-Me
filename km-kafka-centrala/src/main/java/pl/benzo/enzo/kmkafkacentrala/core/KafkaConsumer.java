@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public final class KafkaConsumer {
     private static final Logger logger = LoggerFactory.getLogger(KafkaConsumer.class);
-    @KafkaListener(topics = "know-me-profile", groupId = "group_id")
+    @KafkaListener(topics = {"know-me-profile", "know-me-socket"}, groupId = "group_id")
     public void consumeFromProfile(String message) {
-        logger.info(String.format("KNOW_ME_PROFILE service msg => %s", message));
+        logger.info(String.format("Service msg => %s", message));
     }
 }
