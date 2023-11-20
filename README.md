@@ -3,6 +3,10 @@
 - Naprawienie funkcjonalności odpowiedzialnej za upload i wyświetlanie zdjęć.
 - Walidacja pól 
 - Wyświetlanie informacji na temat ilości osób w pokoju(Arenie)
+- Inicjalizacja relacyjnej bazy danych postgreSQL dla komponentu know-me-profile
+- docker-compose
+- aktualizacja komponentu kafka-centrala, logi o sesjach
+- init groovy libs dla testów jednostkowych w komponencie know-me-profile
 
 # know-me Stan na 14.11.2023 0.0.4
 - Inicjalizacja apache kafka/Moduł do przekazywania logów
