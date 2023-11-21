@@ -6,7 +6,7 @@ WORKDIR /app
 COPY ./target/know-me-profile-*.jar /app/know-me-profile.jar
 
 
-ENV SPRING_DATASOURCE_URL=jdbc:postgresql://0.0.0.0:5432/profile
+ENV SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/profile
 ENV SPRING_DATASOURCE_USERNAME=profile1
 ENV SPRING_DATASOURCE_PASSWORD=profile2
 ENV SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
