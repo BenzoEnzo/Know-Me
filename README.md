@@ -1,3 +1,6 @@
+# Rozkład serwisów na amazon AWS:
+- Know-Me-Profile: ec2-54-221-156-50.compute-1.amazonaws.com:8062
+
 # know-me 20.11.2023 0.0.5
 - Usunięcie komponentu odpowiedzialnego za upload zdjęć, funkcjonalność dorzucona do głównej aplikacji
 - Naprawienie funkcjonalności odpowiedzialnej za upload i wyświetlanie zdjęć.

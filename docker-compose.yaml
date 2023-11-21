@@ -24,9 +24,9 @@ services:
     image: postgres:latest
     container_name: profiledb
     environment:
-      POSTGRES_DB: 'profile'
-      POSTGRES_USER: 'profile1'
-      POSTGRES_PASSWORD: 'profile2'
+      POSTGRES_DB: profile
+      POSTGRES_USER: profile1
+      POSTGRES_PASSWORD: profile2
     ports:
       - "5432:5432"
     volumes:
