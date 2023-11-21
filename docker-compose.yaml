@@ -22,6 +22,7 @@ services:
 
   postgres:
     image: postgres:latest
+    container_name: profiledb
     environment:
       POSTGRES_DB: 'profile'
       POSTGRES_USER: 'profile1'
