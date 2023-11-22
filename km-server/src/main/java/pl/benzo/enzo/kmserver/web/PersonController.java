@@ -1,6 +1,7 @@
 package pl.benzo.enzo.kmserver.web;
 
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,7 @@ public class PersonController {
     }
 
     @PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@RequestBody UpdateUserRequest updateUserRequest) {
+    public ResponseEntity<?> update(@RequestBody UpdateUserRequest updateUserRequest, HttpServletRequest httpServletRequest) {
         return profileRestTemplate.updateUser(updateUserRequest);
     }
 
