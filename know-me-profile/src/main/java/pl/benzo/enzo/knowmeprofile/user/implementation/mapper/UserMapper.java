@@ -9,10 +9,6 @@ import pl.benzo.enzo.knowmeprofile.user.implementation.database.User;
 
 @Component
 public class UserMapper {
-    public User sendCryptoMapping(SendCrypto sendCrypto){
-        return User.builder().crypto(sendCrypto.crypto()).build();
-    }
-
     public ValidateCrypto validateCryptoMapping(User user){
         return new ValidateCrypto(user.getId());
     }
