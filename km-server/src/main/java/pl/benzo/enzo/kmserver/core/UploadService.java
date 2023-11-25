@@ -1,5 +1,9 @@
 package pl.benzo.enzo.kmserver.core;
 
+
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,9 +13,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.*;
 
-
+@Slf4j
 public class UploadService {
-
+    private static final Logger logger = LoggerFactory.getLogger(UploadService.class);
     /**
      * Store the provided file in the specified upload directory.
      *
@@ -25,7 +29,7 @@ public class UploadService {
         ensureDirectoryExists(directoryPath);
 
         Path filePath = directoryPath.resolve(filename);
-        System.out.println("Attempting to write to: " + filePath);
+        logger.info("Attempting to write to: " + filePath);
 
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
     }
@@ -40,7 +44,7 @@ public class UploadService {
      */
     public Resource loadFile(String filename, String uploadDirectory) throws FileNotFoundException {
         Path filePath = Paths.get(uploadDirectory).resolve(filename);
-        System.out.println("Attempting to read from: " + filePath);
+        logger.info("Attempting to read from: " + filePath);
 
         try {
             Resource resource = new UrlResource(filePath.toUri());
