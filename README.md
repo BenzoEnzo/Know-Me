@@ -1,7 +1,10 @@
-# Przeniesienie kodów:
- - Serwis know-me-profile: https://github.com/BenzoEnzo/knowme-profile <- Serwis będzie refaktorowany na SSOAP + REST dla obsługi bazy
- - Serwis know-me-socket: https://github.com/BenzoEnzo/knowme-socket
- - Glowna aplikacja(backend + frontend): https://github.com/BenzoEnzo/knowme-app-server
+# Przeniesienie kodów 26.11.2023:
+Każdy serwis jest uruchomiony na oddzielnej maszynie(Amazon AWS)
+ - Serwis know-me-profile: https://github.com/BenzoEnzo/knowme-profile <- http://ec2-34-207-110-93.compute-1.amazonaws.com:8062/
+ - Serwis know-me-socket: https://github.com/BenzoEnzo/knowme-socket  <- http://ec2-54-83-118-234.compute-1.amazonaws.com:8064/
+ - To repo zostaje tylko do edycji komponentów wchodzących w skład głównej aplikacji,
+Frontend + Backend integrujący
+
 
 # Rozkład serwisów na amazon AWS:
 - Know-Me-Profile: ec2-54-221-156-50.compute-1.amazonaws.com:8062
