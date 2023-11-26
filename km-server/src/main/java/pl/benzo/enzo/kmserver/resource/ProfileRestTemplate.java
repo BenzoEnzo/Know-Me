@@ -27,12 +27,12 @@ public class ProfileRestTemplate {
     }
 
     public ResponseEntity<?> signUp() {
-       final Object communication = restTemplate.getForObject(SERVICE_API + "/account/sign-up", SendCrypto.class);
+       final Object communication = restTemplate.getForObject(SERVICE_API + "/user/sign-up", SendCrypto.class);
        return ResponseEntity.ok().body(communication);
     }
 
     public ResponseEntity<?> signIn(SendCrypto sendCrypto) {
-        ResponseEntity<ValidateCrypto> response = restTemplate.postForEntity(SERVICE_API + "/account/sign-in", sendCrypto, ValidateCrypto.class);
+        ResponseEntity<ValidateCrypto> response = restTemplate.postForEntity(SERVICE_API + "/user/sign-in", sendCrypto, ValidateCrypto.class);
 
         if (response.getStatusCode().is2xxSuccessful() && response.getHeaders().containsKey("authorization")) {
             return ResponseEntity.ok().headers(response.getHeaders()).body(response.getBody());
@@ -77,7 +77,7 @@ public class ProfileRestTemplate {
     }
 
     public MainSession getPairsFromQueue() {
-        return restTemplate.getForObject(SERVICE_API + "/admin/queue", MainSession.class);
+        return restTemplate.getForObject(SERVICE_API + "/area/queue", MainSession.class);
     }
 
     public ResponseEntity<?> postSizeArea(AreaJoinDto areaJoinDto) {
